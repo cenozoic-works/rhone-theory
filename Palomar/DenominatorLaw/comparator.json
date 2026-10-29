@@ -1,0 +1,19 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.DenominatorLaw.Challenge",
+  "solution_module": "Palomar.DenominatorLaw.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.DenominatorLaw.T_mulVec_Phi_eq_phiRecursionSource",
+    "Rhone.Palomar.DenominatorLaw.Dfull_mul_q_mem",
+    "Rhone.Palomar.DenominatorLaw.dvdIn_E_of_clears",
+    "Rhone.Palomar.DenominatorLaw.natDegree_E",
+    "Rhone.Palomar.DenominatorLaw.E_pos",
+    "Rhone.Palomar.DenominatorLaw.unbounded_irreducible_E_mm_factor_degree",
+    "Rhone.Palomar.DenominatorLaw.unbounded_irreducible_E_mm_recombination_factor_degree"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

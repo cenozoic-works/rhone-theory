@@ -1,0 +1,134 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "An explicit block-recursive formula for solutions of the two-locus sampling recursion"
+  description: "This entry formalizes an explicit block-recursive formula for the solution of the two-locus sampling recursion under parent-independent mutation, with two alleles at each locus, positive mutation rates, and nonnegative recombination rate, over any ordered field. The explicit expression equals every solution of the recursion and is itself a solution, so it is the unique solution. Lumping statements show that merging alleles, by pushing configurations forward along maps between allele sets of any sizes, carries solutions to solutions, and that when every allele class is merged into two classes the lumped values are given by the explicit two-allele formula at the merged allele frequencies. A variant of the explicit formula, for any number of alleles at one locus and two at the other, is shown to equal every solution of the recursion."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["q-bio.PE", "math.PR"]
+  msc2020: ["92D10", "60J90", "92D15"]
+
+sources:
+  - title: "An explicit, solve-free, block-recursive formula for solutions of the two-locus sampling recursion under parent-independent mutation, and its behaviour under merging of alleles"
+    type: original-proof
+    relationship: other
+    note: "Novelty unknown; no claim of priority. The recursion is established mathematics and is not claimed here: it is the two-locus sampling recursion of the coalescent with recombination (Golding 1984; Ethier and Griffiths 1990), with the project's reference display taken from Jenkins and Song (2009), eq. (5), here specialized to parent-independent mutation and written in the killed form described under status.scope. Usmani (1994) supplies the closed-form inverse of a tridiagonal matrix that the formulas use; that identity is proved in the library, not assumed. What this formalization presents relative to the cited sources is: (i) the expression qExplicit for two alleles at each locus, which combines the coefficients of an explicit polynomial generating function with a table of centred values computed one block of sample sizes at a time by explicit determinants and adjugate entries, with no linear system left to solve, together with proofs that it equals every solution and is a solution; (ii) the two lumping statements under merging of alleles; and (iii) the expression qExplicitKB2 for any number of alleles at locus A and two at locus B, with a proof that it equals every solution."
+  - title: "The sampling distribution of linkage disequilibrium"
+    authors: ["G. Brian Golding"]
+    id: "Genetics 108(1):257-274, 1984"
+    relationship: background
+    note: "Context: an origin of the two-locus sampling recursion whose solutions the entry characterizes. The entry formalizes neither this paper's derivation of the recursion nor its numerical results."
+  - title: "On the two-locus sampling distribution"
+    authors: ["Stewart N. Ethier", "Robert C. Griffiths"]
+    id: "Journal of Mathematical Biology 29(2):131-159, 1990"
+    relationship: background
+    note: "Context: a mathematical treatment of the two-locus sampling distribution and its recursion. No result of this paper is formalized or used as a proof step."
+  - title: "Closed-form two-locus sampling distributions: accuracy and universality"
+    authors: ["Paul A. Jenkins", "Yun S. Song"]
+    id: "Genetics 183(3):1087-1103, 2009; PMCID PMC2778962"
+    location: "eq. (5), pp. 1089-1090"
+    relationship: background
+    note: "Context: the project takes its reference display of the two-locus sampling recursion from eq. (5); the Lean definition IsSolution is the parent-independent-mutation case of that recursion in killed form (see fidelity.divergences). The paper's closed-form large-recombination approximations are context for the contrast between approximate and exact expressions and are not formalized."
+  - title: "Padé approximants and exact two-locus sampling distributions"
+    authors: ["Paul A. Jenkins", "Yun S. Song"]
+    id: "Annals of Applied Probability 22(2):576-607, 2012; arXiv:1107.3897"
+    relationship: background
+    note: "Context: an asymptotic expansion of the two-locus sampling distribution in the inverse recombination rate and its use, with Padé approximants, to obtain exact values. It is a different route to exact values; no step of it is used in the Lean proof."
+  - title: "Two-locus likelihoods under variable population size and fine-scale recombination rate estimation"
+    authors: ["John A. Kamm", "Jeffrey P. Spence", "Jeffrey Chan", "Yun S. Song"]
+    id: "Genetics 203(3):1381-1399, 2016; arXiv:1510.06017"
+    relationship: background
+    note: "Context: numerical computation of two-locus likelihoods and their use in recombination rate estimation, the applied setting in which the sampling recursion is solved. Not used in the Lean proof."
+  - title: "Inversion of a tridiagonal Jacobi matrix"
+    authors: ["Riaz A. Usmani"]
+    id: "Linear Algebra and its Applications 212-213:413-414, 1994"
+    relationship: background
+    note: "Supplies the closed-form inverse of a tridiagonal matrix, whose entries are products of off-diagonal entries with leading and trailing principal minors. The definitions qExplicit (through usmaniEntry) and qExplicitKB2 (through GK) use these entries. The identity that the tridiagonal matrix times this matrix of entries equals its determinant times the identity is proved in the library (trid_mul_usmani), not imported or assumed. The source supplies an ingredient of the proof, not the recorded result."
+  - title: "Importance sampling on the coalescent with recombination"
+    authors: ["Paul A. Jenkins"]
+    id: "Oxford University Research Archive, uuid:de04e3ae-d3be-4eb3-9045-2387d872283d"
+    relationship: background
+    note: "Context: Monte Carlo methods for sampling probabilities under the coalescent with recombination, an alternative to exact solution of the recursion. Not used in the Lean proof."
+  - title: "The two-locus ancestral graph"
+    authors: ["R. C. Griffiths"]
+    id: "doi:10.1214/lnms/1215459289"
+    relationship: background
+    note: "Context: the two-locus ancestral process whose sampling probabilities satisfy the recursion. The entry does not formalize the ancestral graph; its statements concern solutions of the recursion only."
+  - title: "One and two locus likelihoods under complex demography"
+    authors: ["John A. Kamm"]
+    id: "eScholarship qt1dp6w9q8"
+    relationship: background
+    note: "Context: computation of one- and two-locus likelihoods under variable population size. Not used in the Lean proof."
+  - title: "Probability Models for DNA Sequence Evolution"
+    authors: ["Richard Durrett"]
+    id: "doi:10.1007/978-0-387-78168-6"
+    location: "2nd edition, 2008, sec. 3.1, Samples of size 3, pp. 89-90"
+    relationship: background
+    note: "Context for the block structure: solves the recursion block by block, three equations in three unknowns given the lower levels; no solve-free formula. Not used in the Lean proof."
+  - title: "Duality between the two-locus Wright-Fisher diffusion model and the ancestral process with recombination"
+    authors: ["Shuhei Mano"]
+    id: "doi:10.1239/jap/1363784437"
+    location: "Sec. 4, eq. (4.1) (arXiv:1201.5557, pp. 14-15)"
+    relationship: background
+    note: "Context for the block structure: moments of the two-locus diffusion solved class by class through tridiagonal systems. Not used in the Lean proof."
+  - title: "General moment closure for the neutral two-locus Wright-Fisher dynamics"
+    authors: ["Raunak Kundagrami", "Sean Yetter", "Matthias Steinrücken"]
+    id: "doi:10.64898/2026.01.16.700021"
+    location: "bioRxiv, 2026; sec. 1 and sec. 4, eqs. (4.1)-(4.2)"
+    relationship: background
+    note: "Context: a closed system for canonical moments in coordinates with marginal variables, for any number of alleles; stationary values are computed numerically. Related; it gives no closed-form expression and is not used in the Lean proof."
+
+status:
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  scope: "Setting. A configuration ξ in Config KA KB records a sample of lineages at two loci A and B with KA and KB alleles: a(i) lineages ancestral only at A with allele i, b(j) lineages ancestral only at B with allele j, and c(i,j) lineages ancestral at both with alleles (i, j). Write t for the sum of the c(i,j), n_A for the sum of the a(i) plus t, n_B for the sum of the b(j) plus t, and n for the sum of all a, b, and c counts. For a field F, mutation parameters θ_A, θ_B, recombination parameter ρ, and allele weights π_A, π_B in F, the predicate IsSolution θ_A θ_B ρ π_A π_B q on a function q from configurations to F requires: q(empty) = 1; q = π_A(i) on a single A-only lineage, π_B(j) on a single B-only lineage, and π_A(i) π_B(j) on a single doubly ancestral lineage; and, at every configuration with n at least 2, [n(n − 1) + θ_A n_A + θ_B n_B + ρ t] q(ξ) equals the sum of: coalescence terms a(i)(a(i) − 1 + 2 c(i,·)) q(ξ with one A-only i removed), where c(i,·) is the sum of c(i,j) over j, the analogous B terms, c(i,j)(c(i,j) − 1) q(ξ with one (i, j) lineage removed), and 2 a(i) b(j) q(ξ with an A-only i and a B-only j merged into an (i, j) lineage); mutation terms θ_A Σ_i π_A(i) [a(i) q(ξ with one A-only i removed) + Σ_j c(i,j) q(ξ with one (i, j) lineage replaced by a B-only j lineage)] and the analogous θ_B terms; and recombination terms ρ Σ c(i,j) q(ξ with one (i, j) lineage split into an A-only i and a B-only j lineage). This is the parent-independent-mutation recursion in killed form: a mutation removes the lineage's type at that locus and contributes the weight π. The recursion is imposed at every configuration; q is an arbitrary F-valued function, the weights π are not assumed nonnegative, and nothing in these statements says that q is a probability. In the three explicit-formula theorems F is any linearly ordered field (for example the rationals or the reals). (1) q_eq_qExplicit: if θ_A > 0, θ_B > 0, ρ ≥ 0, π_A(0) + π_A(1) = 1, and π_B(0) + π_B(1) = 1, then every solution q for two alleles at each locus satisfies q(ξ) = qExplicit(ξ) at every configuration ξ, including the empty one. qExplicit(ξ) is the sum, over 0 ≤ d1 ≤ n_A, 0 ≤ d2 ≤ n_B, and 0 ≤ d3 ≤ t, of the coefficient of x^d1 y^d2 z^d3 in the polynomial G_ξ times a table value Φ(d1, d2, d3). G_ξ is the product of (π_A(i) + ε(i) x)^a(i), (π_B(j) + ε(j) y)^b(j), and (π_A(i) π_B(j) + ε(i) π_B(j) x + π_A(i) ε(j) y + ε(i) ε(j) xyz)^c(i,j), with ε = (1, −1). The table is defined by recursion on d1 + d2: Φ(0, 0, ·) = 1, and otherwise Φ(i, j, t) is E(i, j)⁻¹ times a sum over s from 0 to min(i, j) of an explicit adjugate entry of a (min(i, j) + 1)-square tridiagonal matrix, whose entries are polynomials in θ_A, θ_B, and ρ, and whose determinant is E(i, j), times an explicit linear combination of table values with smaller i + j, whose coefficients involve π(0)π(1) and π(1) − π(0) at each locus. Lean's inverse sends 0 to 0; the library proves E(i, j) > 0 under these hypotheses (E_pos_all), so the inverse is genuine. Table entries with t > min(i, j) are a padding convention (the row index t of the adjugate entry is replaced by min(t, min(i, j))) and carry coefficient zero, because z occurs in G_ξ only in the monomial xyz. (2) qExplicit_isSolution: under the same hypotheses qExplicit is a solution. With (1), the two-allele recursion has exactly one solution and it is qExplicit; the existence of a solution is used in the proof of (2) and is proved in the library. (3) lump_isSolution: for any field F of characteristic zero, any allele counts KA, KB, KA', KB' (zero allowed), any θ_A, θ_B, ρ with no sign conditions, any weights π_A, π_B with no normalization, any solution q, and any maps fA : Fin KA → Fin KA' and fB : Fin KB → Fin KB' (not necessarily surjective), let S be any family of finite sets with ξ ∈ S(η) exactly when push fA fB ξ = η, that is, S(η) is the finite fibre over η. Then η ↦ mult(η)⁻¹ Σ_{ξ ∈ S(η)} mult(ξ) q(ξ) is a solution of the recursion with KA', KB' alleles and pushed-forward weights π'_A(p) = Σ_{fA(i) = p} π_A(i) and π'_B likewise (an allele class with empty preimage receives weight 0). Here push sums the counts a, b, and c over preimages, and mult(ξ) is the product of the multinomial coefficients of the vectors a, b, and c, which is nonzero in characteristic zero. (4) lumping_eq_qExplicit: for a linearly ordered field F, θ_A > 0, θ_B > 0, ρ ≥ 0, π_A and π_B each summing to 1 (so KA and KB are at least 1; with zero alleles the hypothesis fails and the statement is vacuous), any solution q, maps fA, fB into Fin 2, any two-allele configuration η, and the fibre S over η, mult(η) qExplicit(π'_A, π'_B)(η) = Σ_{ξ ∈ S} mult(ξ) q(ξ). (5) q_eq_qExplicitKB2: for a linearly ordered field F, any KA, two alleles at B, θ_A > 0, θ_B > 0, ρ ≥ 0, Σ_i π_A(i) = 1, and π_B(0) + π_B(1) = 1 (so KA is at least 1), every solution q satisfies q(ξ) = qExplicitKB2(ξ) at every configuration. qExplicitKB2 expands each lineage of the sample into centred terms and evaluates a table indexed by a number m of labelled A-slots with their A-alleles, a count of B-slots, and the set of A-slots that are paired. Each table level is computed by an explicit inverse built from the down and up operators on the Boolean lattice of subsets of the A-slots, an explicit projector onto primitive components, and Usmani adjugate entries of scalar tridiagonal matrices divided by their determinants. Only this representation direction is compared; the compared statements do not assert that qExplicitKB2 is a solution. A solution exists for every KA and KB under θ_A > 0, θ_B > 0, ρ ≥ 0 (Rhone.LinearAlgebra.Recursion.exists_isSolution, proved in the library and compared in the SamplingRecursion entry of the same repository), so (5) is not vacuous. Not covered: the identification of the solution with the sampling probability of the coalescent with recombination (treated in the SamplingRecursion entry, not here); zero mutation rates; general, non-parent-independent mutation matrices; infinitely-many-alleles or infinite-sites models; an explicit formula with more than two alleles at both loci; a statement that qExplicitKB2 is a solution; and any analysis of computational cost."
+
+fidelity:
+  divergences: "1. The recursion is stated only for parent-independent mutation and in killed form: a mutation at locus A deletes an A-only lineage or turns an (i, j) lineage into a B-only j lineage, with weight π_A(i), instead of changing the allele as in the general recursion with a mutation matrix displayed by Jenkins and Song (2009, eq. (5)). The passage from the general form to this form is not formalized in this entry. 2. Scaling conventions are fixed by the Lean definition: the diagonal coefficient is n(n − 1) + θ_A n_A + θ_B n_B + ρ t, and θ_A, θ_B, ρ are measured on that scale; readers comparing with a source must match its normalization. 3. In the lumping statements q(ξ) is weighted by mult(ξ), the product of multinomial coefficients of the allele counts, which corresponds to reading q(ξ) as the value for one labelled arrangement of the sample; a source using unordered configurations would absorb these weights. 4. The statements are algebraic and more general than the probabilistic setting: they hold over any ordered field (or any field of characteristic zero for lump_isSolution), with weights π that need not be nonnegative and q an arbitrary function; they do not by themselves identify q with a probability. 5. Mutation rates are required to be strictly positive in the explicit-formula statements; the zero-mutation case is not covered. ρ = 0 is included. 6. For any number of alleles at locus A and two at locus B, only the statement that every solution equals qExplicitKB2 is compared, not that qExplicitKB2 solves the recursion. 7. All statements are exact identities in the field; no numerical approximation is involved. Durrett (2008), Mano, and Kundagrami, Yetter, and Steinrücken (2026) solve related block or moment systems by linear algebra or numerically, whereas the entry's formulas are explicit; this is a difference in form, not a mismatch with a stated result."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.ExplicitFormula"
+  statements:
+    - source: "This project"
+      lean: "Rhone.Probability.ExplicitFormula.q_eq_qExplicit"
+      module: "Rhone.Probability.ExplicitFormula.Main"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Probability.ExplicitFormula.qExplicit_isSolution"
+      module: "Rhone.Probability.ExplicitFormula.Main"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Probability.AlleleLumping.lump_isSolution"
+      module: "Rhone.Probability.AlleleLumping.Lumping"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Probability.AlleleLumping.lumping_eq_qExplicit"
+      module: "Rhone.Probability.AlleleLumping.Lumping"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Probability.BooleanLatticeInverse.q_eq_qExplicitKB2"
+      module: "Rhone.Probability.BooleanLatticeInverse.ExplicitBiallelicSampling"
+      status: "proved"

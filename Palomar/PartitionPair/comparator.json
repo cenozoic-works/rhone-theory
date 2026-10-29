@@ -1,0 +1,20 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.PartitionPair.Challenge",
+  "solution_module": "Palomar.PartitionPair.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.PartitionPair.esf_pair_decomposition",
+    "Rhone.Palomar.PartitionPair.margA_eq_esfPart",
+    "Rhone.Palomar.PartitionPair.margB_eq_esfPart",
+    "Rhone.Palomar.PartitionPair.tendsto_esfKernel_prod",
+    "Rhone.Palomar.PartitionPair.meetLaw_rho_zero_eq_esfPart",
+    "Rhone.Palomar.PartitionPair.product_family_iff",
+    "Rhone.Palomar.PartitionPair.block22_closed_form",
+    "Rhone.LinearAlgebra.Recursion.exists_isSolution"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

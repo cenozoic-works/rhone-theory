@@ -1,0 +1,73 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Linked-site block laws of all lengths identify the collapsed mutation-scaled genealogy"
+  description: "This entry formalizes an identifiability theorem for three sampled sequences whose sites all share one random three-tip genealogy (complete linkage). A genealogy is a pair of branch lengths (u, v), where u is the height of the cherry and v is the length of the upper internal branch, together with a label in Fin 3 recording which pair of tips forms the cherry. Its law is an arbitrary finite measure that is almost everywhere supported on nonnegative branch lengths. Given the genealogy, sites evolve independently under the K-state equal-rates mutation model with a uniform root distribution and mutation scale k. For K ≥ 2 and k, l ≥ 0, two such measures, with scales k and l, produce the same law of block patterns for every number L of linked sites if and only if their collapsed objects agree. The collapsed object is the push-forward of the measure under (u, v, q) ↦ (k u, k v, q), with the cherry label replaced by a fixed value whenever k v = 0. A second statement shows that, for a genealogy with zero upper branch (a star tree), the block-pattern law does not depend on which cherry label is attached."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["q-bio.PE", "math.PR"]
+  msc2020: ["92D10", "60J90", "62F03"]
+
+sources:
+  - title: "Identification of the collapsed clock-scaled three-tip genealogy from linked-site block laws"
+    type: original-proof
+    relationship: other
+    note: "The statements and proofs were written in this project; no published source is formalized. Novelty unknown; no claim of priority. The model itself is standard: three tips on an ultrametric tree with one internal branch, and the K-state equal-rates (Jukes–Cantor type) substitution process, with transition matrix exp(-k t/2) I + (1 - exp(-k t/2)) U for uniform matrix U, started from the uniform distribution at the root; no cited source is formalized for it. What this formalization adds is the exact identification statement for a mixture over genealogies of linked-site block laws, the explicit collapsed object that it identifies, and the star-tree label invariance, together with a proof that runs as follows. Normalized pairwise identity scores have conditional mean exp(-k T) for a pair whose coalescence time is T, so products of scores over the L sites of a block turn the block laws into all mixed moments of the three pairwise means. The three pairwise means are encoded as a point of the cube [0, 1]^3. Measures on that cube are equal when all of their monomial moments agree, which is proved here from a Mathlib theorem that finite measures are determined by their integrals against a point-separating subalgebra of bounded continuous functions (a Stone–Weierstrass argument). A measurable decoder then maps the cube back to the collapsed object."
+  - title: "Full reconstruction of Markov models on evolutionary trees: identifiability and consistency"
+    authors: ["J. T. Chang"]
+    id: "doi:10.1016/S0025-5564(96)00075-2"
+    relationship: background
+    note: "Context only; no result of this paper is used or formalized. It shows that, for a fixed tree, joint laws of site patterns at triples of tips identify a general Markov model on that tree under mild conditions. It is context for the question of what three-tip site-pattern laws identify. The present entry differs in that the substitution model is fixed up to its scale k, the genealogy is random and mixed over, and the sites of a block share one genealogy; the proof does not pass through Chang's argument."
+  - title: "Symmetric measures on Cartesian products"
+    authors: ["E. Hewitt", "L. J. Savage"]
+    id: "doi:10.1090/S0002-9947-1955-0076206-8"
+    relationship: background
+    note: "Context only; no result of this paper is used or formalized. It represents exchangeable laws as unique mixtures of product laws. It is context for viewing a block of linked sites, which are conditionally independent and identically distributed given the genealogy, as a mixture of product laws whose mixing measure is to be identified. The proof here does not use a de Finetti or Hewitt–Savage representation; the mixing measure is identified by moment uniqueness on a compact cube."
+
+related_formalizations:
+  - id: "PALOMAR-2026-10-04-000005"
+    relationship: "other"
+    note: "A Lean 4 formalization of the species-tree identifiability results of Allman, Degnan, and Rhodes (2011) under the multispecies coalescent. It treats a related identifiability question, recovering trees from laws of gene-tree topologies; this entry neither imports nor adapts its code, and its results are not used here."
+
+status:
+  scope: "Setting. K is the number of allelic states. A genealogy g = ((u, v), q) in (ℝ × ℝ) × Fin 3 has cherry height u, upper-branch length v, and cherry label q; the two cherry tips have pendant branches of length u, and the third tip has a pendant branch of length u + v to the root. A site pattern is a triple of states in Fin K, and a block of length L is a function from Fin L to such triples. Given g and mutation scale k, the probability of a block is the product over its L sites of the single-site probability, in which the root state is uniform on Fin K and each branch of length t applies the matrix exp(-k t/2) I + (1 - exp(-k t/2)) U, where U has all entries 1/K. For a finite measure μ on genealogies, the block law is the finite measure on blocks that gives each block x the mass ENNReal.ofReal of the μ-integral of its fixed-genealogy probability. The measure μ need not be a probability measure; its total mass is the mass of the empty block (L = 0). The collapsed object of μ at scale k is the push-forward of μ under g ↦ ((k u, k v), q'), where q' = q if k v ≠ 0 and q' = 0 if k v = 0. Theorem all_blocks_iff_collapsed_joint_eq. Hypotheses: K ≥ 2; real scales k ≥ 0 and l ≥ 0; finite measures μ and ν on genealogies with u ≥ 0 and v ≥ 0 almost everywhere. Conclusion: the block laws of μ at scale k and of ν at scale l agree for every L in ℕ (including L = 0) if and only if the collapsed object of μ at k equals the collapsed object of ν at l. So the data of all block lengths determine exactly the joint law of the two mutation-scaled branch lengths and the cherry label, with the label forgotten on star trees, and nothing more. In particular: only the products k u and k v are identified, so the mutation scale and the time scale cannot be separated, and rescaling the genealogy against k gives the same block laws; when k v = 0, the cherry label is not identified: with v = 0 (or k = 0) all three tips hang from the root on branches of the same mutation-scaled length, so the site law is symmetric in the tips and is the same under every label; the original measure μ is not recovered, only its collapsed image; equality of collapsed objects forces equal total masses. Degenerate cases: when k = 0, the collapsed object is the total mass of μ placed at ((0, 0), 0), so with k = l = 0 the block laws agree exactly when μ and ν have the same total mass; when k = 0 and l > 0, they agree exactly when ν has the same total mass as μ and ν-almost every genealogy has u = v = 0. The reverse direction holds for every K ≥ 1; K ≥ 2 is used for the forward direction, which fails for K = 1, where each block law is the total mass placed on the single possible block. The identification uses all block lengths together; no bound on the block length needed is given. Theorem star_labels_same_sequence_law. Hypotheses: K ≥ 1; any block length L; any real k and u, with no sign condition; any two labels q and p in Fin 3. Conclusion: the block law of the point mass at ((u, 0), q) equals that of the point mass at ((u, 0), p). For negative k or u the fixed-genealogy values need not be probabilities, and the statement is the equality of the measures defined by the formula above, in which negative values are truncated to zero. Not covered: samples of more than three tips; recombination or partial linkage (all sites of a block share one genealogy); substitution models other than the equal-rates model, and root distributions other than uniform; identification of the mutation scale separately from branch lengths; any statement about a finite number of blocks or sites, about estimation, or about consistency; and any particular coalescent model for the law of the genealogy, which here is an arbitrary finite measure."
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+
+fidelity:
+  divergences: "No cited source states the formalized results, so there is no source statement to diverge from; the two cited papers are context only. Relative to Chang (1996), the substitution model here is the specific K-state equal-rates model with uniform root distribution rather than a general Markov model, the tree is a random three-tip ultrametric genealogy mixed over by an arbitrary finite measure rather than a fixed tree, and what is identified is the collapsed mutation-scaled law of the genealogy rather than the model parameters. Relative to Hewitt–Savage (1955), the setting is finite blocks of every length rather than infinite exchangeable sequences, and the mixing measure is identified only up to the collapse map. Further conventions: the genealogy law is a finite measure, not necessarily a probability measure; branch lengths are required to be nonnegative only almost everywhere; block laws are defined by truncating the fixed-genealogy mass at zero, which matters only in the star-tree statement, where k and u may be negative; and the collapsed label on a star tree is the fixed label 0."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.CollapsedGenealogy"
+  statements:
+    - source: "This project"
+      lean: "Rhone.Statistics.CollapsedGenealogy.all_blocks_iff_collapsed_joint_eq"
+      module: "Rhone.Statistics.CollapsedGenealogy.Equivalence"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Statistics.CollapsedGenealogy.star_labels_same_sequence_law"
+      module: "Rhone.Statistics.CollapsedGenealogy.Boundary"
+      status: "proved"

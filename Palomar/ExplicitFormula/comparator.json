@@ -1,0 +1,17 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.ExplicitFormula.Challenge",
+  "solution_module": "Palomar.ExplicitFormula.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.ExplicitFormula.q_eq_qExplicit",
+    "Rhone.Palomar.ExplicitFormula.qExplicit_isSolution",
+    "Rhone.Palomar.ExplicitFormula.lump_isSolution",
+    "Rhone.Palomar.ExplicitFormula.lumping_eq_qExplicit",
+    "Rhone.Palomar.ExplicitFormula.q_eq_qExplicitKB2"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

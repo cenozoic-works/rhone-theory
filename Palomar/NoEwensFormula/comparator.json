@@ -1,0 +1,23 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.NoEwensFormula.Challenge",
+  "solution_module": "Palomar.NoEwensFormula.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.NoEwensFormula.boundedDen_eval",
+    "Rhone.Palomar.NoEwensFormula.no_degree_one_formula",
+    "Rhone.Palomar.NoEwensFormula.no_degree_one_formula_total",
+    "Rhone.Palomar.NoEwensFormula.no_degree_two_formula",
+    "Rhone.Palomar.NoEwensFormula.no_degree_two_formula_total",
+    "Rhone.Palomar.NoEwensFormula.exists_isSolution\u03c0",
+    "Rhone.Palomar.NoEwensFormula.isSolution\u03c0_unique_s22",
+    "Rhone.Palomar.NoEwensFormula.no_bounded_degree_formula",
+    "Rhone.Palomar.NoEwensFormula.existsUnique_uniform_solution",
+    "Rhone.Palomar.NoEwensFormula.no_bounded_recombination_degree_formula",
+    "Rhone.Palomar.NoEwensFormula.existsUnique_recomb_solution"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.KnownStrataPairDesign.Challenge",
+  "solution_module": "Palomar.KnownStrataPairDesign.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.KnownStrataPairDesign.pair_generator_eq_projected",
+    "Rhone.Palomar.KnownStrataPairDesign.exit_rate_eq_projected",
+    "Rhone.Palomar.KnownStrataPairDesign.spatial_laplace_gap",
+    "Rhone.Palomar.KnownStrataPairDesign.spatial_separated_iff",
+    "Rhone.Palomar.KnownStrataPairDesign.asymmetric_balance",
+    "Rhone.Palomar.KnownStrataPairDesign.asymmetric_laplace_separation",
+    "Rhone.Palomar.KnownStrataPairDesign.asymmetric_no_common_law"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.SamplingRecursion.Challenge",
+  "solution_module": "Palomar.SamplingRecursion.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.SamplingRecursion.exists_isSolution",
+    "Rhone.Palomar.SamplingRecursion.isSolution_unique",
+    "Rhone.Palomar.SamplingRecursion.measure_hit_ever_initT",
+    "Rhone.Palomar.SamplingRecursion.sum_q_cSample",
+    "Rhone.Palomar.SamplingRecursion.tendsto_q_qHat",
+    "Rhone.Palomar.SamplingRecursion.isSolutionOneG_q_rho_zero",
+    "Rhone.Palomar.SamplingRecursion.expected_total_length",
+    "Rhone.LinearAlgebra.Recursion.exists_isSolution",
+    "Rhone.Coalescent.TypedAncestralChain.transS_nonneg",
+    "Rhone.Coalescent.TypedAncestralChain.sum_transS"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

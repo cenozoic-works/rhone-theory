@@ -1,0 +1,76 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "When one finite block of linked sites separates a three-sample genealogy from every panmictic history"
+  description: "This entry formalizes conditions under which a single finite block of linked sites separates a three-sample genealogy from every panmictic history. A law of the two coalescence-interval lengths and the tree shape of three sampled sequences is uniformly separated at mutation scale k > 0 when some block of L completely linked sites, observed under the equal-rates mutation model, has a law at ℓ1 distance at least a fixed ε > 0 from the block law of every panmictic history (any nonnegative, locally integrable, time-varying coalescence rate with a diverging integrated clock), at every mutation scale and for every alphabet size K ≥ 2. For laws with nonnegative interval lengths, a positive first coalescence time, and a regular first-survival profile matching the first coalescence time, uniform separation holds if and only if the law differs from the panmictic law with the profile's rate, in which the tree shape is uniform and independent of the times; a version for laws of the interval lengths alone, with a uniform independent shape, is also given. For three-sample symmetric island histories with time-varying coalescence and migration rates under the stated integrability hypotheses, uniform separation holds if and only if the history is not the one with all three lineages starting in the same island, no migration, and a diverging integrated coalescence clock. For finite-phase histories, separation is equivalent to failure of a density identity characterizing the panmictic form."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["q-bio.PE", "math.PR"]
+  msc2020: ["92D10", "60J90", "62F03"]
+
+sources:
+  - title: "Uniform finite-block separation criteria for three-sample genealogies against panmictic histories"
+    type: original-proof
+    relationship: other
+    note: "The result first presented by this formalization. What is new relative to the cited sources: necessary and sufficient criteria for separation by the law of one finite block of linked finite-alphabet sites, uniformly over alphabet sizes, panmictic histories, and panmictic mutation scales, for general three-sample laws with a regular first-coalescence profile, for symmetric island models with time-varying rates and any admissible initial configuration, and for finite-phase histories. The established mathematics the entry builds on is the structured coalescent of three lineages in a symmetric island model (the symmetric island model of Grusea et al., sec. 2.2.1, eq. (2), used here with time-varying rates and the parameterization stated under scope) and the coalescent with a time-varying population size; the coalescence-time analogue of the island criterion is the result of Grusea et al. No cited source supplies the finite-block criteria or their proofs. Novelty unknown; no claim of priority."
+  - title: "Coalescence times for three genes provide sufficient information to distinguish population structure from population size changes"
+    authors: ["S. Grusea", "W. Rodriguez", "D. Pinchon", "L. Chikhi", "S. Boitard", "O. Mazet"]
+    id: "doi:10.1007/s00285-018-1272-4"
+    relationship: background
+    note: "Context and model. HAL preprint hal-01631938v1: the symmetric n-island model, sec. 2.2.1, eq. (2); the Challenge uses a three-lineage symmetric island model with time-varying rates in its own parameterization (migration rate per lineage to each other island, coalescence rate within an island); the three-gene result, sec. 3.1, the paragraph after Prop. 10; two islands, App. B, Prop. 14. Their result is a related form of `Rhone.Palomar.WeakRegularSeparation.island_uniformlySeparated_iff`, for constant-size symmetric island models and the coalescence times themselves rather than finite-site observations. The Lean proof does not use their result."
+  - title: "On the importance of being structured: instantaneous coalescence rates and human evolution - lessons for ancestral population size inference?"
+    authors: ["O. Mazet", "W. Rodriguez", "S. Grusea", "S. Boitard", "L. Chikhi"]
+    id: "doi:10.1038/hdy.2015.104"
+    relationship: background
+    note: "Context only: the inverse instantaneous coalescence rate (IICR) of pairwise coalescence times (T2) in structured models; no three-sample result. The entry uses no result from this paper."
+
+status:
+  scope: "Common setting. A three-sample genealogy is described by a measure on Joint = (ℝ × ℝ) × {0, 1, 2}: the first coordinate is (T3, T2), the length of the interval with three lineages and then with two, and the second is the tree shape (which sampled sequence is the outgroup). A block of L sites shares this single genealogy (complete linkage). Given the genealogy, sites are independent; each has a root state uniform on K states and evolves along branches under the equal-rates model in which the state is resampled uniformly at rate k/2. For a law μ on Joint, its block law gives each of the K^(3L) panels the mass obtained by integrating the panel probability over μ. uniformLift ν is the law on Joint that draws (T3, T2) from ν and the shape uniformly and independently. Panmictic histories: for a function r that is nonnegative everywhere, locally integrable, and whose integral from 0 to t tends to infinity, PanThreeSample.durationLaw r is the law of (T3, T2) when every pair coalesces at time-varying rate r(t). UniformlySeparated k μ means: there exist L and ε > 0 such that for every K ≥ 2, every such r, and every l > 0, the sum over all panels of the absolute difference between the block law of μ at scale k and the block law of uniformLift(PanThreeSample.durationLaw r) at scale l is at least ε. L and ε may depend on μ and k but not on K, r, or l. A first-survival profile P is a function S on the reals with S(0) = 1, S continuous, S(t) > 0 for every t ≥ 0, S absolutely continuous on each [0, T] with a nonnegative locally integrable density f on [0, ∞) and S' = −f almost everywhere there, and S(t) → 0; P matches a law of (T3, T2) when P(T3 > t), computed as 1 − P(0 < T3 ≤ t), equals S(t) for every t ≥ 0. Its rate P.rate is f(t)/(3S(t)) for t ≥ 0 (0 for t < 0), the pair rate of the panmictic history with the same law of T3. Compared theorems, each for a fixed k > 0. (1) nonnegative_internal_branch_separation_iff: if μ is a probability measure on Joint with T3 ≥ 0 and T2 ≥ 0 almost surely and T3 > 0 almost surely, and P matches the (T3, T2) marginal of μ, then μ is uniformly separated if and only if μ ≠ uniformLift(PanThreeSample.durationLaw P.rate). (2) regular_profile_uniform_criterion: under the same hypotheses for a probability measure μ on (T3, T2) (T3 ≥ 0 and T2 ≥ 0 almost surely, T3 > 0 almost surely, and P matching μ), lifted with a uniform independent shape: uniformLift μ is uniformly separated if and only if μ ≠ PanThreeSample.durationLaw P.rate. (3) island_uniformlySeparated_iff: for the symmetric island model with n + 2 islands, in which each lineage migrates to each other island at rate q(t) and two lineages in the same island coalesce at rate c(t), started from a probability vector ρ on the three configurations (all three lineages in one island, two together and one apart, all apart), with ρ(all apart) = 0 when there are only two islands (n = 0), with c and q locally integrable and almost everywhere nonnegative on [0, ∞), and assuming the law of the two coalescence times is a probability measure: the uniform lift of the island law of (T3, T2) is uniformly separated if and only if it is not the case that ρ puts all mass on the configuration with all three lineages in one island, q = 0 almost everywhere on [0, ∞), and the integral of c over [0, t] tends to infinity. (4) finitePhase_uniformlySeparated_iff: for a finite-phase history M (n pre-coalescence phases with locally integrable Metzler sub-generator A(t), m post-coalescence phases with sub-generator B(t), a nonnegative flux matrix F(t) carrying all exit from the pre-coalescence phases, the combined block generator N(t), and an initial probability vector α), assuming its law of the two coalescence times, with density α Φ_A(0, s) F(s) Φ_B(s, t) times the exit rate of B(t) on 0 < s < t, is a probability measure: the uniform lift of its (T3, T2) law is uniformly separated if and only if the density identity fails. The identity says that this density equals 3u(s)d(s)d(t) almost everywhere on 0 < s < t, where u(t) = (1/3)P(first coalescence after t) + (2/3)P(second coalescence after t) and d(t) = −((1/3) density of the first coalescence time + (2/3) density of the second); for a panmictic history u is exp(−integrated clock) and the identity holds. Degenerate cases: theorems (1) and (2) require a matching profile, so they apply only when T3 has a density and P(T3 > t) > 0 for every t; theorems (3) and (4) assume the law is a probability measure rather than deriving it. Not covered: explicit values of L or ε, blocks with recombination, unequal root weights, other mutation models, more than three sequences, and statistical tests built on the separation."
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+
+fidelity:
+  divergences: "Relative to Grusea et al.: their result compares the coalescence-time laws (T3, T2) of constant-size symmetric island models with panmictic models; the island criterion here concerns finite-site block observations of those times, allows time-varying coalescence and migration rates and any admissible initial configuration, and is an equivalence; neither statement implies the other as stated. Modelling conventions of the entry: the tree shape attached to island and finite-phase histories is uniform and independent of the times (the uniform lift), which is exact when the starting configuration is exchangeable and otherwise corresponds to labelling the three sampled sequences at random; the mutation model is the equal-rates K-state model with a uniform root, and the panmictic side may use a different mutation scale l from the scale k of the tested law; panmictic rates are required to be nonnegative at every time, locally integrable, and to have a diverging integrated clock; separation is measured by the ℓ1 distance between block laws, twice the total variation distance. Theorems (3) and (4) assume that the coalescence-time law is a probability measure; theorems (1) and (2) assume a first-coalescence survival function that is positive at every time and absolutely continuous. Time-varying transition matrices are defined through the Peano–Baker series. The criteria are exact equivalences; L and ε are asserted to exist but not computed."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.WeakRegularSeparation"
+  statements:
+    - source: "This project"
+      lean: "Rhone.Statistics.WeakRegularSeparation.nonnegative_internal_branch_separation_iff"
+      module: "Rhone.Statistics.WeakRegularSeparation.JointCriterion"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Statistics.WeakRegularSeparation.regular_profile_uniform_criterion"
+      module: "Rhone.Statistics.WeakRegularSeparation.Criterion"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Statistics.FiniteBlockModel.island_uniformlySeparated_iff"
+      module: "Rhone.Statistics.FiniteBlockModel.IslandCriterion"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Statistics.FiniteBlockModel.finitePhase_uniformlySeparated_iff"
+      module: "Rhone.Statistics.FiniteBlockModel.FinitePhaseCriterion"
+      status: "proved"

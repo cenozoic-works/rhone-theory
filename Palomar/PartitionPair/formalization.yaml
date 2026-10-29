@@ -1,0 +1,145 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "A partition-pair decomposition of the two-locus sampling probability with Ewens marginals"
+  description: "This entry formalizes a decomposition of the two-locus sampling probability, under finite-allele parent-independent mutation, in terms of pairs of set partitions of the sample, with Ewens marginals at each locus. A partition-carrying ancestral process with coalescence, mutation, and recombination records, at each locus, which sample members lose their ancestry to the same mutation; the kernel is the probability that it ends with a given pair of partitions. The solution of the two-locus sampling recursion at a fully typed sample is the sum over pairs of partitions of the kernel times the probability that each block receives a single allele consistent with the sample. Summing the kernel over the partition at one locus gives the Ewens partition probability at the other; as the recombination rate tends to infinity the kernel tends to the product of the two Ewens partition probabilities; and with recombination rate 0 the common refinement of the two partitions has the Ewens law with parameter θA + θB. The sampling probability equals the product of its one-locus marginals for all parameter values exactly when at most one lineage is typed at one of the loci (with at least two alleles per locus). A closed form for configurations with two lineages typed at each locus is also stated, together with existence of a solution of the recursion."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["q-bio.PE", "math.CO"]
+  msc2020: ["92D10", "60C05", "05A18", "60J90"]
+
+sources:
+  - title: "Decomposition of the two-locus sampling probability over pairs of partitions, with Ewens marginals, and the characterization of product-form configurations"
+    type: original-proof
+    relationship: other
+    note: "Novelty unknown; no claim of priority. The established mathematics used is the neutral two-locus model with recombination and its sampling recursion (Golding 1984; Ethier and Griffiths 1990), here in its finite-allele, parent-independent-mutation form, and the Ewens sampling formula (Ewens 1972), here in its set-partition form. Several statements have known special cases, recorded in the source notes below: the one-block case of the rho = 0 meet law, the large-rho product limit in sampling-distribution form, the 'if' direction of the product-form characterization for particular configurations, and the block-(2,2) denominator at total mutation rate 0. Formulated and proved for this formalization: the partition-carrying chain and its kernel, the decomposition over pairs of partitions for any number of alleles, the marginal identities and the large-rho limit at the level of the kernel, the meet law for arbitrary positive rates, the 'only if' direction of the product-form characterization, and the block-(2,2) closed form for positive mutation rates over any ordered field. The cited works are context; none of them supplies a step of the Lean proofs."
+  - title: "The sampling theory of selectively neutral alleles"
+    authors: ["Warren J. Ewens"]
+    id: "doi:10.1016/0040-5809(72)90035-4"
+    relationship: background
+    note: "Context: the one-locus Ewens sampling formula. Its set-partition form, theta^k times the product of (|block| − 1)! divided by the rising factorial theta(theta + 1)...(theta + n − 1), is the function esfPart that appears in margA_eq_esfPart, margB_eq_esfPart, tendsto_esfKernel_prod, and meetLaw_rho_zero_eq_esfPart. The Lean proofs establish these identities from the partition-carrying chain; they do not take the formula's derivation from the paper."
+  - title: "The sampling distribution of linkage disequilibrium"
+    authors: ["G. Brian Golding"]
+    id: "doi:10.1093/genetics/108.1.257"
+    relationship: background
+    note: "Context: an early source of the two-locus sampling recursion. The library module documentation cites p. 264 for the case of meetLaw_rho_zero_eq_esfPart in which the common refinement is a single block (the whole sample identical by descent at both loci) at rho = 0; the existing citation records it for equal mutation rates at the two loci. The general meet law for arbitrary positive rates is formulated here."
+  - title: "On the two-locus sampling distribution"
+    authors: ["S. N. Ethier", "R. C. Griffiths"]
+    id: "doi:10.1007/BF00168175"
+    relationship: background
+    note: "Context: the two-locus sampling recursion, and the large-rho limit of the sampling distribution as a product of one-locus distributions. tendsto_esfKernel_prod is the analogous statement at the level of the partition kernel; its Lean proof works with the partition-carrying chain."
+  - title: "Padé approximants and exact two-locus sampling distributions"
+    authors: ["Paul A. Jenkins", "Yun S. Song"]
+    id: "doi:10.1214/11-AAP780"
+    relationship: background
+    note: "Context: eq. (3.8) is the case n_A = n_B = 1 of the 'if' direction of product_family_iff."
+  - title: "Properties of a neutral allele model with intragenic recombination"
+    authors: ["Richard R. Hudson"]
+    id: "doi:10.1016/0040-5809(83)90013-8"
+    relationship: background
+    note: "Context for block22_closed_form: the sample-of-two quantity with denominator rho^2 + 13 rho + 18 at mutation rate 0. The block-(2,2) denominator Eblock reduces to 2(rho^2 + 13 rho + 18) when theta_A + theta_B = 0, a case the Lean statement excludes (it assumes positive mutation rates)."
+  - title: "An asymptotic sampling formula for the coalescent with recombination"
+    authors: ["Paul A. Jenkins", "Yun S. Song"]
+    id: "doi:10.1214/09-AAP646"
+    relationship: background
+    note: "Context for tendsto_esfKernel_prod: the large-rho behaviour of the two-locus sampling distribution, whose leading term is the product of the one-locus distributions. The Lean statement is at the level of the partition kernel and gives only the limit, not further terms of the expansion."
+  - title: "Gene-history correlation and population structure"
+    authors: ["A. Eriksson", "B. Mehlig"]
+    id: "doi:10.1088/1478-3967/1/4/004"
+    relationship: background
+    note: "Context for block22_closed_form: a mutation-rate-0 result for a sample of two with the same denominator rho^2 + 13 rho + 18."
+  - title: "Statistical properties of the number of recombination events in the history of a sample of DNA sequences"
+    authors: ["Richard R. Hudson", "Norman L. Kaplan"]
+    id: "doi:10.1093/genetics/111.1.147"
+    relationship: background
+    note: "Context for block22_closed_form: a mutation-rate-0 result for a sample of two with the same denominator rho^2 + 13 rho + 18."
+  - title: "Neutral two-locus multiple allele models with recombination"
+    authors: ["R. C. Griffiths"]
+    id: "doi:10.1016/0040-5809(81)90016-2"
+    relationship: background
+    note: "Background on neutral two-locus models with multiple alleles and recombination; no specific statement of this entry is taken from it."
+  - title: "Linkage disequilibrium at steady state determined by random genetic drift and recurrent mutation"
+    authors: ["Tomoko Ohta", "Motoo Kimura"]
+    id: "doi:10.1093/genetics/63.1.229"
+    relationship: background
+    note: "Context: classical two-locus analysis of linkage disequilibrium under drift, recurrent mutation, and recombination. Background for the two-locus model; not used in the statements or proofs."
+  - title: "Haplotypes: the joint distribution of alleles at linked loci"
+    authors: ["Paul Fearnhead"]
+    id: "doi:10.1239/jap/1053003559"
+    relationship: background
+    note: "Context: the 'if' direction of product_family_iff is a special case of a result of this paper. The 'only if' direction is formulated here."
+  - title: "The effect of intragenic recombination on the number of alleles in a finite population"
+    authors: ["Curtis Strobeck", "Kenneth Morgan"]
+    id: "doi:10.1093/genetics/88.4.829"
+    relationship: background
+    note: "Context for meetLaw_rho_zero_eq_esfPart: the case without recombination in this paper contains the content of that statement in substance. The Lean statement is the set-partition form for arbitrary positive rates and is proved from the partition-carrying chain."
+  - title: "Probability Models for DNA Sequence Evolution"
+    authors: ["Richard Durrett"]
+    id: "doi:10.1007/978-0-387-78168-6"
+    location: "2nd edition, 2008, sec. 3.1, Theorem 3.1, p. 85"
+    relationship: background
+    note: "Context for block22_closed_form: the covariance of the two coalescence times for a sample of size 2, with denominator rho^2 + 13 rho + 18, the total-mutation-rate-0 value of Eblock/2. The Lean statement assumes positive mutation rates."
+  - title: "A Markov chain model of coalescence with recombination"
+    authors: ["Katy L. Simonsen", "Gary A. Churchill"]
+    id: "doi:10.1006/tpbi.1997.1307"
+    relationship: background
+    note: "Context for block22_closed_form: the two-locus chain for a sample of size 2, with P(T1 = T2) = (rho + 18)/(rho^2 + 13 rho + 18), as quoted in Wilton, Carmi, and Hobolth (2015), eq. (5); the same quadratic is Eblock/2 at total mutation rate 0."
+
+status:
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  scope: "The recursion. A configuration with KA alleles at locus A and KB at locus B records a_i lineages typed only at A (allele i), b_j typed only at B (allele j), and c_ij typed at both; n_A counts lineages typed at A (including doubly typed), n_B those typed at B, t the doubly typed ones, and n all lineages. A solution of the recursion (IsSolution) over a field F is a function q on configurations with q(empty) = 1, q equal to the allele frequency pi_A(i), pi_B(j), or pi_A(i) pi_B(j) on the one-lineage configurations, and, for every configuration with n ≥ 2, (n(n − 1) + theta_A n_A + theta_B n_B + rho t) q equal to the sum of coalescence terms (including the merger of an A-only and a B-only lineage into a doubly typed one), parent-independent mutation terms in killed form (a lineage that mutates loses its type at that locus, weighted by the frequency of its allele), and recombination terms (a doubly typed lineage splits into an A-only and a B-only lineage). This time scale corresponds to pairwise coalescence at rate 1 and mutation and recombination rates theta_A/2, theta_B/2, and rho/2 per lineage. Recursion.q is the solution chosen by exists_isSolution; the library proves it is the unique solution, but uniqueness is not a compared statement here.\n\nThe chain and the kernel. For a sample labelled 1, ..., n, a lineage is a pair (S, T) of sets of sample members whose ancestry it carries at A and at B. The partition-carrying chain starts with the n lineages ({k}, {k}) and empty partition records. Each ordered pair of distinct lineages coalesces at rate 1 (merging both components); each lineage with nonempty S mutates at locus A at rate theta_A, which adds S as a block of the A-record and removes the A-component (the lineage disappears if T is empty); similarly at B with rate theta_B; and each lineage with both components nonempty recombines at rate rho into (S, empty) and (empty, T). The process stops when no lineages remain. esfKernel(zeta_A, zeta_B) is the probability that the embedded jump chain stops with records zeta_A and zeta_B, defined as the supremum over N of the probability of stopping within N jumps. Under an infinite-alleles reading, zeta_A is the allelic partition of the sample at locus A. esfPart n theta zeta is the Ewens partition probability theta^k prod_blocks (|block| − 1)! / (theta(theta + 1)...(theta + n − 1)) if zeta is a set partition of {1, ..., n} with k blocks, and 0 for any other finite family of sets. The block weight wA(zeta) is the product over blocks of pi_A(i) if every member of the block has allele i under the typing sigma_A, and 0 if the block is not of a single allele (wB similarly). The meet of (zeta_A, zeta_B) is the family of nonempty intersections of a block of zeta_A with a block of zeta_B, and meetLaw is the law of the meet under the kernel. qOne theta pi m = prod_i (theta pi_i)(theta pi_i + 1)...(theta pi_i + m_i − 1) / (theta(theta + 1)...(theta + |m| − 1)) is the one-locus probability of an ordered sample with counts m under parent-independent mutation, and qHat is the product of the two one-locus values at the marginal allele counts of a configuration.\n\nCompared theorems. (1) esf_pair_decomposition: for real theta_A > 0, theta_B > 0, rho ≥ 0, probability vectors pi_A and pi_B (nonnegative entries summing to 1), and any typings sigma_A and sigma_B of n sample members, the solution at the fully typed configuration of the sample (c_ij = number of members with allele i at A and j at B, no singly typed lineages) equals the sum over all finite families of subsets zeta_A, zeta_B of esfKernel(zeta_A, zeta_B) wA(zeta_A) wB(zeta_B). For n = 0 both sides are 1. (2) margA_eq_esfPart: for theta_A > 0, theta_B > 0, rho ≥ 0, and every family zeta_A, the sum of esfKernel(zeta_A, zeta_B) over all zeta_B equals esfPart n theta_A zeta_A; it does not depend on theta_B or rho. (3) margB_eq_esfPart: the same at locus B with parameter theta_B. (4) tendsto_esfKernel_prod: for theta_A > 0 and theta_B > 0 and any zeta_A, zeta_B, esfKernel(zeta_A, zeta_B) tends to esfPart n theta_A zeta_A times esfPart n theta_B zeta_B as rho tends to infinity. (5) meetLaw_rho_zero_eq_esfPart: for theta_A > 0 and theta_B > 0, at rho = 0 the probability that the meet equals zeta is esfPart n (theta_A + theta_B) zeta, for every zeta. (6) product_family_iff: for KA ≥ 2 and KB ≥ 2 and any configuration xi (which may contain singly typed lineages), the solution at xi equals qHat at xi for all real theta_A > 0, theta_B > 0, rho ≥ 0 and all probability vectors pi_A, pi_B with strictly positive entries if and only if n_A(xi) ≤ 1 or n_B(xi) ≤ 1. (7) block22_closed_form: over any linearly ordered field, for theta_A > 0, theta_B > 0, rho ≥ 0, arbitrary pi_A and pi_B (no positivity or normalization is assumed), every solution q, and every configuration xi with n_A = n_B = 2, q(xi) = qHat(xi) + G_A G_B g(t), where G = qOne(m) − sum_i C(m_i, 2) qOne(m − e_i) at the marginal counts m of each locus, g(t) = w(t)/(2 E), E = (theta + 2) rho^2 + (theta + 2)(3 theta + 13) rho + 2(theta + 1)(theta + 3)(theta + 6) with theta = theta_A + theta_B, and w(0) = 16, w(1) = 4(theta + 6), w(2) = 4(theta + 3)(theta + 6) + 2 rho (theta + 2); here t is 0, 1, or 2. (8) exists_isSolution: over any linearly ordered field, for theta_A > 0, theta_B > 0, rho ≥ 0, and arbitrary pi_A, pi_B (any numbers of alleles), the recursion has a solution.\n\nNot covered: mutation that is not parent-independent, including the infinite-alleles model as such (it appears only through the partitions); selection, population structure, or variable population size; more than two loci; zero mutation rates; asymptotic expansions in 1/rho beyond the limit; and closed forms for blocks other than n_A = n_B = 2. The kernel is defined through the embedded jump chain rather than as a continuous-time process, and no statement about coalescence times is made."
+
+fidelity:
+  divergences: "The result is presented as original; the following are the differences from the cited settings. The recursion is the finite-allele, parent-independent-mutation form, whereas Golding (1984) and Ethier and Griffiths (1990) treat infinite alleles; the partitions of the kernel play the role of infinite-alleles allelic partitions. The Ewens sampling formula is used in its set-partition form rather than as a law of allele counts. The large-rho limit is proved for the partition kernel, not directly for the sampling distribution as in Ethier and Griffiths (1990) and in the asymptotic sampling formula of Jenkins and Song. The rho = 0 meet law is stated for arbitrary positive rates, while the citation of Golding (1984) concerns the one-block case. The 'if' direction of the product-form characterization is known in special cases (Jenkins and Song 2012, eq. (3.8); Fearnhead 2003); the characterization assumes at least two alleles at each locus and strictly positive allele frequencies, and quantifies over all parameter values rather than a fixed one. The block-(2,2) closed form assumes positive mutation rates, while the cited formulas of Hudson (1983), Hudson and Kaplan (1985), Eriksson and Mehlig, Durrett (2008), and Simonsen and Churchill (1997) are for mutation rate 0 and concern coalescence times; only the shared denominator is related. Rates follow the convention in which the coefficient of q is n(n − 1) + theta_A n_A + theta_B n_B + rho t; other presentations scale theta and rho by a factor of 2. Statements (1)–(6) are over the real numbers; (7) and (8) hold over any linearly ordered field."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.PartitionPair"
+  statements:
+    - source: "This project"
+      lean: "Rhone.Coalescent.EsfPair.esf_pair_decomposition"
+      module: "Rhone.Coalescent.EsfPair.Decomp"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Coalescent.EsfPair.margA_eq_esfPart"
+      module: "Rhone.Coalescent.EsfPair.Marginal"
+      status: "proved"
+    - source: "Ethier and Griffiths 1990"
+      lean: "Rhone.Coalescent.InfiniteAllelesLimit.tendsto_esfKernel_prod"
+      module: "Rhone.Coalescent.InfiniteAllelesLimit.Limit"
+      status: "proved"
+    - source: "Known in substance"
+      lean: "Rhone.Coalescent.PartitionCarryingChain.meetLaw_rho_zero_eq_esfPart"
+      module: "Rhone.Coalescent.PartitionCarryingChain.Final"
+      status: "proved"
+    - source: "Fearnhead 2003 (if); this project (only if)"
+      lean: "Rhone.Coalescent.Converse.product_family_iff"
+      module: "Rhone.Coalescent.Converse.ProductFamilyConverse"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.MarkovChain.BilinearForm.block22_closed_form'"
+      module: "Rhone.MarkovChain.BilinearForm.Block22"
+      status: "proved"

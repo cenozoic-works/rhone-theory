@@ -1,0 +1,131 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Classical identities and a limit theorem of selection theory"
+  description: "This entry collects classical identities and a limit theorem from selection theory, stated for finite populations. Fisher's fundamental theorem is stated, in Ewens' interpretation, as the equality of the partial change in mean fitness (the change in allele frequencies under selection, weighted by least-squares average effects) with the additive genetic variance divided by mean fitness, for arbitrary genotype frequencies and any number of loci, together with nonnegativity of that change. A grouped covariance decomposition and a multilevel Price equation are stated as identities for arbitrary weights. Hamilton's rule is derived from the least-squares regression of fitness on own and social genotypes, and the existence of the Lande–Arnold gradient, equal to the inverse phenotypic covariance matrix applied to the vector of selection differentials, is stated under a nonsingular phenotypic covariance. Geiringer's theorem is stated as convergence of repeated recombination to the product of the single-locus marginals, under the condition that every pair of loci is separated with positive probability."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["q-bio.PE", "math.PR"]
+  msc2020: ["92D15", "92D10", "60J10", "62J05"]
+
+sources:
+  - title: "An interpretation and proof of the fundamental theorem of natural selection"
+    authors: ["Warren J. Ewens"]
+    id: "doi:10.1016/0040-5809(89)90028-2"
+    relationship: formalizes
+    note: "One of the two sources of the statement formalized in fisher_fundamental_theorem and fisher_partial_nonneg: in Ewens' interpretation, the partial change in mean fitness, computed from the change in allele frequencies with the least-squares average effects held fixed, equals the additive genetic variance divided by mean fitness, without assuming Hardy–Weinberg genotype frequencies. The library module documentation cites pp. 175–177, eqs. (22)–(28). The Lean proof is written for this formalization."
+  - title: "On the interpretation and relevance of the Fundamental Theorem of Natural Selection"
+    authors: ["Warren J. Ewens", "Sabin Lessard"]
+    id: "doi:10.1016/j.tpb.2015.07.002"
+    relationship: formalizes
+    note: "The source recorded in the alignment for fisher_fundamental_theorem and fisher_partial_nonneg; the library module documentation cites p. 61, eqs. 11–13, for the definitions of allele frequencies after selection, the partial change, and the additive variance, and for the statement. The Lean proof is written for this formalization."
+  - title: "Fisher's 'fundamental theorem' made clear"
+    authors: ["George R. Price"]
+    id: "doi:10.1111/j.1469-1809.1972.tb00764.x"
+    location: "Annals of Human Genetics 36:129-140, 1972"
+    relationship: background
+    note: "Context: Price's reading of Fisher's fundamental theorem as a statement about the partial change in mean fitness; background for the Fisher statements. Not the Price 1972 paper cited for the covariance statements."
+  - title: "The Fundamental Theorem of Natural Selection in Ewens' Sense (Case of Many Loci)"
+    authors: ["A. M. Castilloux", "Sabin Lessard"]
+    id: "doi:10.1006/tpbi.1995.1031"
+    relationship: background
+    note: "Context: the many-locus form of the theorem in Ewens' interpretation, which is the setting of the Lean Fisher statements (genotypes carry allele counts at any finite number of loci). Not cited in the library modules; no step of the Lean proof is taken from it."
+  - title: "The Genetical Theory of Natural Selection"
+    authors: ["Ronald A. Fisher"]
+    location: "Clarendon Press, Oxford, 1930"
+    relationship: background
+    note: "Context: the original statement of the fundamental theorem of natural selection, whose interpretation is the subject of the Ewens, Price, and Castilloux–Lessard sources. The Lean statement formalizes Ewens' interpretation, not Fisher's wording."
+  - title: "Extension of covariance selection mathematics"
+    authors: ["George R. Price"]
+    id: "doi:10.1111/j.1469-1809.1957.tb01874.x"
+    location: "Annals of Human Genetics 35:485-490, 1972 (the DOI contains 1957)"
+    relationship: formalizes
+    note: "The Price 1972 paper for grouped_covariance_decomposition and multilevel_price_equation, which formalize its covariance decomposition and multilevel selection equation (the library module documentation cites pp. 487–488, eqs. (A 14)–(A 17)). It is also cited, at p. 488, eq. A18, for the regression form of Hamilton's rule that hamilton_from_leastSquares adapts. The Lean proofs are direct algebraic verifications written for this formalization."
+  - title: "George Price's contributions to evolutionary genetics"
+    authors: ["Steven A. Frank"]
+    id: "doi:10.1006/jtbi.1995.0148"
+    relationship: background
+    note: "Context: an exposition of the Price equation and its multilevel form; the library cites p. 376, eq. (4), for the form in which grouped_covariance_decomposition and multilevel_price_equation are written, and the alignment cites pp. 374–375 for the kin-selection statement."
+  - title: "The genetical evolution of social behaviour. I"
+    authors: ["W. D. Hamilton"]
+    id: "doi:10.1016/0022-5193(64)90038-4"
+    relationship: background
+    note: "Context: Hamilton's rule, which hamilton_from_leastSquares states in regression form; the library module documentation cites pp. 14–15. The Lean coefficients are least-squares regression coefficients, not Hamilton's original quantities."
+  - title: "A general model for kin selection"
+    authors: ["David C. Queller"]
+    id: "doi:10.1111/j.1558-5646.1992.tb02045.x"
+    relationship: background
+    note: "Context: the regression formulation of kin selection in which the costs and benefits of Hamilton's rule are partial regression coefficients of fitness on own and partner genotypes, as in hamilton_from_leastSquares (the alignment cites Queller for that statement). No step of the Lean proof is taken from it."
+  - title: "The measurement of selection on correlated characters"
+    authors: ["Russell Lande", "Stevan J. Arnold"]
+    id: "doi:10.2307/2408842"
+    relationship: formalizes
+    note: "Formalized in lande_arnold_gradient_exists: the selection gradient, the vector of partial regression coefficients of relative fitness on the phenotypes, equals the inverse phenotypic covariance matrix applied to the vector of selection differentials (the library module documentation cites pp. 1212–1213). The Lean statement is for a finite population with uniform weights."
+  - title: "On the Probability Theory of Linkage in Mendelian Heredity"
+    authors: ["Hilda Geiringer"]
+    id: "doi:10.1214/aoms/1177731313"
+    relationship: adapts
+    note: "Adapted in geiringer_recombination_converges: the convergence of haplotype frequencies under repeated recombination to the product of the single-locus marginals (the library module documentation cites Thm. II, p. 42, and eq. (37), p. 41). The Lean statement describes recombination by an arbitrary probability distribution on the set of loci inherited from the first parent and assumes that every pair of distinct loci is separated with positive probability. The Lean proof is written for this formalization."
+
+status:
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  scope: "Notation. For a finite index set and weights p, wMean p f = sum_i p_i f_i and wCov p f g = wMean p (f g) − wMean p f · wMean p g; the weights need not be normalized unless a statement says so. For a finite nonempty population, popMean and popCov are the uniform mean and covariance (divisor the population size), and nextMean w z = popMean(w z)/popMean(w) is the fitness-weighted mean. The least-squares predicate IsFisherLeastSquares P W X beta says that beta minimizes the weighted squared error sum_g P_g (W_g − sum_k X_gk beta_k)^2 over all coefficient vectors; existence of a minimizer is not part of that predicate.\n\nCompared theorems. (1) fisher_fundamental_theorem: let G be a finite set of genotypes with frequencies P (nonnegative, summing to 1), fitnesses W ≥ 0 with mean fitness W̄ = sum_g P_g W_g > 0, a finite nonempty set of loci with finitely many alleles at each, and allele counts X_gk ≥ 0 that sum to 2 over the alleles at each locus for every genotype (diploidy). If beta is a least-squares fit of W on the allele counts (with weights P and no separate intercept; the per-locus sums supply one), then the partial change 2 sum_k (p'_k − p_k) beta_k equals V_A / W̄. Here p_k = sum_g P_g X_gk / 2 is the allele frequency, p'_k is the same frequency computed from the selected genotype frequencies P_g W_g / W̄, and V_A = sum_g P_g (sum_k X_gk beta_k − W̄)^2 is the additive genetic variance. No Hardy–Weinberg or linkage-equilibrium assumption is made. (2) fisher_partial_nonneg: under the same hypotheses the partial change is nonnegative. (3) grouped_covariance_decomposition: for any finite family of groups with weights p_g, within-group weights q_gi, and values w_gi and z_gi (no normalization or sign conditions), the grouped mean of w z minus the product of the grouped means of w and z equals the between-group covariance (weights p) of the group means of w and z plus the p-weighted mean of the within-group covariances. (4) multilevel_price_equation: in the same setting, with offspring values z'_gi and nonzero grouped mean fitness W̄, the change from the grouped mean of z to the fitness-weighted grouped mean of z' equals [between-group covariance of group means of w and z + mean within-group covariance of w and z + grouped mean of w (z' − z)] / W̄. (5) hamilton_from_leastSquares: in a finite nonempty population with uniform weights, fitness w with positive mean, own genotypic value z with positive variance, and partner value y, if beta = (beta_0, beta_1, beta_2) is a least-squares fit of w on (1, z, y), then nextMean w z − popMean z = Var(z)(beta_2 r + beta_1)/w̄, where r = Cov(y, z)/Var(z), and this change is positive if and only if beta_2 r + beta_1 > 0 (Hamilton's rule r b > c with b = beta_2 and c = −beta_1). Offspring values equal parental values in this statement. (6) lande_arnold_gradient_exists: in a finite nonempty population with uniform weights, fitness w with positive mean, and finitely many traits z_ij whose population covariance matrix P (divisor the population size) has nonzero determinant, there is a least-squares fit gamma of relative fitness w/w̄ on (1, z − z̄) with intercept 1 and slope vector P^{-1} s, where s_j is the selection differential nextMean w z_j − popMean z_j. The statement asserts existence of such a fit; uniqueness of the fit is not stated. (7) geiringer_recombination_converges: for a finite nonempty set of loci with a common finite allele set, a probability distribution rho on subsets of loci (the loci a gamete takes from its first parent, the rest coming from the second), and a probability distribution p on haplotypes, if every pair of distinct loci is separated (one in the subset and one outside) with positive probability, then the iterates of the recombination map p ↦ R(p), where R(p)(h) = sum over subsets M of rho(M) times the probability that two independent haplotypes drawn from p assemble to h, converge pointwise to the product over loci of the single-locus marginals of p. With one locus the condition is vacuous and the map is the identity.\n\nNot covered: Mendelian transmission in the Fisher statements (the allele frequencies after selection are those of the selected parents), dynamics over several generations for (1)–(6), dominance or epistatic variance decompositions, infinite or continuous populations, random sampling or drift, mutation, selection acting together with recombination in (7), rates of convergence in (7), and sample (n − 1) covariance conventions."
+
+fidelity:
+  divergences: "Fisher statements: the change in allele frequencies is the change from the parental genotype frequencies to the fitness-weighted ones, which equals the next-generation change only under fair Mendelian transmission; that transmission step is not modelled. Allele counts are real numbers subject to nonnegativity and the per-locus sum 2, which includes the usual integer counts; the least-squares fit is assumed rather than constructed. Fisher (1930) is formalized only in Ewens' interpretation, not in his own wording. Price equations: stated as algebraic identities for arbitrary, possibly unnormalized, weights, which includes the probability-weighted forms of Price (1972) and Frank (1995). Hamilton's rule: b and c are least-squares coefficients with uniform weights in a finite population and no transmission bias, as in the regression formulation, rather than Hamilton's original fitness effects; the statement concerns the direction of the one-generation change of the mean genotypic value. Lande–Arnold: uniform weights, the population (not sample) covariance, and existence of the fit only. Geiringer: discrete generations, infinite-population (deterministic) recombination with a general distribution of the set of loci inherited from one parent, a common allele set at all loci, and no selection or mutation; the alignment records this statement as adapted from Geiringer (1944), and how its hypothesis on the recombination distribution compares with Geiringer's own conditions has not been checked against the paper."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.SelectionTheorems"
+  statements:
+    - source: "Ewens and Lessard 2015"
+      lean: "Rhone.Statistics.fisher_fundamental_theorem"
+      module: "Rhone.Statistics.Fisher"
+      status: "proved"
+    - source: "Ewens and Lessard 2015"
+      lean: "Rhone.Statistics.fisher_partial_nonneg"
+      module: "Rhone.Statistics.Fisher"
+      status: "proved"
+    - source: "Price 1972; Frank 1995, p. 376"
+      lean: "Rhone.Statistics.grouped_covariance_decomposition"
+      module: "Rhone.Statistics.MultilevelPrice"
+      status: "proved"
+    - source: "Price 1972; Frank 1995, p. 376, eq. (4)"
+      lean: "Rhone.Statistics.multilevel_price_equation"
+      module: "Rhone.Statistics.MultilevelPrice"
+      status: "proved"
+    - source: "Queller 1992; Frank 1995, pp. 374-375"
+      lean: "Rhone.Statistics.hamilton_from_leastSquares"
+      module: "Rhone.Statistics.KinSelectionRegression"
+      status: "adapted"
+    - source: "Lande and Arnold 1983, pp. 1212-1213"
+      lean: "Rhone.Statistics.lande_arnold_gradient_exists"
+      module: "Rhone.Statistics.LandeArnoldRegression"
+      status: "proved"
+    - source: "Geiringer 1944"
+      lean: "Rhone.MarkovChain.Geiringer.geiringer_recombination_converges"
+      module: "Rhone.MarkovChain.GeiringerConvergence"
+      status: "adapted"

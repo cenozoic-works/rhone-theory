@@ -1,0 +1,95 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "A kernel-checked implementation of the biallelic two-locus sampling recursion, and a table checker"
+  description: "This entry states correctness results, in exact rational arithmetic, for an executable implementation of the two-locus sampling recursion of the coalescent with recombination under parent-independent mutation, with two alleles at each locus. For valid parameters and configurations with the stated array sizes, the computation succeeds and its value equals the solution of the recursion at the decoded configuration. A table checker is shown to be sound and complete: a table that passes the check consists of true values of the recursion, and the table of true values over the closure of configurations of a given size passes. The existence of a solution to the recursion, for any finite numbers of alleles, positive mutation rates, and nonnegative recombination rate, is also stated, together with an explicit characterization of the Boolean parameter-validity test."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["q-bio.PE", "math.PR"]
+  msc2020: ["92D10", "68V15", "65Q30"]
+
+sources:
+  - title: "Correctness of an executable evaluation of the biallelic two-locus sampling probability, and soundness and completeness of an executable table checker"
+    type: original-proof
+    relationship: other
+    note: "The recursion itself is established mathematics and is not claimed here: it is the two-locus sampling recursion under parent-independent mutation, which goes back to Golding (1984) and Ethier and Griffiths (1990); its Lean form (IsSolution) is recorded in this repository as matching eq. (5) of Jenkins and Song (2009). What is written in this project is the following. (1) The executable algorithm and the proof that it computes the recursion's solution. The algorithm does not iterate the recursion directly; for two alleles per locus it computes a table of centred moments block by block, inverting each tridiagonal block exactly by the standard continuant formula for the inverse of a tridiagonal matrix, and then assembles the sampling probability from a sparse polynomial attached to the configuration. The block-recursive formula behind this method is proved in this project (it is the subject of the companion ExplicitFormula entry), and its novelty is likewise unknown. (2) The table checker and the proofs of its soundness and completeness. (3) The existence proof for the recursion and the characterization of the validity test. Novelty unknown; no claim of priority."
+  - title: "Closed-form two-locus sampling distributions: accuracy and universality"
+    authors: ["Paul A. Jenkins", "Yun S. Song"]
+    id: "doi:10.1534/genetics.109.107995"
+    relationship: background
+    note: "Supplies the stated form of the recursion that the compared statements take as their specification: the definition IsSolution is recorded in this repository as eq. (5) of this paper, the parent-independent-mutation form of the two-locus sampling recursion. The paper's own results, on closed-form asymptotic expansions in the recombination rate, are not used or formalized here."
+  - title: "On the two-locus sampling distribution"
+    authors: ["Stewart N. Ethier", "Robert C. Griffiths"]
+    id: "doi:10.1007/BF00168175"
+    relationship: background
+    note: "Context: a foundational source for the two-locus sampling distribution and the recursion it satisfies. No result of this paper is formalized here, and the Lean recursion has not been checked equation by equation against this paper; the form used is the one cited from Jenkins and Song (2009)."
+  - title: "The sampling distribution of linkage disequilibrium"
+    authors: ["G. Brian Golding"]
+    id: "doi:10.1093/genetics/108.1.257"
+    relationship: background
+    note: "Context: an early source of a recursion for two-locus sampling probabilities with recombination. No result of this paper is formalized here, and the Lean recursion has not been checked equation by equation against this paper."
+  - title: "Two-locus sampling distributions and their application"
+    authors: ["Richard R. Hudson"]
+    id: "doi:10.1093/genetics/159.4.1805"
+    relationship: background
+    note: "Context for the purpose of the table checker: precomputed tables of two-locus sampling probabilities are used in applications such as composite-likelihood estimation of recombination rates. Nothing from this paper is formalized, and no claim is made that the tables checked here agree with tables computed in this paper."
+  - title: "Two-locus likelihoods under variable population size and fine-scale recombination rate estimation"
+    authors: ["John A. Kamm", "Jeffrey P. Spence", "Jeffrey Chan", "Yun S. Song"]
+    id: "doi:10.1534/genetics.115.184820"
+    relationship: background
+    note: "Context for the purpose of the table checker: tables of two-locus likelihoods are computed for fine-scale recombination rate estimation, here under variable population size. This entry treats only the constant-size recursion; nothing from this paper is formalized, and no agreement with its tables is claimed."
+
+status:
+  scope: "Setting. The recursion is stated over any ordered field F, for KA alleles at locus A and KB at locus B. A configuration ξ records a_i lineages ancestral only at locus A carrying allele i, b_j lineages ancestral only at locus B carrying allele j, and c_ij lineages ancestral at both loci carrying alleles i and j; n is the total number of lineages, nA = sum of a + sum of c, nB = sum of b + sum of c, and t = sum of c. Given mutation rates θA, θB, recombination rate ρ, and stationary allele weights πA and πB, a function q on configurations is a solution (IsSolution) when q(empty) = 1, q equals πA i, πB j, or πA i πB j on the three kinds of single-lineage configuration, and for every ξ with n ≥ 2, [n(n − 1) + θA nA + θB nB + ρ t] q(ξ) equals the sum of coalescence terms (within and across the three lineage kinds), parent-independent mutation terms that remove an allele at one locus with weight θA πA i or θB πB j, and recombination terms ρ c_ij q(split of a doubly ancestral lineage). Recursion.q denotes a solution chosen by the existence theorem. Theorem Rhone.LinearAlgebra.Recursion.exists_isSolution: for every KA and KB (including zero), every ordered field F, every θA > 0, θB > 0, and ρ ≥ 0, and arbitrary weights πA and πB with no positivity or summation condition, a solution exists. Uniqueness of solutions under the same rate conditions is proved in the library (IsSolution.unique) but is not among this entry's compared statements; with it, Recursion.q is the unique solution. Executable objects. Params holds rationals thetaA, thetaB, and rho, and arrays piA and piB of rationals; a configuration is three arrays of natural numbers a, b, and c, with c read in row-major order c_00, c_01, c_10, c_11; decode turns it into a configuration with KA = KB = 2, reading missing entries as 0. Theorem Rhone.Computation.Params.valid_iff: the Boolean test valid holds exactly when thetaA > 0, thetaB > 0, rho ≥ 0, both weight arrays have size 2, all four weights are strictly positive, and each weight array sums to 1. Theorem q_correct: if the parameters are valid and the configuration arrays have sizes 2, 2, and 4, then the executable q returns a value rather than an error, and that value equals Recursion.q over the rationals, at the given rates and weights, evaluated at the decoded configuration. In particular, the internal checks for a zero determinant and for disagreeing continuants never fail on such inputs. Inputs of other sizes, more than two alleles, or invalid parameters are refused with an error and are not covered. Theorem checkTable_sound: for any parameters, any bound n, and any array of (configuration, rational) entries, if checkTable returns true then the rates satisfy θA > 0, θB > 0, ρ ≥ 0, and every entry's value equals Recursion.q at its decoded configuration. The checker returns true only if the parameters are valid; every entry has array sizes 2, 2, and 4 and nA ≤ n and nB ≤ n; no configuration appears twice; the entries' configurations are exactly those of the closure of size n, namely all configurations with nA ≤ n and nB ≤ n; the empty configuration has value 1; every single-lineage entry has its boundary value; every entry with at least two lineages satisfies the recursion, with the table's values (missing configurations read as 0) on its right-hand side; and, for each size from 0 to n, the values of the fully linked configurations of that size, weighted by the multinomial coefficient size! divided by the product of the c_ij!, sum to 1. Theorem checkTable_complete: for valid parameters and every n, the table that lists each configuration of the closure of size n once, in the closure's enumeration order, with its value Recursion.q, passes checkTable. Degenerate cases: for n = 0 the only accepted table is the empty configuration with value 1; ρ = 0 is allowed throughout. Not covered: more than two alleles per locus in the executable code (the recursion and existence theorem are general); mutation models other than parent-independent mutation; variable population size or any demographic model; the probabilistic interpretation of the solution as a sampling probability, which is not among the compared statements; floating-point output, timing, or any guarantee about compiled binaries beyond the Lean definitions."
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+
+fidelity:
+  divergences: "The specification is the parent-independent-mutation form of the two-locus recursion, in which a mutation removes the mutated locus from a lineage with weight given by the stationary allele frequency; it is not compared here with the general finite-allele mutation forms in Golding (1984) and Ethier and Griffiths (1990). The executable code covers only two alleles per locus, with strictly positive allele weights summing to 1 and positive mutation rates; the general recursion and existence theorem allow any numbers of alleles and arbitrary weights. All arithmetic is exact over the rationals; there is no floating-point approximation. Recursion.q is defined by choice from the existence theorem, so the compared statements identify the computed values with that chosen solution; that it is the unique solution relies on a library theorem that is not compared here. The correctness theorems concern the Lean definitions; agreement of a compiled executable with them relies on the Lean compiler and runtime, which are not verified. No comparison is made with the numerical tables of Hudson (2001) or Kamm et al. (2016), which are cited as context."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.ComputeTwoLocus"
+  statements:
+    - source: "This project"
+      lean: "Rhone.Computation.q_correct"
+      module: "Rhone.Computation.CorrectnessProof"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Computation.checkTable_sound"
+      module: "Rhone.Computation.CheckerSoundnessProof"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Computation.checkTable_complete"
+      module: "Rhone.Computation.CheckerCompletenessProof"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.LinearAlgebra.Recursion.exists_isSolution"
+      module: "Rhone.LinearAlgebra.Recursion.Exist"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Computation.Params.valid_iff"
+      module: "Rhone.Computation.ParamsProof"
+      status: "proved"

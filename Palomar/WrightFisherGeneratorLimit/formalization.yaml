@@ -1,0 +1,163 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "The generator limit of the neutral Wright-Fisher chain, with an explicit rate"
+  description: "This entry formalizes the neutral Wright–Fisher chain with N individuals and the convergence of its rescaled generator, N times the one-generation change, to the diffusion generator x(1 − x)/2 times the second derivative. The transition probabilities are binomial and form a stochastic matrix. The first four moments of the frequency change have explicit formulas, with the fourth moment bounded by 3/(16 N²) and the absolute third moment by 7/(32 N √N). For f with an L-Lipschitz second derivative on [0, 1], the generator error is at most 7L/(192 √N) at every state, with a diploid version in which the chain size is 2N; for a thrice continuously differentiable f with third derivative bounded by M on [0, 1] it is at most 7M/(192 √N), so the largest error over states tends to 0. Corresponding drift statements are given for haploid mutation–selection, with an explicit error bound 2σ(ν + σ)/N and limit (1 − x)(ν − σ x)."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["math.PR", "q-bio.PE"]
+  msc2020: ["60J10", "60F17", "92D10", "41A25"]
+
+sources:
+  - title: "Markov Processes: Characterization and Convergence"
+    authors: ["Stewart N. Ethier", "Thomas G. Kurtz"]
+    id: "doi:10.1002/9780470316658"
+    relationship: formalizes
+    note: "Supplies the established result the entry formalizes: the rescaled Wright–Fisher generator converges to the diffusion generator x(1 − x)/2 times the second derivative (in the chapter on genetic models). The entry formalizes this generator convergence on thrice continuously differentiable functions; the explicit error bounds and moment bounds are not taken from the book, and the book's convergence of the processes themselves is not formalized."
+  - title: "Mathematical Population Genetics I: Theoretical Introduction"
+    authors: ["Warren J. Ewens"]
+    id: "doi:10.1007/978-0-387-21822-9"
+    relationship: background
+    note: "Textbook account of the Wright–Fisher model and its diffusion approximation, including the mean and variance of the one-generation frequency change and the drift of mutation–selection models, which the alignment cites for those statements. The Lean proofs are self-contained and use no specific result from it."
+  - title: "Error estimate for the diffusion approximation of the Wright-Fisher model"
+    authors: ["S. N. Ethier", "M. F. Norman"]
+    id: "doi:10.1073/pnas.74.11.5096"
+    relationship: background
+    note: "Context only: an O(1/N) error bound for the diffusion approximation over finite time, under more smoothness. The rhone bound is a one-step generator bound with a slower rate, and its proof uses no result from this paper."
+  - title: "Dirichlet approximation of equilibrium distributions in Cannings models with mutation"
+    authors: ["H. L. Gan", "A. Röllin", "N. Ross"]
+    id: "doi:10.1017/apr.2017.27"
+    relationship: background
+    note: "Context only: uses moments of the one-generation increment of the same kind as those formalized here, for approximating equilibrium distributions. The entry uses no result from this paper."
+  - title: "Descent"
+    authors: ["SauersML"]
+    type: other
+    id: "https://github.com/SauersML/Descent/tree/28bbf4915b40b80e84ec9354e0bf450b0e4c7120"
+    location: "Descent/Coalescent/Duality.lean: duality_identity, moment_closure; Descent/Coalescent/BlockMatrixLimit.lean: tendsto_blockOperator_pow (files first committed 2026-08-05)"
+    license: "Apache-2.0"
+    relationship: other
+    note: "A separate Lean 4 formalization containing the Wright–Fisher diffusion generator applied to monomials, written out by hand, and the limit of the Wright–Fisher block-counting chain. It overlaps with the generator statements; an independent formalization. No code or result from it is used here."
+
+related_formalizations:
+  - id: "https://github.com/SauersML/Descent"
+    relationship: "independent"
+    note: "Independent formalization (Lean 4, Apache-2.0) that overlaps with this entry's generator statements; the overlap is described under sources. This entry neither imports nor ports it."
+
+status:
+  scope: "Model. For N individuals, wf N is the (N + 1) × (N + 1) matrix whose entry (i, j) is the binomial probability C(N, j) (i/N)^j (1 − i/N)^(N − j) of moving from i to j copies of an allele; wfChain N is the same matrix as a finite Markov chain, and wfDiploid N is wf (2N). The frequency of state i is i/N. The generator error of f at state i is N times (E_i f(X'/N) − f(i/N)) minus (i/N)(1 − i/N)/2 times the second derivative of f at i/N, where X' is the next state; wfGenerator f x = x(1 − x)/2 times the second derivative of f at x. Compared theorems. (1) wf_eq_binomial: the binomial formula for every entry, for every N, including N = 0 under Lean's convention 0/0 = 0. (2) wf_nonneg_and_row_sum: every entry is nonnegative and every row sums to 1. (3) wfChain_expect_eq: the expectation operator of wfChain N is the matrix action. (4) wfDiploid_eq_wf: the diploid chain of size N is the chain with 2N copies. (5) wfChain_generatorError_eq: the general generator-error expression, specialized to this chain, time factor N, and the map i ↦ i/N, is the expression above. (6) hapMutSelStep_eq: the haploid mutation–selection step is μ + (1 − μ) x(1 − s)/(1 − s x) for all real s, μ, and x (an unfolding of the definition, with Lean's convention that division by 0 gives 0). For N ≥ 1 and every state i, with x = i/N and Δ = X'/N − x: (7) E[Δ] = 0; (8) E[Δ²] = x(1 − x)/N; (9) E[Δ³] = x(1 − x)(1 − 2x)/N²; (10) E[Δ⁴] = x(1 − x)(1 + 3(N − 2)x(1 − x))/N³; (11) E[Δ⁴] ≤ 3/(16N²); (12) E|Δ|³ ≤ 7/(32 N √N). (13) wf_generator_error_le: if f has a derivative f' and f' has a derivative f'' within [0, 1] at every point of [0, 1] (one-sided at the ends), and |f''(x) − f''(y)| ≤ L|x − y| on [0, 1], then for N ≥ 1 and every state the error |N(E_i f(X'/N) − f(x)) − x(1 − x)/2 f''(x)| is at most 7L/(192 √N). (14) wfDiploid_generator_error_le: the same with 2N in place of N, giving 7L/(192 √(2N)). (15) wfChain_generatorError_le: if f is thrice continuously differentiable on ℝ and its third derivative is bounded by M in absolute value on [0, 1], the generator error at every state is at most 7M/(192 √N) for N ≥ 1. (16) wf_generatorLimit: for every thrice continuously differentiable f, the supremum over states of the absolute generator error tends to 0 as N → ∞. (17) wf_generator_eventually_le: consequently, for every such f and ε > 0, for all large N the error is at most ε at every state. (18) and (19) sum_binomRow_freq_sub and sum_binomRow_freq_sub_sq: for N ≥ 1 and all real q and x (the binomial weights written as polynomials, so q need not lie in [0, 1]), the sum of the weights times (j/N − x) is q − x, and times (j/N − x)² is q(1 − q)/N + (q − x)². (20) hapMutSel_drift_error_le: with selection s = σ/N and mutation μ = ν/N, for σ ≥ 0, ν ≥ 0, x in [0, 1], N ≥ 1, and N ≥ 2σ, the expected change of frequency after a binomial draw with the mutation–selection step probability, times N, differs from (1 − x)(ν − σx) by at most 2σ(ν + σ)/N. (21) hapMutSel_drift_tendsto: under the same sign and range conditions, that scaled drift tends to (1 − x)(ν − σx) as N → ∞. In this step the allele with frequency x has relative fitness 1 − s and the other allele mutates to it with probability μ. Not covered: convergence of the chains themselves to the Wright–Fisher diffusion (no semigroup, martingale-problem, or weak-convergence statement), the second moment or generator limit of the mutation–selection chain, multi-allele or multi-locus models, and Cannings or Moran models."
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+
+fidelity:
+  divergences: "Only the generator part of the classical diffusion approximation is formalized: the rescaled one-step generator converges to the diffusion generator on thrice continuously differentiable functions, but no convergence of finite-dimensional distributions, semigroups, or path laws is proved, and no core or closure argument for the full domain of the diffusion generator is given. Time is rescaled by N generations for a haploid chain of size N (by 2N for the diploid version), so the limit generator is x(1 − x)/2 times the second derivative. The explicit rates are the entry's own: the Lipschitz version follows from a second-order Taylor expansion with remainder at most (L/6)|Δ|³ and the bound E|Δ|³ ≤ 7/(32 N √N), giving the rate 1/√N, which is slower than the O(1/N) finite-time bound of Ethier and Norman. The mutation–selection statements concern only the first moment (drift) of a single step, uniformly over x in [0, 1] with N ≥ 2σ; they do not require ν ≤ N, so for small N the step probability can exceed 1, the binomial weights are then not probabilities, and the statements hold as algebraic facts. The polynomial binomial-moment identities (18) and (19) are stated for all real q."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.WrightFisherGeneratorLimit"
+  statements:
+    - source: "This project"
+      lean: "Rhone.Palomar.WrightFisherGeneratorLimit.wf_eq_binomial"
+      module: "Palomar.WrightFisherGeneratorLimit.Solution"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.MarkovChain.wf_isStochastic"
+      module: "Rhone.MarkovChain.WrightFisher"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Palomar.WrightFisherGeneratorLimit.wfChain_expect_eq"
+      module: "Palomar.WrightFisherGeneratorLimit.Solution"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.MarkovChain.wfDiploid_eq_haploid"
+      module: "Rhone.MarkovChain.WrightFisherDiploid"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Palomar.WrightFisherGeneratorLimit.wfChain_generatorError_eq"
+      module: "Palomar.WrightFisherGeneratorLimit.Solution"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Palomar.WrightFisherGeneratorLimit.hapMutSelStep_eq"
+      module: "Palomar.WrightFisherGeneratorLimit.Solution"
+      status: "proved"
+    - source: "Ewens 2004"
+      lean: "Rhone.MarkovChain.wf_expect_freq_sub"
+      module: "Rhone.MarkovChain.WrightFisherGeneratorLimitMoments"
+      status: "proved"
+    - source: "Ewens 2004"
+      lean: "Rhone.MarkovChain.wf_expect_freq_sub_sq"
+      module: "Rhone.MarkovChain.WrightFisherGeneratorLimitMoments"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.MarkovChain.wf_expect_freq_sub_cube"
+      module: "Rhone.MarkovChain.WrightFisherGeneratorLimitMoments"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.MarkovChain.wf_expect_freq_sub_pow_four"
+      module: "Rhone.MarkovChain.WrightFisherGeneratorLimitMoments"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.MarkovChain.wf_expect_freq_sub_pow_four_le"
+      module: "Rhone.MarkovChain.WrightFisherGeneratorLimitMoments"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.MarkovChain.wf_expect_abs_freq_sub_cube_le"
+      module: "Rhone.MarkovChain.WrightFisherGeneratorLimitMoments"
+      status: "proved"
+    - source: "Ethier and Kurtz 1986; Ewens 2004"
+      lean: "Rhone.Diffusion.wf_generator_error_le"
+      module: "Rhone.Diffusion.WrightFisherGeneratorLimit"
+      status: "adapted"
+    - source: "This project"
+      lean: "Rhone.Diffusion.wfDiploid_generator_error_le"
+      module: "Rhone.Diffusion.WrightFisherGeneratorLimit"
+      status: "adapted"
+    - source: "This project"
+      lean: "Rhone.Diffusion.wfChain_generatorError_le"
+      module: "Rhone.Diffusion.WrightFisherGeneratorLimit"
+      status: "adapted"
+    - source: "Ethier and Kurtz 1986"
+      lean: "Rhone.Diffusion.wf_generatorLimit"
+      module: "Rhone.Diffusion.WrightFisherGeneratorLimit"
+      status: "adapted"
+    - source: "This project"
+      lean: "Rhone.Palomar.WrightFisherGeneratorLimit.wf_generator_eventually_le"
+      module: "Palomar.WrightFisherGeneratorLimit.Solution"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Diffusion.sum_binomRow_freq_sub"
+      module: "Rhone.Diffusion.WrightFisherGeneratorLimitForces"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Diffusion.sum_binomRow_freq_sub_sq"
+      module: "Rhone.Diffusion.WrightFisherGeneratorLimitForces"
+      status: "proved"
+    - source: "Ewens 2004"
+      lean: "Rhone.Diffusion.hapMutSel_drift_error_le"
+      module: "Rhone.Diffusion.WrightFisherGeneratorLimitForces"
+      status: "adapted"
+    - source: "This project"
+      lean: "Rhone.Diffusion.hapMutSel_drift_tendsto"
+      module: "Rhone.Diffusion.WrightFisherGeneratorLimitForces"
+      status: "adapted"

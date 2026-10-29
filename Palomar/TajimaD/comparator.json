@@ -1,0 +1,31 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.TajimaD.Challenge",
+  "solution_module": "Palomar.TajimaD.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.TajimaD.markedKingmanLaw_probability",
+    "Rhone.Palomar.TajimaD.markedKingmanTajimaVarianceEstimate_eq",
+    "Rhone.Palomar.TajimaD.markedKingmanTajimaD_eq",
+    "Rhone.Palomar.TajimaD.tajimaD_of_varianceEstimate_nonpos",
+    "Rhone.Palomar.TajimaD.tajimaD_zero_segregating",
+    "Rhone.Palomar.TajimaD.tajimaD_two",
+    "Rhone.Palomar.TajimaD.tajimaD_three",
+    "Rhone.Palomar.TajimaD.measurable_markedKingmanTajimaD",
+    "Rhone.Palomar.TajimaD.markedKingmanTajimaNumerator_mean",
+    "Rhone.Palomar.TajimaD.markedKingmanPi_mul_segregating_mean",
+    "Rhone.Palomar.TajimaD.markedKingmanPi_segregating_covariance",
+    "Rhone.Palomar.TajimaD.markedKingmanTajimaNumerator_second_moment",
+    "Rhone.Palomar.TajimaD.markedKingmanTajimaNumerator_variance",
+    "Rhone.Palomar.TajimaD.markedKingmanTajimaVarianceEstimate_mean",
+    "Rhone.Palomar.TajimaD.markedKingmanTajimaVarianceEstimate_unbiased",
+    "Rhone.Palomar.TajimaD.markedKingmanSfs_mean",
+    "Rhone.Palomar.TajimaD.sum_markedKingmanSfs_mean",
+    "Rhone.Palomar.TajimaD.expSfs_eq",
+    "Rhone.Palomar.TajimaD.expSfs_eq_integral_markedKingmanSfs"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

@@ -1,0 +1,128 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "No formula with denominators of bounded degree, in the total mutation parameter or in rho, for the two-locus sampling recursion"
+  description: "This entry formalizes results on the degree of denominators of any closed-form expression for the solution of the two-locus sampling recursion of the coalescent with recombination, with two alleles at each locus and parent-independent mutation. The mutation rates, the recombination rate rho, and the allele frequencies are independent indeterminates, and the recursion is solved over a field of rational functions in them. An expression is built from rational constants, arbitrary coefficients from the coefficient field, the rates, sums, products, and quotients; it is admissible at degree D when every divisor evaluates to a nonzero polynomial of degree at most D in a designated variable (rho, or the total mutation rate theta_A + theta_B). A closure lemma shows that admissible expressions in inputs with bounded denominators have bounded denominators. For the sample of two lineages that carry the same haplotype at both loci, no admissible expression of degree one in rho, and none of degree two in the total mutation rate, equals the value of the solution; variants bound the total degree of the divisors in the three rates instead. For the samples of m lineages typed at locus A only and m typed at locus B only, all of allele 0, for every bound D there is an m ≥ 2 at which no admissible expression of degree D, in the total mutation rate or in rho, equals the value of the solution. Existence and uniqueness of the solutions are also stated in these settings."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["math.AC", "q-bio.PE"]
+  msc2020: ["12E05", "92D10", "13P15"]
+
+sources:
+  - title: "No expression with divisors of bounded degree, in the total mutation parameter or in rho, for values of the two-locus sampling recursion"
+    type: original-proof
+    relationship: other
+    note: "The non-existence statements are presented here for the first time as far as this record knows; no literature search establishing that is claimed. Novelty unknown; no claim of priority. The established mathematics that the entry builds on is the two-locus sampling recursion under parent-independent mutation, in the finite-allele form given by Bhaskar and Song (2012) and treated by Jenkins and Song (2012), with the infinite-alleles form going back to Golding (1984) and Ethier and Griffiths (1990); the closed forms for a sample of size two at total mutation rate 0 (Durrett 2008, Simonsen and Churchill 1997) are context for the block-(2,2) statements. Formulated for this formalization: the classes of admissible expressions (with the designated degree variable and arbitrary coefficient leaves), the closure lemma for bounded denominators, the identification of an irreducible denominator factor of the value at the two-haplotype sample (degree two in rho, degree three in the total mutation rate), the existence and uniqueness proofs over the fields of rational functions, and the statements for the families indexed by m. The cited works are context; none of them is formalized here."
+  - title: "The sampling distribution of linkage disequilibrium"
+    authors: ["G. Brian Golding"]
+    id: "Genetics 108(1):257-274, 1984"
+    relationship: background
+    note: "Context: an early source of the two-locus sampling recursion, in infinite-alleles form. The Lean statements use the finite two-allele, parent-independent-mutation form of the recursion instead."
+  - title: "On the two-locus sampling distribution"
+    authors: ["S. N. Ethier", "R. C. Griffiths"]
+    id: "Journal of Mathematical Biology 29(2):131-159, 1990"
+    relationship: background
+    note: "Context: the two-locus sampling recursion, in infinite-alleles form. The Lean statements use the finite two-allele, parent-independent-mutation form instead."
+  - title: "Padé approximants and exact two-locus sampling distributions"
+    authors: ["Paul A. Jenkins", "Yun S. Song"]
+    id: "Annals of Applied Probability 22(2):576-607, 2012; arXiv:1107.3897"
+    relationship: background
+    note: "Context for two parts of the entry. Sec. 2.2, p. 7, says the two-locus sampling distribution is not known in closed form even under parent-independent mutation, which motivates the non-existence statements. Sec. 7.3 concerns uniqueness of the solution of the recursion for real parameters, which is context for the existence and uniqueness statements (exists_isSolutionπ with isSolutionπ_unique_s22, existsUnique_uniform_solution, and existsUnique_recomb_solution). Those statements are over fields of rational functions, and their Lean proofs do not follow the paper: uniqueness for the families is obtained from the nonvanishing of block determinants of the linear system, checked by mapping to a point with positive real mutation rates."
+  - title: "Closed-form asymptotic sampling distributions under the coalescent with recombination for an arbitrary number of loci"
+    authors: ["Anand Bhaskar", "Yun S. Song"]
+    id: "doi:10.1239/aap/1339878717"
+    location: "Sec. 3, eq. (3) (arXiv:1107.4700v2)"
+    relationship: background
+    note: "Context: the source used for the form of the finite-allele recursion that the Lean definitions state (in its two-allele, parent-independent-mutation case), together with the statement that the sampling distribution is its unique solution (asserted there, not proved). The existence and uniqueness statements of this entry (exists_isSolutionπ with isSolutionπ_unique_s22, existsUnique_uniform_solution, and existsUnique_recomb_solution) are proved in Lean over fields of rational functions."
+  - title: "Probability Models for DNA Sequence Evolution"
+    authors: ["Richard Durrett"]
+    id: "doi:10.1007/978-0-387-78168-6"
+    location: "2nd edition, 2008, sec. 3.1, Theorem 3.1, p. 85"
+    relationship: background
+    note: "Context for the block-(2,2) statements. Sec. 3.1 solves the recursion block by block, and Theorem 3.1 has the denominator rho^2 + 13 rho + 18. In the library the irreducible denominator factor E_{2,2} of the value at the two-haplotype sample is a 3 × 3 determinant that equals 8(rho^2 + 13 rho + 18) at total mutation rate 0."
+  - title: "A Markov chain model of coalescence with recombination"
+    authors: ["Katy L. Simonsen", "Gary A. Churchill"]
+    id: "doi:10.1006/tpbi.1997.1307"
+    relationship: background
+    note: "Context for the block-(2,2) statements: the two-locus chain for a sample of size 2, with P(T1 = T2) = (rho + 18)/(rho^2 + 13 rho + 18), as quoted in Wilton, Carmi, and Hobolth (2015), eq. (5). The same quadratic appears in the denominator factor E_{2,2} at total mutation rate 0."
+  - title: "Duality between the two-locus Wright-Fisher diffusion model and the ancestral process with recombination"
+    authors: ["Shuhei Mano"]
+    id: "doi:10.1239/jap/1363784437"
+    location: "Sec. 4 (arXiv:1201.5557, pp. 14-15)"
+    relationship: background
+    note: "Context: moments are solved class by class through tridiagonal systems, with the remark that closed-form eigenvalues cannot be expected for classes k >= 4. Related in theme; it contains no non-existence theorem of the kind formalized here."
+
+status:
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  scope: "Expressions and admissibility. Expr F is the type of finite expression trees whose leaves are rational constants, coefficients from a field F, and the three symbols theta_A, theta_B, and rho, and whose nodes are sums, products, and quotients. An expression is evaluated in the field F(X) of rational functions in one variable X over F, after the three symbols are assigned values in F(X). An expression is D-admissible (DAdm) when every quotient node has a D-admissible divisor whose value is a nonzero polynomial in X of degree at most D, and a D-admissible numerator; leaves are always admissible. Coefficient leaves may be arbitrary elements of F, so the restriction applies only to the degree in X of the explicit divisors. A rational function has D-bounded denominator (BoundedDen) when it can be written N/M with M a nonzero polynomial all of whose irreducible factors have degree at most D. The variable X is the designated degree variable: in each statement it is either rho or the total mutation rate theta = theta_A + theta_B, with the other parameters held in the coefficient field. The total-degree variants (TotalDAdm, TotalDAdmUπ) instead require each divisor to be the value of a nonzero polynomial in theta_A, theta_B, and rho of total degree at most D, with coefficients that are rational functions of the allele frequencies; coefficient leaves are still arbitrary.\n\nThe recursion. Two alleles (0 and 1) are used at each locus, with parent-independent mutation: at locus A a mutation produces allele 0 with probability pi_A and allele 1 with probability 1 − pi_A, and similarly at locus B with pi_B. A sample configuration records the numbers of lineages typed at locus A only, at locus B only, and at both loci, by allele. For a configuration with n ≥ 2 lineages, of which n_A are typed at A, n_B at B, and t at both, the recursion multiplies q by n(n − 1) + theta_A n_A + theta_B n_B + rho t and equates this with the sum of terms for coalescence (including the merging of an A-only and a B-only lineage into a doubly typed one), mutation in killed form (a lineage that mutates is removed, weighted by the frequency of its allele), and recombination (a doubly typed lineage splits into an A-only and a B-only lineage). The boundary values are q(empty sample) = 1 and, for one lineage, the allele frequency (or the product of the two frequencies for a doubly typed lineage). The finite system IsSolutionπ (and IsSolutionG) consists of the 73 equations of this recursion for the configurations reachable from the sample s22, which has two lineages both carrying allele 1 at A and allele 1 at B, together with the 8 one-lineage boundary values; the empty-sample value is not part of it.\n\nFields. In exists_isSolutionπ, isSolutionπ_unique_s22, no_degree_one_formula, and no_degree_one_formula_total, the coefficient field is Q(pi_A, pi_B)(v)(u) with u = theta_A + theta_B and v = theta_A − theta_B independent indeterminates, so theta_A = (u + v)/2 and theta_B = (u − v)/2 are coefficients, and the degree variable X is rho. In no_degree_two_formula and no_degree_two_formula_total the roles are exchanged: X is the total mutation rate theta, and rho, theta_A − theta_B, pi_A, and pi_B are the coefficient indeterminates. In existsUnique_uniform_solution and no_bounded_degree_formula, the coefficient field is Q(rho)(theta_A)(pi_B)(pi_A), X is theta, and theta_B = theta − theta_A. In existsUnique_recomb_solution and no_bounded_recombination_degree_formula, the coefficient field is Q(theta)(theta_A)(pi_B)(pi_A), theta_B = theta − theta_A, and X is rho. In all cases the parameters are independent indeterminates over Q, not numbers.\n\nCompared theorems. (1) boundedDen_eval: over any field F and for any D (including D = 0), if the values assigned to theta_A, theta_B, and rho each have D-bounded denominator, then every D-admissible expression has a value with D-bounded denominator. (2) no_degree_one_formula: for every solution q of the finite system in the rho-variable presentation, no 1-admissible expression (divisors of degree at most one in rho, coefficients arbitrary rational functions of theta_A, theta_B, pi_A, and pi_B) has value q(s22). (3) no_degree_one_formula_total: for every such q, no expression whose divisors are nonzero polynomials of total degree at most one in theta_A, theta_B, and rho (coefficients rational in pi_A and pi_B) has value q(s22). (4) no_degree_two_formula: for every solution q of the same finite system in the presentation in which X is theta, no 2-admissible expression (divisors of degree at most two in theta, coefficients arbitrary rational functions of rho, theta_A − theta_B, pi_A, and pi_B) has value q(s22). (5) no_degree_two_formula_total: for every such q, no expression whose divisors are nonzero polynomials of total degree at most two in theta_A, theta_B, and rho has value q(s22). (6) exists_isSolutionπ: the finite system in the rho-variable presentation has a solution. (7) isSolutionπ_unique_s22: any two solutions of that system agree at s22 (the statement does not assert agreement at other configurations). (8) no_bounded_degree_formula: for every D and every solution q of the full recursion (all configurations with two alleles per locus) over the field with degree variable theta, there is m ≥ 2 such that no D-admissible expression has value q at the configuration samplingMM m, which has m lineages typed at A only and m typed at B only, all of allele 0, and no doubly typed lineage. (9) existsUnique_uniform_solution: that full recursion has exactly one solution on all configurations. (10) no_bounded_recombination_degree_formula: the same as (8) over the field in which the degree variable is rho. (11) existsUnique_recomb_solution: the full recursion over that field has exactly one solution. The hypotheses of (2)–(5), (8), and (10) are satisfiable: existence is (6), (9), and (11), and for the presentation of (4) and (5) a solution is constructed in the library (not a compared statement). In (8) and (10) the index m depends on D and is not given explicitly; the statements do not say that every large m works.\n\nNot covered: more than two alleles per locus; mutation that is not parent-independent; specific numerical parameter values (including rational rates), real parameter points, or open sets of parameters; the identification of the solution with the sampling probability of the ancestral process (proved elsewhere in the library, not compared here); a degree-two statement in rho at s22, which is impossible because the irreducible denominator factor there has degree two in rho; explicit values of m; and the infinite-alleles model. The entry name refers to the one-locus Ewens sampling formula, whose denominators are products of factors linear in the mutation parameter."
+
+fidelity:
+  divergences: "The result is presented as original, so there is no cited statement to diverge from; the following are the differences from the cited settings. The recursion is the finite-allele form with two alleles per locus and parent-independent mutation, written in killed form, whereas Golding (1984) and Ethier and Griffiths (1990) treat infinite alleles. The parameters are independent indeterminates and the recursion is solved over fields of rational functions, not for real parameters as in the cited probability literature; the probabilistic meaning of the solution is not part of the compared statements. Bhaskar and Song (2012) assert uniqueness of the solution without proof; here existence and uniqueness are proved over those fields, and for the finite system uniqueness is stated only at s22. Durrett (2008) and Simonsen and Churchill (1997) give closed forms at total mutation rate 0 for a sample of size two; the Lean statements concern symbolic mutation rates and a sample typed at both loci, and only the denominator factor is related to their formula. The excluded expression classes allow coefficient leaves that are arbitrary rational functions of the non-designated parameters, so the degree bound applies to one designated variable (or, in the total-degree variants, to explicit divisors only). The degree-one statement in rho and the degree-two statement in the total mutation rate use different degree variables."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.NoEwensFormula"
+  statements:
+    - source: "This project"
+      lean: "Rhone.Algebra.boundedDen_eval"
+      module: "Rhone.Algebra.BoundedDenominator"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Algebra.BlockTwoSymbolic.no_degree_one_formula_pi_coalescent"
+      module: "Rhone.Algebra.BlockTwoSymbolic.NoDegreeOneFormula"
+      status: "partial"
+    - source: "This project"
+      lean: "Rhone.Algebra.BlockTwoSymbolic.no_degree_one_formula_total_pi_coalescent"
+      module: "Rhone.Algebra.BlockTwoSymbolic.NoDegreeOneFormula"
+      status: "partial"
+    - source: "This project"
+      lean: "Rhone.Algebra.BlockTwoSymbolic.no_degree_two_formula_pi_coalescent"
+      module: "Rhone.Algebra.BlockTwoSymbolic.NoDegreeTwoFormula"
+      status: "partial"
+    - source: "This project"
+      lean: "Rhone.Algebra.BlockTwoSymbolic.no_degree_two_formula_total_pi_coalescent"
+      module: "Rhone.Algebra.BlockTwoSymbolic.TotalDegreeU"
+      status: "partial"
+    - source: "This project"
+      lean: "Rhone.Probability.SamplingUniform.no_bounded_degree_formula_sampling"
+      module: "Rhone.Probability.SamplingUniform.NoFormula"
+      status: "proved"
+    - source: "Bhaskar and Song 2012, sec. 2"
+      lean: "Rhone.Probability.SamplingUniform.existsUnique_uniform_solution"
+      module: "Rhone.Probability.SamplingUniform.NoFormula"
+      status: "proved"
+    - source: "Jenkins and Song 2012, sec. 7.3"
+      lean: "Rhone.Algebra.BlockTwoSymbolic.exists_unique_isSolutionπ"
+      module: "Rhone.Algebra.BlockTwoSymbolic.Tower"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Probability.RecombinationDegree.no_bounded_recombination_degree_formula_sampling"
+      module: "Rhone.Probability.RecombinationDegree.NoFormula"
+      status: "proved"
+    - source: "Bhaskar and Song 2012, sec. 2"
+      lean: "Rhone.Probability.RecombinationDegree.existsUnique_recomb_solution"
+      module: "Rhone.Probability.RecombinationDegree.NoFormula"
+      status: "proved"

@@ -1,0 +1,15 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.ConcreteBettingTest.Challenge",
+  "solution_module": "Palomar.ConcreteBettingTest.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.ConcreteBettingTest.concrete_uniform_pan_size",
+    "Rhone.Palomar.ConcreteBettingTest.concrete_source_power_eighty",
+    "Rhone.Palomar.ConcreteBettingTest.concrete_source_power_ninety_five"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

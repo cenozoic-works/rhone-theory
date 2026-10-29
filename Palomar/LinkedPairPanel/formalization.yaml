@@ -1,0 +1,82 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Linked-pair panels: panel laws are determined by finitely many Laplace values"
+  description: "This entry formalizes panels of linked site pairs observed through a reporting channel, with the pair coalescence time T following a probability law on the non-negative reals. All L sites of a panel share the same time T; given T = t, the sites are reported independently, and at each site the two lineages share one latent type with weight e^(−kt) and have independent types otherwise, each type being reported through a channel that maps K latent types to probability distributions on a finite set of labels. For an informative channel (one whose rows are not all equal) and a panel of length L, the panel laws of two time laws agree for all outcomes if and only if their Laplace transforms agree at the points rk for r = 0, …, L. If the channel erases all information, every panel law agrees. If the transforms agree up to L and differ at the next point, then panels of length L agree but some panel of length L + 1 differs. For k > 0, agreement of all panels of all lengths is equivalent to equality of the time laws."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["math.ST", "q-bio.PE"]
+  msc2020: ["62F03", "62B15", "44A10", "92D10"]
+
+sources:
+  - title: "Linked-pair panels: panel laws are determined by finitely many Laplace values"
+    type: original-proof
+    relationship: other
+    note: "The four compared theorems are presented in this formalization: the exact finite-length criterion (for an informative channel, panel laws of length L agree exactly when the Laplace values at rk, r = 0, …, L, agree), the erased-channel case, the sharp step from length L to length L + 1, and identification of the time law from panels of all lengths. Relative to the cited sources, what is new here is the reporting-channel setting, the exact equivalence at each finite length, and its sharpness; the cited works express probabilities of sequence data through Laplace transforms or generating functions of coalescence times, and the classical uniqueness theorem for the Hausdorff moment problem supplies the established mathematics behind all_panels_eq_iff. Novelty unknown; no claim of priority."
+  - title: "Summationsmethoden und Momentfolgen I"
+    authors: ["F. Hausdorff"]
+    location: "Mathematische Zeitschrift 9:74-109, 1921"
+    relationship: background
+    note: "Background: the established mathematics behind all_panels_eq_iff is the uniqueness half of the Hausdorff moment problem, that a probability law on [0, 1] is determined by its moments, applied to the law of e^(−kT), whose moments are the Laplace values at rk. The Lean proof does not use this paper: it maps the time axis into a compact set and obtains uniqueness from Mathlib's theorem that finite measures with equal integrals over a point-separating subalgebra of bounded continuous functions are equal. The characterization of moment sequences, the main subject of the paper, is not formalized."
+  - title: "A general method for calculating likelihoods under the coalescent process"
+    authors: ["K. Lohse", "R. J. Harrison", "N. H. Barton"]
+    id: "doi:10.1534/genetics.111.129569"
+    relationship: background
+    note: "Context only; no step of any proof comes from it. Its eq. (3) expresses probabilities of mutational configurations through the generating function (Laplace transform) of genealogical branch lengths; as restated in Lohse, Chmelik, Martin, and Barton (bioRxiv 10.1101/016469), this is in substance a special case of one direction of panel_eq_iff, that the observable probabilities are determined by Laplace values, in an infinite-sites mutation setting rather than through a reporting channel."
+  - title: "Minimal-assumption inference from population-genomic data"
+    authors: ["D. B. Weissman", "O. Hallatschek"]
+    id: "doi:10.7554/eLife.24836"
+    location: "Materials and methods, Laplace transforms"
+    relationship: background
+    note: "Context only; no step of any proof comes from it. It writes the probabilities of SNP counts in a block as Taylor coefficients of the Laplace transform of the pair coalescence time, a relation of the same kind as the link in panel_eq_iff between panel probabilities and Laplace values, in an infinite-sites setting rather than through a reporting channel."
+
+status:
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  scope: "Objects. A channel E has K ≥ 1 latent types and a finite set H of reported labels; its row i is a probability vector on H. Its column mean at a label is the average of the rows there, and its retained variance is the average over rows of the squared distance from the column means, which is 0 exactly when all rows are equal. E is informative when two rows differ at some label. For a weight ℓ, the reported mass of a pair of labels (x, y) is (1 − ℓ) times the product of the column means at x and y plus ℓ times the average over latent types i of row_i(x)·row_i(y); it is the law of a reported pair when, with weight ℓ, both lineages share one latent type drawn uniformly, and otherwise have independent uniform types. A panel of length L is a sequence x of L pairs of labels, and its weight given time t is the product over the L sites of the reported masses with weight e^(−kt); every site of the panel uses the same t, so the sites are perfectly linked. The panel law of a time law μ assigns to x the integral of this weight against μ. The Laplace value of μ at s is the integral of e^(−st). In every theorem μ and ν are probability measures on the real line that give full mass to [0, ∞). Theorems. (1) panel_eq_iff: for an informative channel, k ≥ 0, and every length L, the panel laws of μ and ν agree at every panel of length L if and only if the Laplace values of μ and ν agree at rk for every natural r ≤ L. When L = 0 or k = 0 both sides hold trivially. (2) panel_erased: for a channel whose retained variance is 0, any k ≥ 0, any L, and any panel x, the panel laws of μ and ν agree at x. (3) next_moment_upgrade: for an informative channel and k ≥ 0, if the Laplace values agree at rk for every r ≤ L but differ at (L + 1)k, then the panel laws agree at every panel of length L and differ at some panel of length L + 1. The hypothesis can hold only when k > 0, since all Laplace values at 0 equal 1. (4) all_panels_eq_iff: for an informative channel and k > 0, the panel laws of μ and ν agree at every panel of every length if and only if μ = ν. Conventions: for t ≥ 0 and k ≥ 0 the panel weights lie in [0, 1], and e^(−st) ≤ 1 for t ≥ 0 and s ≥ 0, so, since μ and ν give full mass to [0, ∞), every integral in the statements is of an almost everywhere bounded measurable function against a probability measure and the zero convention for non-integrable functions never applies. Not covered: recombination between sites or different times at different sites; any model of mutation or genotyping from which the channel and the weight e^(−kt) are derived (the library has an equal-rates bridge that is not among the compared theorems); samples of more than two lineages; how large L must be for a given pair of laws; statistical tests, estimators, and sample sizes; and the existence or characterization of moment or Laplace sequences."
+
+fidelity:
+  divergences: "Setting: Lohse, Harrison, and Barton, and Weissman and Hallatschek, work with mutation counts under infinite-sites models, in which probabilities of data are derivatives or coefficients of a Laplace transform or generating function; here each site is a pair of reported labels from a finite channel, with the mixture weight e^(−kt), so the relation to those works is one of kind, and no infinite-sites model is formalized. Moment problem: the classical uniqueness theorem for the Hausdorff moment problem on [0, 1] is used in substance, through Mathlib's separating-subalgebra theorem, rather than in Hausdorff's form; the characterization of moment sequences is not formalized. Linkage: all sites of a panel share one coalescence time, which models complete linkage only. Laws: time laws are probability measures on the real line concentrated on [0, ∞), rather than measures on [0, ∞)."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.LinkedPairPanel"
+  statements:
+    - source: "This project"
+      lean: "Rhone.Statistics.LinkedPairMoments.panel_eq_iff"
+      module: "Rhone.Statistics.LinkedPairMoments.FiniteCriterion"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Statistics.LinkedPairMoments.panel_erased"
+      module: "Rhone.Statistics.LinkedPairMoments.FiniteCriterion"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Statistics.LinkedPairMoments.next_moment_upgrade"
+      module: "Rhone.Statistics.LinkedPairMoments.FiniteCriterion"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Statistics.LinkedPairMoments.all_panels_eq_iff"
+      module: "Rhone.Statistics.LinkedPairMoments.InfiniteCriterion"
+      status: "proved"

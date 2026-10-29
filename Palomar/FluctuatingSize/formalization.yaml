@@ -1,0 +1,157 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Heterozygosity of the Wright-Fisher model under fluctuating population size, and the harmonic mean"
+  description: "This entry formalizes the Wright–Fisher chain with population sizes that change between generations. A resizing transition matrix from size M to size N is nonnegative with unit row sums and equals the usual Wright–Fisher matrix when M = N. The expected heterozygosity after resizing is multiplied by 1 − 1/N, so after t generations it is the initial heterozygosity multiplied by the product of the factors 1 − 1/n(s). For T values each at least 1, the product of the factors 1 − 1/a(t) is at most the T-th power of 1 − 1/harmonic mean, with equality if and only if all values are equal, and the gap is bounded by explicit second-order expressions; consequently the expected heterozygosity under a fluctuating size schedule is at most that of a constant population of harmonic-mean size. A numerical example with sizes 2 and 4 shows that the product and the power differ."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["q-bio.PE", "math.PR"]
+  msc2020: ["92D10", "60J10", "92D25"]
+
+sources:
+  - title: "Size of population and breeding structure in relation to evolution"
+    authors: ["Sewall Wright"]
+    location: "Science 87:430-431, 1938"
+    relationship: adapts
+    note: "Supplies the established idea that the entry adapts: under fluctuating population size, the effective number over several generations is the harmonic mean of the sizes. The alignment records this source, with Crow and Kimura (1970), for wfVarExpect_het. The entry replaces the approximate harmonic-mean rule by exact statements: the product of per-generation factors is at most the harmonic-mean power, with equality exactly for constant sizes, and the gap is bounded explicitly."
+  - title: "Evolution in Mendelian populations"
+    authors: ["Sewall Wright"]
+    id: "doi:10.1093/genetics/16.2.97"
+    location: "pp. 110-111"
+    relationship: adapts
+    note: "Supplies the established mathematics of wfResize_expect_het: the decay of heterozygosity by a constant factor per generation under random drift in a population of fixed size (the library cites pp. 110-111). The entry adapts it to a haploid population of N genes, where the factor is 1 − 1/N, and to a generation in which the size changes from M to N."
+  - title: "An Introduction to Population Genetics Theory"
+    authors: ["James F. Crow", "Motoo Kimura"]
+    location: "Harper and Row, New York, 1970"
+    relationship: background
+    note: "Context: textbook account of the decline of heterozygosity under changing population size and of the harmonic-mean effective number. The alignment records it with Wright (1938) for wfVarExpect_het; no step of the Lean proof is taken from it."
+  - title: "Mathematical Population Genetics I: Theoretical Introduction"
+    authors: ["Warren J. Ewens"]
+    location: "2nd edition, Interdisciplinary Applied Mathematics 27, Springer, New York, 2004"
+    relationship: background
+    note: "Context: the Wright–Fisher model and the heterozygosity calculations for it. The library module cites secs. 3.2 and 3.7. No step of the Lean proof is attributed to the book."
+  - title: "Theoretical Evolutionary Genetics"
+    authors: ["Joseph Felsenstein"]
+    id: "https://felsenst.github.io/pgbook/pgbook.pdf"
+    relationship: adapts
+    note: "Supplies a textbook derivation of the harmonic-mean effective size by matching the product of per-generation heterozygosity factors with the power for a constant size. The entry adapts this into the exact comparison prod_deficit_le_harmonic, its equality case, and the two explicit gap bounds, all proved here; the inequality and its equality case rest on the weighted AM–GM inequality from Mathlib, not on an argument from the book."
+  - title: "Relationship of Effective to Census Size in Fluctuating Populations"
+    authors: ["Steven T. Kalinowski", "Robin S. Waples"]
+    id: "doi:10.1046/j.1523-1739.2002.00134.x"
+    relationship: background
+    note: "Context: the relation between effective and census sizes in fluctuating populations, where the harmonic mean is the usual approximation. Not formalized and not used in the Lean proofs."
+  - title: "Descent"
+    authors: ["SauersML"]
+    type: other
+    id: "https://github.com/SauersML/Descent/tree/28bbf4915b40b80e84ec9354e0bf450b0e4c7120"
+    location: "Descent/PopGen/LDDecayTheory.lean: harmonicMeanNe, harmonic_mean_reciprocal; Descent/Coalescent/VariableSize.lean: timeChange (files first committed 2026-08-05)"
+    license: "Apache-2.0"
+    relationship: other
+    note: "The harmonic mean of a size history and its reciprocal identity (compare sum_inv_eq_div_harmonicSize), and the coalescent time change for exponential growth. Related; an independent formalization."
+
+related_formalizations:
+  - id: "https://github.com/leanprover-community/mathlib4/blob/c55e6e786f49471c72fbddbec5415808896aec1e/Mathlib/Analysis/MeanInequalities.lean"
+    relationship: "builds-on"
+    note: "Mathlib's inequalities between means. The proofs of prod_deficit_le_harmonic and prod_deficit_eq_harmonic_iff apply its weighted AM–GM inequality and its equality case (Real.geom_mean_le_arith_mean_weighted and Real.geom_mean_eq_arith_mean_weighted_iff_of_pos) to the factors 1 − 1/a(t)."
+  - id: "https://github.com/SauersML/Descent"
+    relationship: "independent"
+    note: "Independent formalization (Lean 4, Apache-2.0); the overlap is described under sources."
+
+status:
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  scope: "Setting. All quantities are real. For natural numbers M and N, the resizing matrix W(M, N) has rows indexed by counts i in {0, ..., M} and columns by counts j in {0, ..., N}, with entry C(N, j) p^j (1 − p)^(N − j), p = i/M: the next generation of N genes is a binomial sample from the allele frequency i/M of the current M genes. When M = 0, Lean's convention 0/0 = 0 gives p = 0. The ordinary Wright–Fisher matrix wf N is the case M = N. Heterozygosity is het(N, i) = 2 (i/N)(1 − i/N), the expected heterozygosity 2p(1 − p) at frequency p = i/N (het is 0 when N = 0). For a size schedule n : ℕ → ℕ, wfVarExpect n t f is the function of the initial count i in {0, ..., n(0)} giving the expectation of f(X_t), where the chain moves from size n(s) to size n(s + 1) by W(n(s), n(s + 1)) for s = 0, ..., t − 1. The harmonic mean of T reals a(0), ..., a(T − 1) is H(a) = T / Σ_t 1/a(t). (1) wfResize_nonneg: every entry of W(M, N) is nonnegative, for all M and N. (2) wfResize_row_sum: every row of W(M, N) sums to 1, for all M and N, including N = 0. (3) wfResize_self: W(N, N) = wf N. (4) wfVarExpect_const: with the constant schedule n(s) = N, wfVarExpect n t f is the t-fold iterate of the Wright–Fisher expectation operator applied to f, for every t and f. (5) wfResize_expect_het: for any M and N > 0 and every count i, Σ_j W(M, N)(i, j) het(N, j) = (1 − 1/N) het(M, i). (6) wfVarExpect_het: if n(s + 1) > 0 for every s < t (n(0) may be 0), then for every initial count i the expected heterozygosity at time t is Π_{s=0}^{t−1} (1 − 1/n(s + 1)) times het(n(0), i). The factors use the sizes n(1), ..., n(t) reached after each transition; n(0) enters only through the initial heterozygosity. (7) sum_inv_eq_div_harmonicSize: for any T and any reals a, with no hypotheses, Σ_t 1/a(t) = T / H(a). In degenerate cases (T = 0, some a(t) = 0, or Σ_t 1/a(t) = 0) the identity holds through Lean's convention x/0 = 0. In (8) to (11), T is any natural number and a(t) ≥ 1 for every t (the a(t) need not be integers). (8) prod_deficit_le_harmonic: Π_t (1 − 1/a(t)) ≤ (1 − 1/H(a))^T. (9) prod_deficit_eq_harmonic_iff: equality holds in (8) if and only if all a(t) are equal. (10) harmonic_sub_prod_deficit_le: (1 − 1/H(a))^T − Π_t (1 − 1/a(t)) ≤ ((T − 1)/(2T)) (Σ_t 1/a(t))². (11) abs_prod_deficit_sub_harmonic_le: |Π_t (1 − 1/a(t)) − (1 − 1/H(a))^T| ≤ (Σ_t 1/a(t))²/2. For T = 0 both sides of (8) are 1, (9) holds trivially, and both sides of (10) and (11) are 0 (in (10) through x/0 = 0). (12) wfVarExpect_het_le_harmonic: under the hypotheses of (6), the expected heterozygosity at time t is at most (1 − 1/H)^t het(n(0), i), where H is the harmonic mean of n(1), ..., n(t); that is, the fluctuating population keeps no more expected heterozygosity than a population of constant size H. (13)–(16) are a worked example with T = 2 and sizes a = (2, 4): the product (1 − 1/2)(1 − 1/4) equals 3/8; H(a) = 8/3; (1 − 1/H(a))² = 25/64; and 3/8 ≠ 25/64, so the inequality (8) can be strict. Not covered: mutation, selection, or migration; diploid populations with separate counts of individuals and genes; sample heterozygosity with the correction N/(N − 1); random (rather than fixed, deterministic) size schedules; coalescent formulations; and any limit or approximation statement for large sizes (a related limit theorem in the library is not part of this entry)."
+
+fidelity:
+  divergences: "1. The model is haploid with N genes, so the per-generation factor is 1 − 1/N; in the diploid formulations of Wright (1931, 1938) and Crow and Kimura (1970) a population of N individuals has 2N genes and the factor is 1 − 1/(2N). 2. Heterozygosity is the population quantity 2p(1 − p) at the current allele frequency, not a sample estimate. 3. The size schedule is fixed and deterministic; random size fluctuations are not covered. 4. In the literature the harmonic mean appears as an approximate effective size, so that Π (1 − 1/N(t)) is approximately (1 − 1/H)^t; the entry instead proves the exact inequality with equality exactly for constant sizes, and explicit second-order bounds on the gap, and gives an example where the inequality is strict. 5. The harmonic-mean comparisons (8) to (11) are stated for real values a(t) ≥ 1, a slight generalization of integer population sizes. 6. sum_inv_eq_div_harmonicSize holds without hypotheses because of Lean's convention x/0 = 0; for positive a(t) and T ≥ 1 it is the usual rearrangement of the definition. 7. All statements are exact; the worked example is an exact rational computation, not a numerical approximation."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.FluctuatingSize"
+  statements:
+    - source: "The resizing matrix has nonnegative entries"
+      lean: "Rhone.MarkovChain.wfResize_nonneg"
+      module: "Rhone.MarkovChain.FluctuatingSizeHeterozygosity"
+      status: "proved"
+    - source: "The rows of the resizing matrix sum to one"
+      lean: "Rhone.MarkovChain.wfResize_row_sum"
+      module: "Rhone.MarkovChain.FluctuatingSizeHeterozygosity"
+      status: "proved"
+    - source: "Equal sizes give the Wright-Fisher matrix"
+      lean: "Rhone.MarkovChain.wfResize_self"
+      module: "Rhone.MarkovChain.FluctuatingSizeHeterozygosity"
+      status: "proved"
+    - source: "A constant schedule gives the iterated Wright-Fisher expectation"
+      lean: "Rhone.MarkovChain.wfVarExpect_const"
+      module: "Rhone.MarkovChain.FluctuatingSizeHeterozygosity"
+      status: "proved"
+    - source: "Wright 1931"
+      lean: "Rhone.MarkovChain.wfResize_expect_het"
+      module: "Rhone.MarkovChain.FluctuatingSizeHeterozygosity"
+      status: "adapted"
+    - source: "Wright 1938; Crow and Kimura 1970"
+      lean: "Rhone.MarkovChain.wfVarExpect_het"
+      module: "Rhone.MarkovChain.FluctuatingSizeHeterozygosity"
+      status: "adapted"
+    - source: "Definition of the harmonic mean, rearranged"
+      lean: "Rhone.MarkovChain.sum_inv_eq_div_harmonicSize"
+      module: "Rhone.MarkovChain.FluctuatingSizeHeterozygosity"
+      status: "proved"
+    - source: "The product is at most the harmonic-mean power"
+      lean: "Rhone.MarkovChain.prod_deficit_le_harmonic"
+      module: "Rhone.MarkovChain.FluctuatingSizeHeterozygosity"
+      status: "proved"
+    - source: "Equality exactly for constant size"
+      lean: "Rhone.MarkovChain.prod_deficit_eq_harmonic_iff"
+      module: "Rhone.MarkovChain.FluctuatingSizeHeterozygosity"
+      status: "proved"
+    - source: "Second-order bound on the gap"
+      lean: "Rhone.MarkovChain.harmonic_sub_prod_deficit_le"
+      module: "Rhone.MarkovChain.FluctuatingSizeHeterozygosity"
+      status: "proved"
+    - source: "Absolute second-order bound"
+      lean: "Rhone.MarkovChain.abs_prod_deficit_sub_harmonic_le"
+      module: "Rhone.MarkovChain.FluctuatingSizeHeterozygosity"
+      status: "proved"
+    - source: "The harmonic-mean population keeps at least as much heterozygosity"
+      lean: "Rhone.MarkovChain.wfVarExpect_het_le_harmonic"
+      module: "Rhone.MarkovChain.FluctuatingSizeHeterozygosity"
+      status: "proved"
+    - source: "Sizes (2, 4), the product is 3/8"
+      lean: "Rhone.MarkovChain.prod_deficit_two_four"
+      module: "Rhone.MarkovChain.FluctuatingSizeHeterozygosity"
+      status: "proved"
+    - source: "Sizes (2, 4), the harmonic mean is 8/3"
+      lean: "Rhone.MarkovChain.harmonicSize_two_four"
+      module: "Rhone.MarkovChain.FluctuatingSizeHeterozygosity"
+      status: "proved"
+    - source: "Sizes (2, 4), the harmonic-mean power is 25/64"
+      lean: "Rhone.MarkovChain.harmonic_power_two_four"
+      module: "Rhone.MarkovChain.FluctuatingSizeHeterozygosity"
+      status: "proved"
+    - source: "Sizes (2, 4), the product differs from the harmonic-mean power"
+      lean: "Rhone.MarkovChain.prod_deficit_two_four_ne_harmonic"
+      module: "Rhone.MarkovChain.FluctuatingSizeHeterozygosity"
+      status: "proved"

@@ -1,0 +1,120 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "The two-locus sampling recursion of the coalescent with recombination: existence, uniqueness, and probabilistic interpretation"
+  description: "This entry formalizes the two-locus sampling recursion of the coalescent with recombination, with finitely many alleles at each locus and parent-independent mutation. For positive mutation rates and nonnegative recombination rate, a solution exists and is unique, over any linearly ordered field. For real parameters, the solution at a sample typed at both loci equals the probability that the typed ancestral recombination graph, in which a mutation removes the ancestry of a lineage at that locus and assigns a type to the sample members it carries, ends with exactly the types of the sample. The solution sums to 1 over all typings of a sample of given size, tends to the product of the one-locus sampling probabilities as the recombination rate tends to infinity, and at recombination rate 0 gives a solution of a one-locus recursion on pairs of alleles. With mutation rates 0, the expected total branch length of the genealogy at locus A of a sample of size n is 2 times the sum of 1/(i + 1) for i < n − 1. The transition matrix of the typed ancestral chain is shown to be nonnegative with unit row sums."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["q-bio.PE", "math.PR"]
+  msc2020: ["92D10", "60J90", "60J10", "92D15"]
+
+sources:
+  - title: "Closed-form two-locus sampling distributions: accuracy and universality"
+    authors: ["Paul A. Jenkins", "Yun S. Song"]
+    id: "doi:10.1534/genetics.109.107995"
+    relationship: adapts
+    note: "The source recorded (in the alignment, eq. (5)) for the two-locus sampling recursion that the entry formalizes. The Lean definition states the recursion for finitely many alleles with parent-independent mutation, in killed form (a mutation removes the lineage's type at that locus, weighted by the frequency of the new allele), over an arbitrary linearly ordered field. The existence and uniqueness proofs are written for this formalization: the recursion is solved level by level in the number n_A + n_B of lineage-locus pairs, each level being a finite linear system whose operator is injective for positive mutation rates. The probabilistic interpretation, the normalization, the limits, and the branch-length identity are proved in Lean and are not taken from this paper."
+  - title: "On the two-locus sampling distribution"
+    authors: ["S. N. Ethier", "R. C. Griffiths"]
+    id: "doi:10.1007/BF00168175"
+    relationship: background
+    note: "Context: the two-locus sampling distribution and its recursion, in infinite-alleles form. The Lean statements use finitely many alleles with parent-independent mutation."
+  - title: "The sampling distribution of linkage disequilibrium"
+    authors: ["G. Brian Golding"]
+    id: "doi:10.1093/genetics/108.1.257"
+    relationship: background
+    note: "Context: an early source of the two-locus sampling recursion, in infinite-alleles form."
+  - title: "An ancestral recombination graph"
+    authors: ["Robert C. Griffiths", "Paul Marjoram"]
+    id: "doi:10.1007/978-1-4757-2609-1_16"
+    relationship: background
+    note: "Context for measure_hit_ever_initT: the ancestral recombination graph, the process of which the typed ancestral chain here is the embedded jump chain with mutation removing ancestry and assigning types. The Lean chain, its trajectory measure, and the identification of its absorption probability with the solution of the recursion are constructed and proved here."
+  - title: "A limit theorem for two-locus diffusion models in population genetics"
+    authors: ["S. N. Ethier"]
+    id: "doi:10.2307/3212907"
+    relationship: background
+    note: "Context for tendsto_q_qHat: the rho -> infinity limit of the two-locus distribution is the product of the one-locus distributions, as credited in Jenkins and Song (2012), sec. 2.2, p. 7. The Lean statement is for the solution of the recursion and its proof does not follow the diffusion argument."
+  - title: "Simulating probability distributions in the coalescent"
+    authors: ["R. C. Griffiths", "S. Tavare"]
+    id: "doi:10.1006/tpbi.1994.1023"
+    relationship: background
+    note: "Context for measure_hit_ever_initT and isSolutionOneG_q_rho_zero: computing sampling probabilities through ancestral processes and sampling recursions. Background only; no step of the Lean proofs is taken from it."
+  - title: "The coalescent"
+    authors: ["J. F. C. Kingman"]
+    id: "doi:10.1016/0304-4149(82)90011-4"
+    relationship: background
+    note: "Context for expected_total_length: the Kingman coalescent, which is the genealogy at one locus of the ancestral recombination graph; its expected total branch length is the classical value 2(1 + 1/2 + ... + 1/(n − 1)) when each pair coalesces at rate 1. The Lean statement is proved for the locus-A marginal of the two-locus chain."
+  - title: "On the number of segregating sites in genetical models without recombination"
+    authors: ["G. A. Watterson"]
+    id: "doi:10.1016/0040-5809(75)90020-9"
+    relationship: background
+    note: "Context for expected_total_length: the expected number of segregating sites is proportional to the sum 1 + 1/2 + ... + 1/(n − 1), which reflects the expected total branch length stated here."
+  - title: "Padé approximants and exact two-locus sampling distributions"
+    authors: ["Paul A. Jenkins", "Yun S. Song"]
+    id: "doi:10.1214/11-AAP780"
+    location: "Sec. 2.2, p. 7, the display after eq. (2.4) (arXiv:1107.3897v2)"
+    relationship: background
+    note: "Context for tendsto_q_qHat: states the rho -> infinity limit as the product of the one-locus marginals, credited to Ethier (1979)."
+
+status:
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  scope: "The recursion. A configuration with KA alleles at locus A and KB at locus B records a_i lineages typed only at A (allele i), b_j typed only at B, and c_ij typed at both; n_A counts lineages typed at A (doubly typed included), n_B those typed at B, t the doubly typed ones, and n all lineages. A solution (IsSolution) over a field F is a function q on configurations with q(empty) = 1, q equal to pi_A(i), pi_B(j), or pi_A(i) pi_B(j) on the one-lineage configurations, and, for every configuration with n ≥ 2, (n(n − 1) + theta_A n_A + theta_B n_B + rho t) q equal to the sum of coalescence terms (including the merger of an A-only and a B-only lineage into a doubly typed one), parent-independent mutation terms in killed form, and recombination terms (a doubly typed lineage splits into an A-only and a B-only lineage). This corresponds to pairwise coalescence at rate 1 and per-lineage mutation and recombination rates theta_A/2, theta_B/2, and rho/2. Recursion.q denotes the solution chosen by exists_isSolution; by (2) it is the only one. qOne theta pi m = prod_i (theta pi_i)(theta pi_i + 1)...(theta pi_i + m_i − 1) / (theta(theta + 1)...(theta + |m| − 1)) is the one-locus probability of an ordered sample with allele counts m. For a labelling of n sample members by alleles sigma_A and sigma_B, cSample is the configuration with c_ij members of type (i, j) and no singly typed lineages; q at cSample is the probability of that labelled typing, not of the unordered allele counts.\n\nThe typed ancestral chain. A state consists of a set of lineages, each a pair (S, T) of sets of sample members whose ancestry it carries at A and at B, and partial type assignments of the sample members at each locus. From the initial state (n lineages ({k}, {k}), no types), each ordered pair of distinct lineages coalesces with weight 1; each lineage with nonempty S mutates at A with weight theta_A, which removes its A-component (and the lineage, if T is empty) and assigns allele i, with probability pi_A(i), to every member of S; similarly at B; and each doubly carrying lineage recombines with weight rho. The weights are normalized by n(n − 1) + theta_A n_A + theta_B n_B + rho t to give the jump-chain transition probabilities transS; a state with zero total weight is absorbing. The trajectory measure is the law on sequences indexed by ℕ of this chain started at a given state at time 0, built with the Ionescu–Tulcea theorem. Adm records theta_A, theta_B, rho ≥ 0 and probability vectors pi_A, pi_B.\n\nCompared theorems. (1) exists_isSolution, stated twice (in the entry namespace and as Rhone.LinearAlgebra.Recursion.exists_isSolution, on which the definition of Recursion.q depends): over any linearly ordered field, for theta_A > 0, theta_B > 0, rho ≥ 0, and arbitrary pi_A and pi_B (no positivity or normalization assumed), the recursion has a solution. (2) isSolution_unique: under the same hypotheses any two solutions are equal on all configurations. (3) measure_hit_ever_initT: for real parameters with Adm and theta_A > 0, theta_B > 0, and any typings sigma_A, sigma_B of n members, the probability that the chain from the initial state ever reaches a state with no lineages whose assigned types agree with sigma_A and sigma_B equals Recursion.q at cSample (as an extended nonnegative real). At such a state every member has been assigned a type at each locus, so the event is that the process ends with exactly the sample's types. (4) sum_q_cSample: for real theta_A > 0, theta_B > 0, rho ≥ 0, and pi_A, pi_B summing to 1 (nonnegativity is not assumed), the sum of q at cSample over all typings sigma_A, sigma_B of n members is 1, for every n including n = 0. (5) tendsto_q_qHat: for real theta_A > 0, theta_B > 0 and probability vectors pi_A, pi_B, and every configuration xi (singly typed lineages allowed), q(xi) tends to qOne(theta_A, pi_A, m_A) qOne(theta_B, pi_B, m_B) as rho tends to infinity, where m_A and m_B are the allele counts of xi at each locus (doubly typed lineages counted at both). (6) isSolutionOneG_q_rho_zero: over any linearly ordered field, for theta_A > 0, theta_B > 0, rho = 0, and nu_A, nu_B summing to 1, the function m ↦ q(full m), on configurations whose lineages are all doubly typed with counts m over pairs of alleles, solves the one-locus recursion (IsSolutionOneG) with mutation rate theta_A + theta_B, boundary values nu_A(i) nu_B(j), and mutation matrix from (i', j') to (i, j) equal to (theta_A [j' = j] nu_A(i) + theta_B [i' = i] nu_B(j))/(theta_A + theta_B). That recursion reads q(empty) = 1, q(one lineage of type x) = nu(x), and (|m|(|m| − 1) + theta |m|) q(m) = sum_x m_x(m_x − 1) q(m − e_x) + theta sum_x sum_y P(y, x) m_x q(m − e_x + e_y) for |m| ≥ 2. (7) expected_total_length: for theta_A = theta_B = 0, any rho ≥ 0, and any probability vectors, the expectation under the trajectory measure from the initial state of the sum over steps k of r(k)/R(k), where r(k) is the number of lineages whose A-component is a nonempty proper subset of the sample and R(k) = L(L − 1)/2 + rho t/2 is the total continuous-time rate (L lineages), equals 2 times the sum of 1/(i + 1) over 0 ≤ i < n − 1; for n ≤ 1 both sides are 0. This is the expected total length, below the root, of the genealogy at locus A, computed with the mean holding time 1/R in place of exponential holding times. (8) transS_nonneg: for nonnegative theta_A, theta_B, and rho and nonnegative pi_A and pi_B, every transition probability is nonnegative. (9) sum_transS: for pi_A and pi_B summing to 1 (no sign conditions), every row of the transition matrix sums to 1.\n\nNot covered: mutation that is not parent-independent in the two-locus recursion (the one-locus recursion in (6) has a general matrix, but only the product of parent-independent matrices is used), the infinite-alleles model, continuous-time construction of the process, distributions or higher moments of branch lengths, the locus-B or joint branch lengths, rates of convergence in (5), and zero mutation rates in (1)–(6)."
+
+fidelity:
+  divergences: "The recursion is formalized for finitely many alleles with parent-independent mutation, written in killed form; any more general mutation model in the cited recursion of Jenkins and Song (2009) is not formalized. Ethier and Griffiths (1990) and Golding (1984) treat infinite alleles. Existence and uniqueness are proved over any linearly ordered field, not only the reals, and require theta_A > 0 and theta_B > 0. The probabilistic interpretation uses the embedded jump chain of the typed ancestral recombination graph on a finite state space, with an ordered-pair coalescence convention; no continuous-time process is constructed, and the expected branch length in (7) uses mean holding times. q is the probability of a labelled (ordered) typing of the sample; probabilities of unordered allele counts differ by multinomial factors. The rho -> infinity limit is proved for the solution of the recursion at fixed positive mutation rates, whereas Ethier (1979) works with two-locus diffusion models. The branch-length identity is for the genealogy at locus A of the two-locus process with zero mutation, which is the Kingman coalescent (proved in the library, not a compared statement); the time scale has pairwise coalescence rate 1. The normalization (4) and the row sums (9) are algebraic and do not assume nonnegative allele frequencies."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.SamplingRecursion"
+  statements:
+    - source: "Jenkins and Song 2009, eq. (5)"
+      lean: "Rhone.LinearAlgebra.Recursion.exists_isSolution"
+      module: "Rhone.LinearAlgebra.Recursion.Exist"
+      status: "proved"
+    - source: "Jenkins and Song 2009, eq. (5)"
+      lean: "Rhone.LinearAlgebra.Recursion.IsSolution.unique"
+      module: "Rhone.LinearAlgebra.Recursion.Unique"
+      status: "proved"
+    - source: "Griffiths and Marjoram 1997"
+      lean: "Rhone.Coalescent.TypedAncestralChain.measure_hit_ever_initT"
+      module: "Rhone.Coalescent.TypedAncestralChain.Sampling"
+      status: "adapted"
+    - source: "Known theory"
+      lean: "Rhone.Coalescent.TwoLocusGenealogy.sum_q_cSample"
+      module: "Rhone.Coalescent.TwoLocusGenealogy.Total"
+      status: "proved"
+    - source: "Known theory"
+      lean: "Rhone.Coalescent.Rational.tendsto_q_qHat"
+      module: "Rhone.Coalescent.Rational.Limit"
+      status: "proved"
+    - source: "Known theory"
+      lean: "Rhone.MarkovChain.GeneralMutation.isSolutionOneG_q_rho_zero"
+      module: "Rhone.MarkovChain.GeneralMutation.RhoZero"
+      status: "proved"
+    - source: "Known theory"
+      lean: "Rhone.Coalescent.BranchLengthMoments.expected_total_length"
+      module: "Rhone.Coalescent.BranchLengthMoments.Length"
+      status: "adapted"

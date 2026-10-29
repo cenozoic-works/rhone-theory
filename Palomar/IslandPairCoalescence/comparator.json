@@ -1,0 +1,29 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.IslandPairCoalescence.Challenge",
+  "solution_module": "Palomar.IslandPairCoalescence.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.IslandPairCoalescence.expectedTime_same",
+    "Rhone.Palomar.IslandPairCoalescence.expectedTime_different",
+    "Rhone.Palomar.IslandPairCoalescence.lintegral_timeBefore",
+    "Rhone.Palomar.IslandPairCoalescence.fstFromTimes_between",
+    "Rhone.Palomar.IslandPairCoalescence.fstFromTimes_random",
+    "Rhone.Palomar.IslandPairCoalescence.fstBetween_diploid",
+    "Rhone.Palomar.IslandPairCoalescence.fstRandom_diploid",
+    "Rhone.Palomar.IslandPairCoalescence.fstBetween_strictAntiOn",
+    "Rhone.Palomar.IslandPairCoalescence.fstRandom_strictAntiOn",
+    "Rhone.Palomar.IslandPairCoalescence.tendsto_fstBetween_zero_right",
+    "Rhone.Palomar.IslandPairCoalescence.tendsto_fstRandom_zero_right",
+    "Rhone.Palomar.IslandPairCoalescence.tendsto_fstBetween_atTop",
+    "Rhone.Palomar.IslandPairCoalescence.tendsto_fstRandom_atTop",
+    "Rhone.Palomar.IslandPairCoalescence.tendsto_fstBetween_demes",
+    "Rhone.Palomar.IslandPairCoalescence.tendsto_fstRandom_demes",
+    "Rhone.Palomar.IslandPairCoalescence.tendsto_fstBetween_demes_diploid",
+    "Rhone.Palomar.IslandPairCoalescence.tendsto_fstRandom_demes_diploid"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

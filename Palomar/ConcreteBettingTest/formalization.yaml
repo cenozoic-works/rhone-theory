@@ -1,0 +1,83 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "A prespecified betting test of panmixia against a two-deme history: size and power"
+  description: "This entry formalizes a prespecified fixed-sample test, based on independent blocks of three linked sites observed at three sampled tips with four allelic states, of a panmictic null model against a two-deme alternative. Under the null, the three-tip genealogy follows the coalescent with a time-varying pair-coalescence rate r, and sites mutate under the four-state equal-rates model with scale k. For every nonnegative locally integrable rate r whose integrated clock diverges and every k > 0, the rejection probability with at least 72,000,000,000 independent blocks is at most 1/20. For one specific two-island alternative, with all three tips sampled in the same deme, the rejection probability is at least 4/5 with exactly 72,000,000,000 blocks and at least 19/20 with exactly 250,000,000,000 blocks. The test, its features, its betting factors, its localization tolerance, and its threshold are fixed numerical choices given in the Challenge."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["q-bio.PE", "math.ST"]
+  msc2020: ["92D10", "62F03", "60J90"]
+
+sources:
+  - title: "A fixed-sample betting test of panmixia against a two-deme history, with size and power bounds"
+    type: original-proof
+    relationship: other
+    note: "The test, its numerical constants, and the size and power proofs were written in this project; no published source is formalized. Novelty unknown; no claim of priority. The models are standard: the three-lineage coalescent with a time-varying coalescence rate, the structured coalescent for two islands with symmetric migration, and the equal-rates mutation model; no cited source is formalized for them. The general idea of rejecting when the product of nonnegative betting factors reaches 1/alpha comes from the testing-by-betting literature cited below as context. What is specific to this entry is the following: a fixed table of five block features; a quadratic score of the five feature means, proved nonpositive under every panmictic null in the stated class; betting factors linear in the features and centred at the alternative's feature means; a localization condition that the first three empirical feature means lie within 1/100000 of the alternative's values; and explicit finite-sample size and power bounds. The size proof combines Markov's inequality for the product wealth at a fixed sample size, which applies when the null feature means lie near the alternative's values, with a Hoeffding-type concentration bound for the localization event otherwise. The power proof combines the same concentration bound with first and second moment bounds on the log wealth."
+  - title: "Testing by betting: a strategy for statistical and scientific communication"
+    authors: ["G. Shafer"]
+    id: "doi:10.1111/rssa.12647"
+    relationship: background
+    note: "Context only; no result of this paper is used or formalized. It presents testing by betting, in which evidence against a hypothesis is the wealth of a bet that cannot be expected to gain under that hypothesis; this is context for the product-wealth form of the rejection rule. The size proof here uses Markov's inequality at one fixed sample size."
+  - title: "Safe testing"
+    authors: ["P. Grunwald", "R. de Heide", "W. M. Koolen"]
+    id: "doi:10.1093/jrsssb/qkae011"
+    relationship: background
+    note: "Context only; no result of this paper is used or formalized. It develops tests based on e-variables, nonnegative statistics with expectation at most 1 under the null. That is context for the product of betting factors; this entry does not prove that its product wealth is an e-variable for the whole composite null, and its size bound instead splits the null into nulls near to and far from the alternative's feature means."
+  - title: "Estimating means of bounded random variables by betting"
+    authors: ["I. Waudby-Smith", "A. Ramdas"]
+    id: "doi:10.1093/jrsssb/qkad009"
+    relationship: background
+    note: "Context only; no result of this paper is used or formalized. It constructs betting-based confidence sets for means of bounded random variables, which is context for betting on bounded features. The features here take values in [-1/3, 1], and the concentration bound used here is a Hoeffding-type bound, not a betting confidence sequence."
+  - title: "Game-theoretic statistics and safe anytime-valid inference"
+    authors: ["Aaditya Ramdas", "Peter Grünwald", "Vladimir Vovk", "Glenn Shafer"]
+    id: "doi:10.1214/23-STS894"
+    location: "Statistical Science 38(4):576-601, 2023; arXiv:2210.01948"
+    relationship: background
+    note: "Context only; no result of this survey is used or formalized. It surveys testing by betting, e-values, and anytime-valid inference, and is context for the construction of the test. The present test is a fixed-sample test; no anytime-validity or optional-stopping guarantee is stated or proved."
+
+status:
+  scope: "Data and test. A block is a function from three sites to triples of states in Fin 4, one state per tip. Each site of a block is assigned one of five categories (all three tips equal; only tips 1 and 2 equal; only tips 1 and 3 equal; only tips 2 and 3 equal; all distinct), and a fixed table assigns to the resulting triple of categories five rational feature values, each a multiple of 1/243 in [-1/3, 1]. A sample is N independent blocks. The test rejects (concreteRejects) when both of the following hold: the empirical means of the first three features each lie within 1/100000 of fixed target values (the first three coordinates of sourceMeans, five fixed rationals); and the product over the N blocks of the betting factor 1 + eta (contrast + margin) is at least 20, where eta = 1/400000000, contrast is a fixed affine function of the block's five feature values that vanishes at sourceMeans, and margin is the value at sourceMeans of a fixed quadratic score minus 401520 × (1/100000)^2. Block laws. Given a genealogy with cherry height u, upper branch length v, and cherry label, the three sites of a block are conditionally independent; at each site the root state is uniform on Fin 4 and every branch of length t applies exp(-k t/2) I + (1 - exp(-k t/2)) U, with U the uniform matrix. Under the null, the cherry label is uniform over the three pairs, and (u, u + v) has the density of the coalescence times of three lineages with pair-coalescence rate r(t) at time t: the first coalescence at total rate 3 r and the second at rate r, with integrated clock H(t) equal to the integral of r from 0 to t. Under the alternative, the three lineages start in deme 0 of two islands, each lineage migrates at rate 1/100, each pair in the same deme coalesces at rate 1, and the mutation scale is 2; the joint density of the two coalescence times and of the first pair to coalesce is given by matrix exponentials of these rates. Theorem concrete_uniform_pan_size. Hypotheses: r is locally integrable with respect to Lebesgue measure, r(t) ≥ 0 for every real t, and H(t) tends to infinity as t does (so that both coalescences occur with probability 1); k > 0; and N ≥ 72000000000. Conclusion: under the null block law, the probability that the test rejects with N independent blocks is at most 1/20. The bound is uniform over all such r and k, which are not known to the test. Theorem concrete_source_power_eighty: under the alternative block law, the probability of rejection with exactly N = 72000000000 blocks is at least 4/5. Theorem concrete_source_power_ninety_five: under the same alternative, the probability of rejection with exactly N = 250000000000 blocks is at least 19/20. Limits: power is proved only for this one alternative parameter (two islands, migration rate 1/100, within-deme coalescence rate 1, mutation scale 2, all tips in one deme), at exactly these two sample sizes; nothing is stated for other alternatives, other sample sizes, or monotonicity in N. The target values in the test are the alternative's own feature means, so the test is tailored to that alternative. Not covered: data with recombination within a block or dependence between blocks; mutation models other than the equal-rates model; more than three tips or other numbers of states or sites; an optimality or efficiency claim; anytime validity or optional stopping; and any practical claim that samples of this size are available."
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+
+fidelity:
+  divergences: "No cited source states the formalized results; the four cited papers are context for the betting form of the test only. Relative to that literature, the test is a fixed-sample test, with size proved by Markov's inequality at a fixed N together with a concentration bound, rather than an anytime-valid test proved by Ville's inequality; the product wealth is not shown to be an e-variable for the whole composite null. The betting factors are fixed in advance, not chosen adaptively from earlier data. The null class is restricted to panmictic three-lineage coalescents with a time-varying coalescence rate satisfying the stated integrability, nonnegativity, and divergence conditions, combined with the four-state equal-rates mutation model with uniform root distribution, any mutation scale k > 0, and a uniformly random cherry label; the alternative is a single parameter point. Blocks are independent across the sample, and the three sites within a block share one genealogy. All statements are exact inequalities about the defined probability laws; no simulation or floating-point computation enters the statements."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.ConcreteBettingTest"
+  statements:
+    - source: "This project"
+      lean: "Rhone.Statistics.ConcreteBettingFeatures.concrete_uniform_pan_size"
+      module: "Rhone.Statistics.ConcreteBettingFeatures.Testing"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Statistics.ConcreteBettingFeatures.concrete_source_power_eighty"
+      module: "Rhone.Statistics.ConcreteBettingFeatures.Testing"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Statistics.ConcreteBettingFeatures.concrete_source_power_ninety_five"
+      module: "Rhone.Statistics.ConcreteBettingFeatures.Testing"
+      status: "proved"

@@ -1,0 +1,17 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.EwensUrn.Challenge",
+  "solution_module": "Palomar.EwensUrn.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.EwensUrn.sum_esf",
+    "Rhone.Palomar.EwensUrn.esf_eq_prod",
+    "Rhone.Palomar.EwensUrn.ewensUrnLaw_apply",
+    "Rhone.Palomar.EwensUrn.esf_conditional_card_real",
+    "Rhone.Palomar.EwensUrn.esf_deletion_consistent_real"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.KingmanSegregatingSites.Challenge",
+  "solution_module": "Palomar.KingmanSegregatingSites.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.KingmanSegregatingSites.markedKingmanSegregating_mean",
+    "Rhone.Palomar.KingmanSegregatingSites.markedKingmanSegregating_variance",
+    "Rhone.Palomar.KingmanSegregatingSites.markedKingmanWatterson_mean",
+    "Rhone.Palomar.KingmanSegregatingSites.markedKingmanWatterson_variance",
+    "Rhone.Palomar.KingmanSegregatingSites.markedKingmanPi_mean",
+    "Rhone.Palomar.KingmanSegregatingSites.markedKingmanPi_variance"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

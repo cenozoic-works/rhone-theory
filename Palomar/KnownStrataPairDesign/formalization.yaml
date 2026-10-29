@@ -1,0 +1,101 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Pair designs with known strata in island models: Laplace gaps and separation of strata"
+  description: "This entry formalizes designs that use pairs of lineages whose starting stratum is known, in island models. In the symmetric island model with n + 2 demes, coalescence rate c within a deme, and migration rate q from a deme to each other deme, the two-state pair generator (lineages in the same deme or in different demes) and its coalescence rates are shown to be the projection of the labelled island-pair generator, and the Laplace transforms of the coalescence-time laws from the two strata differ by ck/(k² + k(c + 2(n + 2)q) + 2cq). A pair is then reported through a channel that maps each of K latent types to a probability distribution on reported labels, the two lineages sharing one latent type with weight equal to the Laplace value and having independent types otherwise; the two strata give different reported pair laws if and only if the channel is informative, that is, its rows are not all equal. For two demes with asymmetric migration rates a and b and coalescence rates c and d, the Laplace values satisfy the first-step balance identity (k + a + b)L₁ = bL₀ + aL₂ for the mixed stratum, the mixed-stratum value lies strictly below at least one of the other two, and consequently no single reported pair law agrees with all three strata through an informative channel with at least two latent types."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["q-bio.PE", "math.PR"]
+  msc2020: ["92D10", "60J27", "60J28", "62F03"]
+
+sources:
+  - title: "Demographic inference using genetic data from a single individual: separating population size variation from population structure"
+    authors: ["O. Mazet", "W. Rodriguez", "L. Chikhi"]
+    id: "doi:10.1016/j.tpb.2015.06.003"
+    location: "arXiv:1412.1243v1, p. 9 (to p. 10, eq. (3))"
+    relationship: formalizes
+    note: "Supplies the established mathematics formalized in spatial_laplace_gap: for two lineages in the symmetric n-island model, p. 9 gives the coupled first-step equations for the Laplace transforms p_s and p_d of the coalescence time from the same deme and from different demes, and p. 10 (eq. (3)) gives their solution. spatial_laplace_gap is the difference p_s − p_d in substance, up to a rescaling of time and with the number of demes written as n + 2. The two-deme asymmetric identity asymmetric_balance is the analogous first-step equation for the mixed stratum of a different model; it is not a statement of this paper. The generator identities pair_generator_eq_projected and exit_rate_eq_projected, and the reporting-channel results spatial_separated_iff, asymmetric_laplace_separation, and asymmetric_no_common_law, are this project's additions and are not taken from any cited source. Novelty unknown; no claim of priority. The Lean proofs identify each Laplace transform with the solution of the linear system (kI − Q)L = (exit rates) for the generator Q and then argue algebraically."
+  - title: "Stochastic models in population genetics: genealogy and genetic differentiation in structured populations"
+    authors: ["H. M. J. D. Herbots"]
+    location: "PhD thesis, University of London, 1994"
+    relationship: background
+    note: "Context only; no step of any proof comes from it. Mazet, Rodriguez, and Chikhi (2015) credit the pair Laplace transforms of the symmetric island model, the content of spatial_laplace_gap, to this thesis; it is cited on that credit."
+  - title: "A general method for calculating likelihoods under the coalescent process"
+    authors: ["K. Lohse", "R. J. Harrison", "N. H. Barton"]
+    id: "doi:10.1534/genetics.111.129569"
+    relationship: background
+    note: "Context only; no step of any proof comes from it. A general generating-function method for coalescent likelihoods; for two lineages in two demes with asymmetric migration, its first-step equations contain asymmetric_balance as a special case."
+  - title: "The coalescent in two partially isolated diffusion populations"
+    authors: ["N. Takahata"]
+    id: "doi:10.1017/S0016672300027683"
+    relationship: background
+    note: "Context only; no step of any proof comes from it. Treats the coalescent of two lineages in two partially isolated populations, the setting of the three-state generator used for asymmetric_balance, asymmetric_laplace_separation, and asymmetric_no_common_law; its first-step equations contain asymmetric_balance as a special case."
+  - title: "Genealogical histories in structured populations"
+    authors: ["S. Kumagai", "M. K. Uyenoyama"]
+    id: "doi:10.1016/j.tpb.2015.01.003"
+    location: "Sec. 2.2, eqs. (13)-(18), and Appendix C"
+    relationship: background
+    note: "Context only; no step of any proof comes from it. For two demes and a sample of size 2, these equations give spatial_laplace_gap (the case of two demes) and asymmetric_balance in substance."
+
+status:
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  scope: "Laws. For a square matrix Q (in the compared statements always a transient generator: non-negative off-diagonal rates, rows summing to at most 0), the exit rate of state i is −(Q·1)_i, and the first-exit law from state i is the measure on the real line with density t ↦ (exp(tQ)·exit)_i on t > 0 (negative values replaced by 0) and zero elsewhere; for a transient generator this is the phase-type law of the absorption time. The Laplace value at k of a measure μ is the integral of e^(−kt) against μ. Symmetric design: pairGenerator n c q is the generator on two states, 0 (both lineages in one deme) and 1 (lineages in different demes), with rates 2(n + 1)q from 0 to 1, 2q from 1 to 0, and coalescence rate c from 0 and 0 from 1. It describes two lineages in an island model with n + 2 demes in which each lineage moves to each specific other deme at rate q. Reporting: a channel E has K ≥ 1 latent types and a finite set H of reported labels; row i is a probability vector on H. For a weight ℓ, the reported mass of a pair of labels (x, y) is (1 − ℓ) times the product of the column means at x and y plus ℓ times the average over latent types i of row_i(x)·row_i(y). It is the law of the reported pair when, with weight ℓ, both lineages share one latent type drawn uniformly, and otherwise their types are independent and uniform; in the compared statements the weight is a Laplace value. E is informative when two of its rows differ at some label. Asymmetric design: generator a b c d is the generator on three states, 0 (both lineages in deme 1), 1 (one lineage in each deme), and 2 (both in deme 2), with rates 2a from 0 to 1, b from 1 to 0, a from 1 to 2, 2b from 2 to 1, and coalescence rates c from 0, 0 from 1, and d from 2; it describes two demes with per-lineage migration rate a from deme 1 to deme 2 and b from deme 2 to deme 1. L_i(k) is the Laplace value at k of the first-exit law from state i. Theorems. (1) pair_generator_eq_projected: for every n and every real c and q, each entry of pairGenerator n c q equals the corresponding entry of projectedGenerator (n + 2) ((n + 1)q) c, the same-deme/different-deme generator of the labelled island pair with n + 2 demes, total per-lineage migration rate (n + 1)q, and coalescence rate c, restricted to the two transient categories. No sign conditions are needed. That projectedGenerator is the lumping of the labelled island-pair generator is proved in the library (generator_observe) but is not itself a compared statement. (2) exit_rate_eq_projected: for every n, c, and q, the exit rate of each state equals the projected rate into the coalesced state, namely c from state 0 and 0 from state 1. (3) spatial_laplace_gap: for every n, c > 0, q > 0, and k ≥ 0, L_0(k) − L_1(k) = ck/(k² + k(c + 2(n + 2)q) + 2cq); at k = 0 the gap is 0. (4) spatial_separated_iff: for every channel E, every n, c > 0, q > 0, and k > 0, some pair of labels receives a different reported mass under the weight L_0(k) than under L_1(k) if and only if E is informative. (5) asymmetric_balance: for a, b, c, d > 0 and k ≥ 0, (k + a + b)L_1(k) = bL_0(k) + aL_2(k). (6) asymmetric_laplace_separation: for a, b, c, d > 0 and k > 0, L_1(k) < L_0(k) or L_1(k) < L_2(k). (7) asymmetric_no_common_law: for every informative channel with K ≥ 2 latent types and all a, b, c, d, k > 0, there is no function Q on pairs of labels such that the reported masses under the weights L_0(k), L_1(k), and L_2(k) all equal Q; that is, the three strata cannot all produce the same reported pair law. Degenerate cases: k = 0 is allowed in (3) and (5) and excluded in (4), (6), and (7), where the Laplace values would coincide; zero migration or coalescence rates are excluded from (3) to (7); a channel with identical rows is the non-informative case of (4) and is excluded from (7). Not covered: samples of more than two lineages; the individual transforms L_0 and L_1 as compared statements (only their difference is compared, although the library computes each); moments or densities of the coalescence time in closed form; the derivation of the reporting channel from a mutation or genotyping model, and the probabilistic reading of the weight as the chance that no event of an independent rate-k process precedes coalescence; asymmetric island models with more than two demes; and any estimation procedure or test built on these separations."
+
+fidelity:
+  divergences: "Scaling: Mazet, Rodriguez, and Chikhi state the symmetric n-island transforms with their own time scale and parametrization; here the coalescence rate c and the per-destination migration rate q are free positive parameters and the number of demes is n + 2, so the formulas agree only after rescaling time and renaming parameters. Form: spatial_laplace_gap states the difference of the two transforms, not the transforms themselves. Asymmetric model: the three-state generator, with unlabelled lineages, migration rates a and b, and separate coalescence rates c and d, is a specific two-deme case of the models of Takahata and of Lohse, Harrison, and Barton; their general equations are not formalized. Reporting channel: the channel, the reported-mass mixture, and the separation results (spatial_separated_iff, asymmetric_laplace_separation, and asymmetric_no_common_law) are not taken from any cited source; their modelling assumptions (uniform latent types, a shared type with weight equal to a Laplace value, independent types otherwise) are part of the definitions. Laws: the first-exit laws are defined as density measures from the matrix exponential; that they are probability measures is proved in the library but is not one of the compared statements. Continuous time only: no discrete-generation model is formalized."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.KnownStrataPairDesign"
+  statements:
+    - source: "This project"
+      lean: "Rhone.Statistics.IslandPairSpatialDesign.pairGenerator_eq_projectedGenerator"
+      module: "Rhone.Statistics.IslandPairSpatialDesign"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Statistics.IslandPairSpatialDesign.exitRate_pairGenerator"
+      module: "Rhone.Statistics.IslandPairSpatialDesign"
+      status: "proved"
+    - source: "Mazet, Rodriguez, and Chikhi 2015, arXiv v1, pp. 8-9"
+      lean: "Rhone.Statistics.SpatialPairDesign.pairLaplace_gap"
+      module: "Rhone.Statistics.SpatialPairDesign.Laplace"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Statistics.SpatialPairDesign.source_separated_iff"
+      module: "Rhone.Statistics.SpatialPairDesign.Observation"
+      status: "proved"
+    - source: "Classical first-step equation"
+      lean: "Rhone.Statistics.AsymmetricPairDesign.laplace_balance"
+      module: "Rhone.Statistics.AsymmetricPairDesign.Laplace"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Statistics.AsymmetricPairDesign.laplace_separation"
+      module: "Rhone.Statistics.AsymmetricPairDesign.Laplace"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Statistics.AsymmetricPairDesign.reportedPairLaw_no_common_law"
+      module: "Rhone.Statistics.AsymmetricPairDesign.Separation"
+      status: "proved"

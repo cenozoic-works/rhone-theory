@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+title: "rhone-theory: a formal web of population genetics in Lean 4"
+message: "Cite this repository as below."
+type: software
+authors:
+  - name: "Cenozoic Works"
+version: 1.0.0
+license: Apache-2.0
+keywords:
+  - population genetics
+  - Lean 4
+  - Mathlib
+  - coalescent theory
+  - formal verification
+abstract: "Population genetics in Lean 4 over Mathlib."

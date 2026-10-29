@@ -1,0 +1,17 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.FiniteChains.Challenge",
+  "solution_module": "Palomar.FiniteChains.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.FiniteChains.wf_charpoly",
+    "Rhone.Palomar.FiniteChains.integer_stepwise_no_stationary",
+    "Rhone.Palomar.FiniteChains.moran_mutation_stationary",
+    "Rhone.Palomar.FiniteChains.moran_mutation_probability",
+    "Rhone.Palomar.FiniteChains.moran_mutation_markov"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

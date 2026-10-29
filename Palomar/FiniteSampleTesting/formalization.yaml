@@ -1,0 +1,98 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Randomized tests on a finite observation space: transfer, null closure, inverse-square sample size"
+  description: "This entry formalizes elementary facts about randomized tests on a finite observation space. If the null law has rejection probability at most α and the total variation distance to another law is at most ε, then the rejection probability under the other law is at most α + ε, with a matching lower bound for power. For tests on N independent samples, a test of size α over a null set has power at most α for any law in the total variation closure of that set. Conversely, any advantage over size gives a positive total variation gap to the null set. A sample size of at least δ² b / (|X| C² ε²) is shown to be necessary for advantage δ when the laws differ pointwise by at most Cε and the null masses are bounded below by b."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["math.ST", "q-bio.PE"]
+  msc2020: ["62F03", "62G10", "62B15"]
+
+sources:
+  - title: "Introduction to Nonparametric Estimation"
+    authors: ["A. B. Tsybakov"]
+    id: "doi:10.1007/b13794"
+    location: "Ch. 2: Definition 2.4, Lemmas 2.1, 2.3, and 2.4, and eq. (2.26)"
+    relationship: adapts
+    note: "Supplies the established tools that the entry adapts to a finite observation space: total variation distance and its control of differences of expectations, which give size_transfer and power_transfer, and the comparison of total variation with Hellinger distance together with the behaviour of the Hellinger affinity under products, which the proof of iid_necessary_inverse_square uses. The alignment records Definition 2.4 and Lemma 2.1 for the transfer statements and Lemmas 2.3 and 2.4 and eq. (2.26) for the sample-size bound. In the Lean proofs these appear as: |E_P φ − E_Q φ| ≤ TV(P, Q) for tests with values in [0, 1]; TV(P, Q)² ≤ H²(P, Q), with H² = Σ_x (√P(x) − √Q(x))²; and the product identity for the affinity Σ_x √P(x) √Q(x), giving H²(P^N, Q^N) ≤ N H²(P, Q). The Lean forms are stated for finite mass functions and may differ in constants or sharpness from the book's displays. The sample-size bound itself, with its pointwise-closeness and lower-mass hypotheses, is assembled here from these tools."
+  - title: "Convergence of estimates under dimensionality restrictions"
+    authors: ["L. Le Cam"]
+    id: "doi:10.1214/aos/1193342380"
+    relationship: background
+    note: "Context for iid_necessary_inverse_square: Hellinger distance as the quantity that governs how well product measures can be distinguished. No result of this paper is formalized, and no step of the Lean proof is taken from it beyond the general Hellinger method also recorded under Tsybakov."
+  - title: "The nonexistence of certain statistical procedures in nonparametric problems"
+    authors: ["R. R. Bahadur", "L. J. Savage"]
+    id: "doi:10.1214/aoms/1177728077"
+    relationship: background
+    note: "Context for approximable_test_power_le_size and test_advantage_implies_gap: the Bahadur–Savage obstruction, that a test cannot have power above its size at alternatives that are limits of the null class. The entry proves an elementary analogue on a finite observation space with N independent observations, by continuity of the N-fold product law in total variation; it does not formalize the paper's theorems for nonparametric classes."
+  - title: "On non-parametric testing, the uniform behaviour of the t-test, and related problems"
+    authors: ["J. P. Romano"]
+    id: "doi:10.1111/j.1467-9469.2004.00407.x"
+    relationship: background
+    note: "Context for the null-closure statements: a treatment of Bahadur–Savage-type impossibility and uniformity in nonparametric testing. Not formalized and not used in the Lean proofs."
+  - title: "A survey on distribution testing: your data is big. But is it blue?"
+    authors: ["Clément L. Canonne"]
+    id: "doi:10.4086/toc.gs.2020.009"
+    location: "Theory of Computing Graduate Surveys 9, 2020; Theorem 9.2"
+    relationship: background
+    note: "Context for iid_necessary_inverse_square: Theorem 9.2 (credited to Bar-Yossef) states that distinguishing two fixed distributions needs a number of samples of order 1/d_H², d_H the Hellinger distance. The entry's bound is of the same inverse-square kind but is stated under pointwise-closeness and lower-mass hypotheses, with explicit constants; it does not formalize this theorem."
+
+related_formalizations:
+  - id: "https://reservoir.lean-lang.org/@RemyDegenne/testing_lower_bounds"
+    relationship: "independent"
+    note: "At commit cdbdf468124bf309e3d47feca3eb42f73d069c50: total variation, Hellinger, and Renyi divergences with composition-product bounds. It has no i.i.d. tensorization of the Hellinger affinity and no TV^2 <= Hellinger bound; related, not identical."
+
+status:
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  scope: "Setting. X is a finite type. A law on X is a real mass function P with P(x) ≥ 0 and Σ_x P(x) = 1 (so X is necessarily nonempty when a law exists). A randomized test is a function φ with 0 ≤ φ(x) ≤ 1 for every x, and its rejection probability under P is Σ_x P(x) φ(x). Total variation is TV(P, Q) = (1/2) Σ_x |P(x) − Q(x)|. For N a natural number, P^N is the product law on N-tuples (Fin N → X), with mass Π_i P(x_i). (1) size_transfer: for laws P and Q on X, a test φ, and any reals α and ε, if the rejection probability under Q is at most α and TV(P, Q) ≤ ε, then the rejection probability under P is at most α + ε. X can be any finite type, including a space of whole data sets such as N-tuples. If ε < 0 the hypothesis TV ≤ ε cannot hold and the statement is vacuous. (2) power_transfer: under the same setting, if the rejection probability under Q is at least 1 − β and TV(P, Q) ≤ ε, then the rejection probability under P is at least 1 − β − ε. (3) approximable_test_power_le_size: let null be any set of laws on X, N any natural number, and φ a test on N-tuples whose rejection probability under Q^N is at most α for every Q in null. If P lies in the total variation closure of null, in the sense that for every ε > 0 some Q in null has TV(P, Q) < ε, then the rejection probability under P^N is at most α. The closure is measured between single-observation laws, not between the N-fold laws. If null is empty the closure hypothesis fails and the statement is vacuous; for N = 0 the product law is a point mass and the test is a constant. (4) test_advantage_implies_gap: with the same size hypothesis, if the rejection probability under P^N exceeds α, then there is ε > 0 with TV(P, Q) ≥ ε for every Q in null. This is the contrapositive of (3); ε is not given explicitly. (5) iid_necessary_inverse_square: let X be finite and nonempty with |X| elements, P and Q laws on X, N a natural number, φ a test on N-tuples, and reals b > 0, C > 0, ε > 0, and δ ≥ 0. If Q(x) ≥ b for every x, |P(x) − Q(x)| ≤ Cε for every x, and the rejection probability under P^N minus that under Q^N is at least δ, then N ≥ δ² b / (|X| C² ε²). The hypotheses force b ≤ 1/|X|. C and ε enter only through the product Cε; the form is meant for local alternatives P = Q + O(ε). When δ = 0 the conclusion is trivial. The bound is a necessary condition only. Not covered: infinite or continuous observation spaces and general measures; dependent observations in (3) to (5); an explicit gap ε in (4); any sufficiency statement, that is, a test achieving the inverse-square sample size; sharp constants; the Bahadur–Savage theorem for nonparametric classes; and any population-genetic model (the statements are about finite probability spaces only)."
+
+fidelity:
+  divergences: "1. Everything is finite: laws are mass functions on a finite set, whereas Tsybakov (2009), Le Cam (1973), and Bahadur and Savage (1956) work with general measures. 2. Tests are functions with values in [0, 1] and rejection probabilities are expectations; this matches the usual randomized-test convention. 3. The null-closure statements are an elementary finite-space analogue of the Bahadur–Savage obstruction, not the theorem itself: Bahadur and Savage concern nonparametric classes on infinite spaces, where the null class can be dense in a large set of alternatives, whereas on a finite space the statement follows from continuity of the product law. The proof uses a crude continuity factor N |X|^N + 1 between TV(P, Q) and TV(P^N, Q^N); no quantitative relation is stated. 4. The sample-size bound is stated under pointwise closeness |P(x) − Q(x)| ≤ Cε and a lower bound b on the masses of Q, which are stronger assumptions than a bound on the Hellinger distance as in Canonne (2020), Theorem 9.2; the conclusion carries the factor |X| and is not claimed to be sharp. 5. The Hellinger quantity in the proof is H² = Σ_x (√P(x) − √Q(x))², without a factor 1/2, and the total variation comparison is used in the form TV² ≤ H²; these may differ in normalization and sharpness from the cited displays, but they do not appear in the compared statements. 6. All statements are exact inequalities over the reals; nothing is numerical."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.FiniteSampleTesting"
+  statements:
+    - source: "Tsybakov 2009, Definition 2.4, Lemma 2.1"
+      lean: "Rhone.Statistics.DependenceBudget.size_transfer"
+      module: "Rhone.Statistics.DependenceBudget.Transfer"
+      status: "proved"
+    - source: "Tsybakov 2009, Definition 2.4, Lemma 2.1"
+      lean: "Rhone.Statistics.DependenceBudget.power_transfer"
+      module: "Rhone.Statistics.DependenceBudget.Transfer"
+      status: "proved"
+    - source: "Bahadur and Savage 1956, finite form"
+      lean: "Rhone.Statistics.NullClosureTesting.approximable_test_power_le_size"
+      module: "Rhone.Statistics.NullClosureTesting.Testing"
+      status: "proved"
+    - source: "Bahadur and Savage 1956, finite form"
+      lean: "Rhone.Statistics.NullClosureTesting.test_advantage_implies_gap"
+      module: "Rhone.Statistics.NullClosureTesting.Testing"
+      status: "proved"
+    - source: "Tsybakov 2009, Lemmas 2.3, 2.4, (2.26); Le Cam 1973"
+      lean: "Rhone.Statistics.FiniteObservationRate.iid_necessary_inverse_square"
+      module: "Rhone.Statistics.FiniteObservationRate.Testing"
+      status: "proved"

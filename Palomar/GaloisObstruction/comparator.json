@@ -1,0 +1,39 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.GaloisObstruction.Challenge",
+  "solution_module": "Palomar.GaloisObstruction.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.GaloisObstruction.natDegree_E",
+    "Rhone.Palomar.GaloisObstruction.E_pos",
+    "Rhone.Palomar.GaloisObstruction.E55pt_irreducible",
+    "Rhone.Palomar.GaloisObstruction.card_rootSet_E55pt_real",
+    "Rhone.Palomar.GaloisObstruction.card_gal_E55pt",
+    "Rhone.Palomar.GaloisObstruction.E55pt_root_not_solvableByRad",
+    "Rhone.Palomar.GaloisObstruction.E77pt_irreducible",
+    "Rhone.Palomar.GaloisObstruction.card_rootSet_E77pt_real",
+    "Rhone.Palomar.GaloisObstruction.card_gal_E77pt",
+    "Rhone.Palomar.GaloisObstruction.E77pt_root_not_solvableByRad",
+    "Rhone.Palomar.GaloisObstruction.E55gen_irreducible_ratFunc",
+    "Rhone.Palomar.GaloisObstruction.E55gen_irreducible_two_var",
+    "Rhone.Palomar.GaloisObstruction.E77gen_irreducible_ratFunc",
+    "Rhone.Palomar.GaloisObstruction.E77gen_irreducible_two_var",
+    "Rhone.Palomar.GaloisObstruction.E55_splits",
+    "Rhone.Palomar.GaloisObstruction.card_roots_E55",
+    "Rhone.Palomar.GaloisObstruction.roots_neg_E55",
+    "Rhone.Palomar.GaloisObstruction.E77_splits",
+    "Rhone.Palomar.GaloisObstruction.card_roots_E77",
+    "Rhone.Palomar.GaloisObstruction.roots_neg_E77",
+    "Rhone.Palomar.GaloisObstruction.E_squarefree_laurent",
+    "Rhone.Palomar.GaloisObstruction.E_coprime_of_ne_laurent",
+    "Rhone.Palomar.GaloisObstruction.E_squarefree_generic",
+    "Rhone.Palomar.GaloisObstruction.E_coprime_generic",
+    "Rhone.Palomar.GaloisObstruction.E55_galois_full",
+    "Rhone.Palomar.GaloisObstruction.E77_galois_full",
+    "Rhone.Palomar.GaloisObstruction.generic_galois_full_of_specialization"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

@@ -1,0 +1,168 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Expected coalescence time and coalescence-time F_ST of two lineages in the symmetric island model"
+  description: "This entry formalizes the expected coalescence time of two lineages in the symmetric island model with d ≥ 2 demes, migration rate m, and coalescence rate c, modelled as a continuous-time Markov chain on the demes of two labelled lineages with an absorbing coalesced state. The expected time is d/c for two lineages in the same deme and d/c + (d − 1)/(2m) for two lineages in different demes. These values are proved for the expected holding time accumulated by the embedded jump chain before absorption, and the same closed forms are proved for the expected absorption time under an explicit jump-and-hold path measure (the jump chain together with independent exponential holding times). The coalescence-time fixation index F_ST = (T − T_within)/T is derived for a between-deme design and for a random-deme design, with closed forms for diploid populations of size N (c = 1/(2N)). Both indices are strictly decreasing in m, tend to 1 as m tends to 0 from above and to 0 as m tends to infinity, and tend to c/(2m + c), or 1/(1 + 4Nm) in the diploid case, as the number of demes tends to infinity."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["q-bio.PE", "math.PR"]
+  msc2020: ["92D10", "60J28", "60J27"]
+
+sources:
+  - title: "Inbreeding coefficients and coalescence times"
+    authors: ["Montgomery Slatkin"]
+    id: "doi:10.1017/S0016672300029827"
+    location: "Sec. 3(i): eqs. (8) and (11), p. 169; eqs. (12)-(14), p. 170"
+    relationship: formalizes
+    note: "Supplies the established mathematics this entry formalizes: the symmetric island model, the coalescence-time F_ST of eq. (8), the same-deme mean time of sec. 3(i), the different-deme mean time of eq. (12), and the whole-collection index of eqs. (11), (13), and (14). Slatkin works in discrete generations and derives eq. (12) approximately, for small m; expectedTime_different is an exact statement for the continuous-time chain, with a free coalescence rate c in place of 1/(2N). The Lean proof does not follow Slatkin's derivation: it checks that the closed-form times satisfy the first-step (generator) equations of the chain off the coalesced state, and applies a uniqueness theorem for expected costs of a finite chain that is absorbed in a set it reaches from every state (meanTime_eq_expectedTime)."
+  - title: "Average number of nucleotide differences in a sample from a single subpopulation: a test for population subdivision"
+    authors: ["Curtis Strobeck"]
+    location: "Genetics 117(1):149-153, 1987, doi:10.1093/genetics/117.1.149"
+    relationship: background
+    note: "Context only; no step of any proof comes from it. The paper concerns the mean number of differences between genes sampled from one subpopulation of a subdivided population. It is cited as context for expectedTime_same, whose value d/c does not depend on the migration rate m."
+  - title: "The coalescent and the genealogical process in geographically structured population"
+    authors: ["M. Notohara"]
+    location: "Journal of Mathematical Biology 29(1):59-75, 1990, doi:10.1007/BF00173909"
+    relationship: background
+    note: "Context only; no step of any proof comes from it. A coalescent for geographically structured populations, cited as context for modelling two lineages as a continuous-time Markov chain in which lineages move between demes and coalesce only within a deme, which is how the chain in this entry is defined."
+  - title: "Estimation of levels of gene flow from DNA sequence data"
+    authors: ["R. R. Hudson", "M. Slatkin", "W. P. Maddison"]
+    id: "doi:10.1093/genetics/132.2.583"
+    relationship: adapts
+    note: "Cited for the between-population index F_ST = 1 − H_w/H_b (eq. (3)) and the island-model value 1/(1 + 4Nm) (eq. (1)). This entry adapts both: the index is written with expected pair coalescence times in place of heterozygosities (fstFromTimes, applied to the same-deme and different-deme times in fstFromTimes_between), and 1/(1 + 4Nm) appears only as the limit, as the number of demes tends to infinity, of the finite-d indices at c = 1/(2N) (tendsto_fstBetween_demes_diploid and tendsto_fstRandom_demes_diploid). No mutation model linking times to heterozygosities is formalized."
+  - title: "A multi-dimensional coalescent process applied to multi-allelic selection models and migration models"
+    authors: ["Jody Hey"]
+    location: "Theoretical Population Biology 39(1):30-48, 1991, doi:10.1016/0040-5809(91)90039-I"
+    relationship: background
+    note: "Context only; no step of any proof comes from it. A coalescent on a multi-dimensional state space applied to migration models, cited as context for the state space used here: the ordered pair of demes that hold the two lineages, together with one coalesced state."
+  - title: "The coalescent in two colonies with symmetric migration"
+    authors: ["H. B. Nath", "R. C. Griffiths"]
+    location: "Journal of Mathematical Biology 31(8):841-851, 1993, doi:10.1007/BF00168049"
+    relationship: background
+    note: "Context only; no step of any proof comes from it. Treats the coalescent for two colonies with symmetric migration, which is the d = 2 case of the model in this entry."
+  - title: "Gene identity and genetic differentiation of populations in the finite island model"
+    authors: ["Naoyuki Takahata"]
+    id: "doi:10.1093/genetics/104.3.497"
+    relationship: background
+    note: "Context only; no step of any proof comes from it. Treats gene identity and differentiation in the island model with finitely many demes, cited as context for the finite-d forms of F_ST in fstBetween_diploid and fstRandom_diploid."
+  - title: "Group selection for a polygenic behavioral trait: estimating the degree of population subdivision"
+    authors: ["J. F. Crow", "K. Aoki"]
+    id: "doi:10.1073/pnas.81.19.6073"
+    relationship: background
+    note: "Context only; no step of any proof comes from it. Cited as context for finite-island corrections to the value 1/(1 + 4Nm), of the kind that appears in fstRandom_diploid as the factor d²/(d − 1)²."
+  - title: "Descent"
+    authors: ["SauersML"]
+    type: other
+    id: "https://github.com/SauersML/Descent/tree/28bbf4915b40b80e84ec9354e0bf450b0e4c7120"
+    location: "Descent/Coalescent/Structured.lean: meanTimeSame_eq_two, fstFromMigration_eq; Descent/Coalescent/StructuredPresentDay.lean: PairwiseCoalescenceTimes.slatkin_identity (files first committed 2026-08-05 and 2026-08-11)"
+    license: "Apache-2.0"
+    relationship: other
+    note: "A Lean 4 repository at the cited commit, listed so that a reader can see an overlapping formalization; it is not a mathematical source of this entry, and nothing from it is imported or used here. At that commit it gives two-deme mean pair coalescence times as closed-form definitions and F_ST = 1/(1 + 2M), which matches the c = 1 case of the limit in tendsto_fstBetween_demes. Related; an independent formalization. No order of priority is stated in either direction."
+
+related_formalizations:
+  - id: "https://github.com/SauersML/Descent"
+    relationship: "independent"
+    note: "Independent formalization (Lean 4, Apache-2.0); the overlap is described under sources."
+
+status:
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  scope: "Model. For d demes, the state of two labelled lineages is either an ordered pair (a, b) of demes in Fin d or a single absorbing coalesced state. Each lineage moves to each of the other d − 1 demes at rate m/(d − 1), so it leaves its deme at total rate m; two lineages in the same deme coalesce at rate c; the coalesced state has no transitions. The expected time from a state s is defined analytically from the embedded jump chain: it is the sum over n of the n-step jump-chain probabilities of being at each non-coalesced state y, weighted by the mean holding time 1/q(y), where q(y) is the total jump rate out of y. This is the mean total holding time before absorption. Every compared theorem assumes m > 0 and c > 0 where these appear. (1) expectedTime_same: for every d ≥ 2, m > 0, c > 0, and deme a, the expected time from (a, a) equals d/c; it does not depend on m. (2) expectedTime_different: for the same parameters and any demes a ≠ b, the expected time from (a, b) equals d/c + (d − 1)/(2m); here d − 1 is natural-number subtraction cast to a real, which equals the real d − 1 because d ≥ 2. (3) lintegral_timeBefore: for d ≥ 2, m > 0, c > 0, and every state s, including the coalesced state, the integral in the extended non-negative reals of the total time spent before absorption, with respect to the jump-and-hold path measure started at s, equals the closed form: 0 at the coalesced state, d/c at a same-deme pair, and d/c + (d − 1)/(2m) at a different-deme pair. The path measure is the product of the law of the jump chain started at s, on sequences of states, and the law of an independent sequence of unit-rate exponential clocks; the k-th holding time is the k-th clock divided by the jump rate of the k-th state, and time at the coalesced state is not counted. (4) fstFromTimes_between: with fstFromTimes(t_w, t) = (t − t_w)/t, for d ≥ 2, m > 0, c > 0, any deme a, and any demes b ≠ b', the index computed from the expected time at (a, a) and the expected time at (b, b') equals fstBetween d m c = (d − 1)c/(2md + (d − 1)c). (5) fstFromTimes_random: for the same parameters and any deme a, the index computed from the expected time at (a, a) and the average of the expected time over all d² ordered pairs of demes (two lineages placed independently and uniformly at random, so in the same deme with probability 1/d) equals fstRandom d m c = (d − 1)²c/(2md² + (d − 1)²c). (6) fstBetween_diploid and fstRandom_diploid: for d ≥ 2, m > 0, and real N > 0 (not required to be an integer), substituting c = 1/(2N) gives fstBetween = 1/(1 + 4Nm·d/(d − 1)) and fstRandom = 1/(1 + 4Nm·d²/(d − 1)²). These are identities between the closed forms and involve no separate diploid model. (7) fstBetween_strictAntiOn and fstRandom_strictAntiOn: for d ≥ 2 and c > 0, each closed-form index is strictly decreasing in m on the open half-line m > 0. (8) tendsto_fstBetween_zero_right and tendsto_fstRandom_zero_right: for d ≥ 2 and c > 0, each index tends to 1 as m tends to 0 through positive values. (9) tendsto_fstBetween_atTop and tendsto_fstRandom_atTop: for d ≥ 2 and c > 0, each index tends to 0 as m tends to +∞; the hypothesis c > 0 is stated but not needed by the proof. (10) tendsto_fstBetween_demes and tendsto_fstRandom_demes: for m > 0 and c > 0, each closed-form index, as a function of the natural number d, tends to c/(2m + c) as d tends to infinity. These limits are statements about the closed forms; their link to the chain holds for each d ≥ 2 through (4) and (5). (11) tendsto_fstBetween_demes_diploid and tendsto_fstRandom_demes_diploid: for m > 0 and N > 0, with c = 1/(2N), both indices tend to 1/(1 + 4Nm) as d tends to infinity. Degenerate cases: d = 0 and d = 1 are excluded wherever the chain appears; m = 0 and c = 0 are excluded from every compared statement, so nothing is said about isolated demes or about a model without coalescence. The ordered pairs (a, b) and (b, a) are distinct states with the same expected time. Not covered: samples of more than two lineages; the distribution, variance, or Laplace transform of the coalescence time; asymmetric migration, unequal deme sizes, and stepping-stone or other spatial structure; the discrete-time Wright–Fisher island model and any convergence from it to the continuous-time chain; mutation and heterozygosity, so the link between coalescence-time F_ST and heterozygosity-based F_ST is not formalized; estimation of Nm from data; and a process indexed by continuous real time, since the probabilistic statement (3) is about the jump-and-hold path measure."
+
+fidelity:
+  divergences: "Time scale: Slatkin's model is in discrete generations and eq. (12) is derived approximately, for small m; here the model is a continuous-time chain with rates m and c, and the formulas are exact for that chain. No discrete-time model, and no limit theorem connecting one to the chain, is formalized. Parametrization: the coalescence rate c is a free positive parameter; the diploid statements substitute c = 1/(2N) and allow any real N > 0. The migration rate m is the total rate at which one lineage moves to another deme, divided evenly among the d − 1 other demes; under conventions in which a migrant may come from or land in its own deme, m must be rescaled before formulas are compared. Index: F_ST is defined from expected coalescence times as (T − T_within)/T; Hudson et al. define it from heterozygosities, and the correspondence through an infinite-sites mutation model is not formalized. Infinite islands: the value 1/(1 + 4Nm) appears only as a limit, as d tends to infinity, of the finite-d closed forms; no infinite-island model is formalized. Sampling: lineages are labelled and the state is an ordered pair of demes; the random-deme design averages over ordered pairs with replacement, so two lineages share a deme with probability exactly 1/d, which matches sampling two genes from the whole collection only when deme sizes are large. Expectation: the expected times in expectedTime_same, expectedTime_different, fstFromTimes_between, and fstFromTimes_random are defined as a series over the embedded jump chain rather than as the expectation of a hitting time of a process indexed by continuous time; lintegral_timeBefore connects them to an explicit jump-and-hold path measure, not to a continuous-time process."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.IslandPairCoalescence"
+  statements:
+    - source: "Slatkin 1991, sec. 3(i), p. 169"
+      lean: "Rhone.Coalescent.IslandPair.expectedTime_same"
+      module: "Rhone.Coalescent.IslandPairExpected"
+      status: "proved"
+    - source: "Slatkin 1991, eq. (12), p. 170"
+      lean: "Rhone.Coalescent.IslandPair.expectedTime_different"
+      module: "Rhone.Coalescent.IslandPairExpected"
+      status: "proved"
+    - source: "Expected times equal the mean absorption time of the jump-and-hold path"
+      lean: "Rhone.Coalescent.IslandPair.lintegral_timeBefore"
+      module: "Rhone.Coalescent.IslandPairExpected"
+      status: "proved"
+    - source: "Hudson et al. 1992, eq. (3), with Slatkin 1991, eq. (12)"
+      lean: "Rhone.Coalescent.IslandPairFst.fstFromTimes_between"
+      module: "Rhone.Coalescent.IslandPairFst"
+      status: "proved"
+    - source: "Slatkin 1991, eqs. (8), (11), (13)"
+      lean: "Rhone.Coalescent.IslandPairFst.fstFromTimes_random"
+      module: "Rhone.Coalescent.IslandPairFst"
+      status: "proved"
+    - source: "Between-deme F_ST at c = 1/(2N), by arithmetic from Slatkin 1991, eq. (12)"
+      lean: "Rhone.Coalescent.IslandPairFst.fstBetween_diploid"
+      module: "Rhone.Coalescent.IslandPairFst"
+      status: "proved"
+    - source: "Slatkin 1991, eq. (14), p. 170"
+      lean: "Rhone.Coalescent.IslandPairFst.fstRandom_diploid"
+      module: "Rhone.Coalescent.IslandPairFst"
+      status: "proved"
+    - source: "Between-deme F_ST is strictly decreasing in m"
+      lean: "Rhone.Coalescent.IslandPairFst.fstBetween_strictAntiOn"
+      module: "Rhone.Coalescent.IslandPairFst"
+      status: "proved"
+    - source: "Whole-collection F_ST is strictly decreasing in m"
+      lean: "Rhone.Coalescent.IslandPairFst.fstRandom_strictAntiOn"
+      module: "Rhone.Coalescent.IslandPairFst"
+      status: "proved"
+    - source: "Between-deme F_ST tends to 1 as m tends to 0 from above"
+      lean: "Rhone.Coalescent.IslandPairFst.tendsto_fstBetween_zero_right"
+      module: "Rhone.Coalescent.IslandPairFst"
+      status: "proved"
+    - source: "Whole-collection F_ST tends to 1 as m tends to 0 from above"
+      lean: "Rhone.Coalescent.IslandPairFst.tendsto_fstRandom_zero_right"
+      module: "Rhone.Coalescent.IslandPairFst"
+      status: "proved"
+    - source: "Between-deme F_ST tends to 0 as m tends to infinity"
+      lean: "Rhone.Coalescent.IslandPairFst.tendsto_fstBetween_atTop"
+      module: "Rhone.Coalescent.IslandPairFst"
+      status: "proved"
+    - source: "Whole-collection F_ST tends to 0 as m tends to infinity"
+      lean: "Rhone.Coalescent.IslandPairFst.tendsto_fstRandom_atTop"
+      module: "Rhone.Coalescent.IslandPairFst"
+      status: "proved"
+    - source: "Between-deme F_ST tends to c/(2m + c) as d tends to infinity"
+      lean: "Rhone.Coalescent.IslandPairFst.tendsto_fstBetween_demes"
+      module: "Rhone.Coalescent.IslandPairFst"
+      status: "proved"
+    - source: "Whole-collection F_ST tends to c/(2m + c) as d tends to infinity"
+      lean: "Rhone.Coalescent.IslandPairFst.tendsto_fstRandom_demes"
+      module: "Rhone.Coalescent.IslandPairFst"
+      status: "proved"
+    - source: "Hudson et al. 1992, eq. (1), p. 583"
+      lean: "Rhone.Coalescent.IslandPairFst.tendsto_fstBetween_demes_diploid"
+      module: "Rhone.Coalescent.IslandPairFst"
+      status: "proved"
+    - source: "Hudson et al. 1992, eq. (1), p. 583"
+      lean: "Rhone.Coalescent.IslandPairFst.tendsto_fstRandom_demes_diploid"
+      module: "Rhone.Coalescent.IslandPairFst"
+      status: "proved"

@@ -1,0 +1,33 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.WrightFisherGeneratorLimit.Challenge",
+  "solution_module": "Palomar.WrightFisherGeneratorLimit.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.WrightFisherGeneratorLimit.wf_eq_binomial",
+    "Rhone.Palomar.WrightFisherGeneratorLimit.wf_nonneg_and_row_sum",
+    "Rhone.Palomar.WrightFisherGeneratorLimit.wfChain_expect_eq",
+    "Rhone.Palomar.WrightFisherGeneratorLimit.wfDiploid_eq_wf",
+    "Rhone.Palomar.WrightFisherGeneratorLimit.wfChain_generatorError_eq",
+    "Rhone.Palomar.WrightFisherGeneratorLimit.hapMutSelStep_eq",
+    "Rhone.Palomar.WrightFisherGeneratorLimit.wf_expect_freq_sub",
+    "Rhone.Palomar.WrightFisherGeneratorLimit.wf_expect_freq_sub_sq",
+    "Rhone.Palomar.WrightFisherGeneratorLimit.wf_expect_freq_sub_cube",
+    "Rhone.Palomar.WrightFisherGeneratorLimit.wf_expect_freq_sub_pow_four",
+    "Rhone.Palomar.WrightFisherGeneratorLimit.wf_expect_freq_sub_pow_four_le",
+    "Rhone.Palomar.WrightFisherGeneratorLimit.wf_expect_abs_freq_sub_cube_le",
+    "Rhone.Palomar.WrightFisherGeneratorLimit.wf_generator_error_le",
+    "Rhone.Palomar.WrightFisherGeneratorLimit.wfDiploid_generator_error_le",
+    "Rhone.Palomar.WrightFisherGeneratorLimit.wfChain_generatorError_le",
+    "Rhone.Palomar.WrightFisherGeneratorLimit.wf_generatorLimit",
+    "Rhone.Palomar.WrightFisherGeneratorLimit.wf_generator_eventually_le",
+    "Rhone.Palomar.WrightFisherGeneratorLimit.sum_binomRow_freq_sub",
+    "Rhone.Palomar.WrightFisherGeneratorLimit.sum_binomRow_freq_sub_sq",
+    "Rhone.Palomar.WrightFisherGeneratorLimit.hapMutSel_drift_error_le",
+    "Rhone.Palomar.WrightFisherGeneratorLimit.hapMutSel_drift_tendsto"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

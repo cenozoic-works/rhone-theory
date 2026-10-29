@@ -1,0 +1,16 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.LinkedPairPanel.Challenge",
+  "solution_module": "Palomar.LinkedPairPanel.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.LinkedPairPanel.panel_eq_iff",
+    "Rhone.Palomar.LinkedPairPanel.panel_erased",
+    "Rhone.Palomar.LinkedPairPanel.next_moment_upgrade",
+    "Rhone.Palomar.LinkedPairPanel.all_panels_eq_iff"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

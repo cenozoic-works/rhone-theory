@@ -1,0 +1,19 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.SelectionTheorems.Challenge",
+  "solution_module": "Palomar.SelectionTheorems.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.SelectionTheorems.fisher_fundamental_theorem",
+    "Rhone.Palomar.SelectionTheorems.fisher_partial_nonneg",
+    "Rhone.Palomar.SelectionTheorems.grouped_covariance_decomposition",
+    "Rhone.Palomar.SelectionTheorems.multilevel_price_equation",
+    "Rhone.Palomar.SelectionTheorems.hamilton_from_leastSquares",
+    "Rhone.Palomar.SelectionTheorems.lande_arnold_gradient_exists",
+    "Rhone.Palomar.SelectionTheorems.geiringer_recombination_converges"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.NeutralFixation.Challenge",
+  "solution_module": "Palomar.NeutralFixation.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.NeutralFixation.fixation_real_of_nonDegenerate",
+    "Rhone.Palomar.NeutralFixation.fixation_real_eventually_of_nonDegenerate",
+    "Rhone.Palomar.NeutralFixation.loss_real_of_nonDegenerate",
+    "Rhone.Palomar.NeutralFixation.fixation_real_of_not_nonDegenerate",
+    "Rhone.Palomar.NeutralFixation.cannings_fixation_ne_freq_without_reaches",
+    "Rhone.Palomar.NeutralFixation.countChain_reaches_iff",
+    "Rhone.Palomar.NeutralFixation.nonDegenerate_iff_offspringProb_zero_pos",
+    "Rhone.Palomar.NeutralFixation.nonDegenerate_iff_offspringProb_one_lt_one",
+    "Rhone.Palomar.NeutralFixation.nonDegenerate_iff_offspringVariance_pos",
+    "Rhone.Palomar.NeutralFixation.fixation_real_of_martingale",
+    "Rhone.Palomar.NeutralFixation.moranModel_nonDegenerate",
+    "Rhone.Palomar.NeutralFixation.moranModel_fixation_real"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

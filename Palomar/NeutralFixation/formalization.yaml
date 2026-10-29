@@ -1,0 +1,126 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Neutral fixation probability in exchangeable (Cannings) models"
+  description: "This entry formalizes the neutral fixation probability in exchangeable (Cannings) models with N individuals. For a non-degenerate model, the probability that the allele count started from i copies ever reaches N equals i/N, and the same holds for eventual absorption in the fixed state. The loss probability is 1 − i/N. For a degenerate model started away from the full state the probability of fixation is 0, and an example with N = 2 shows that the fixation probability can differ from the frequency without a reachability hypothesis. For N ≥ 2, non-degeneracy is shown equivalent to positive-probability reachability of the boundary {0, N} by the count chain, and to each of three conditions on the offspring number of a single parent. A general fixation statement is given for chains on {0, ..., N} whose state is mean-preserving in one step and from which the boundary {0, N} is reachable. The Moran model is shown to be non-degenerate with fixation probability i/N."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["q-bio.PE", "math.PR"]
+  msc2020: ["92D10", "60J10", "60G42", "92D15"]
+
+sources:
+  - title: "The latent roots of certain Markov chains arising in genetics: a new approach, I. Haploid models"
+    authors: ["Chris Cannings"]
+    id: "doi:10.2307/1426293"
+    relationship: background
+    note: "Context for the model: the exchangeable fixed-size haploid reproduction model and the fact that the expected allele count in the next generation equals the current count. The library module documentation cites sec. 3, eqs. (4)–(5), p. 266 for these. The Lean proof does not follow a proof from this paper; mean preservation of the count is proved in the library from the exchangeability axiom."
+  - title: "Mathematical Population Genetics I: Theoretical Introduction"
+    authors: ["Warren J. Ewens"]
+    id: "doi:10.1007/978-0-387-21822-9"
+    relationship: background
+    note: "Textbook context for the Cannings and Moran models and for the classical statement that a neutral allele fixes with probability equal to its initial frequency; the library module documentation cites secs. 3.3 and 3.4. Background only; no step of the Lean proof is taken from it."
+  - title: "Cannings models (chapter 3 of lecture notes)"
+    authors: ["Martin Möhle"]
+    id: "https://www.math.uni-tuebingen.de/user/moehle/sp_cannings.pdf"
+    location: "Cor. 3.2.6, p. 26; Thm 3.2.4, p. 23, footnote 2"
+    relationship: adapts
+    note: "The established statement that this entry adapts: the fixation probability i/N (and loss probability 1 − i/N) in a Cannings model, and the role of non-degeneracy. Cor. 3.2.6 as printed states q_i = 1 − i/N for all Cannings models and omits the non-degeneracy hypothesis of Thm 3.2.4, without which it fails (nu_1 = 1 identically). The Lean statements include that hypothesis, add the degenerate case and a counterexample, and state the reachability equivalence and the equivalent offspring conditions explicitly. The Lean proof is written for this formalization and is not claimed to follow the notes: it identifies the hitting probability with the unique function that is harmonic off the closed boundary sets {0} and {N} and takes the boundary values 0 and 1 (uniqueness under positive-probability reachability), and it proves reachability for non-degenerate models by an elementary combinatorial argument on subsets of parents."
+  - title: "leanamics"
+    authors: ["formal-dynamics"]
+    type: other
+    id: "https://github.com/formal-dynamics/leanamics/tree/ef4b8d60657213d8345512dc46dd461e505398c6"
+    location: "moran/Moran/Counts.lean: moranCountKernel_fixation (file first committed 2026-10-18)"
+    license: "MIT"
+    relationship: other
+    note: "A separate Lean 4 formalization, listed here for disclosure rather than as a mathematical source; it is also recorded under related_formalizations. It proves fixation probability k/n for the neutral Moran count chain, which overlaps the Moran case of the fixation statements (moranModel_fixation_real); no claim is made that the two Moran models coincide. It is not a dependency of this repository and nothing in this entry is taken from it."
+
+related_formalizations:
+  - id: "https://github.com/SauersML/Descent"
+    relationship: "independent"
+    note: "Descent/Coalescent/Fixation.lean (at commit 28bbf4915b40b80e84ec9354e0bf450b0e4c7120) defines neutralFixation as the identity in x and proves neutralFixation_generator_eq_zero, neutralFixation_zero, and neutralFixation_one: the diffusion fixation function. Related only; independent formalization."
+  - id: "https://github.com/formal-dynamics/leanamics"
+    relationship: "independent"
+    note: "Independent formalization (Lean 4, MIT); the overlap is described under sources."
+
+status:
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  scope: "Setting. A Cannings model with N individuals is given by a finite sample space Ω with real weights w ≥ 0 summing to 1 (some weights may be 0) and, for each outcome, an offspring vector ν = (ν_0, ..., ν_{N−1}) of natural numbers summing to N. Exchangeability is the requirement that for every permutation σ of the N parents and every real function f of offspring vectors, the expectation of f(ν ∘ σ) equals the expectation of f(ν). Since ν takes values in a finite set, a finite Ω loses no generality. The count chain is the Markov chain on {0, ..., N} whose transition from i to j has the probability that the first i parents (indices below i) together have j offspring; generations are independent with the same offspring law. Its path law from i is the law, on sequences indexed by ℕ, of the chain started at i at time 0 (built with the Ionescu–Tulcea theorem); probabilities are real numbers (the real part of the measure). Fixation means that some time n ≥ 0 has count N, and loss that some time has count 0; time 0 counts, so the statements are trivial at i = 0 and i = N. A model is non-degenerate if some outcome of positive weight has some parent with offspring number other than 1, that is, if the offspring vector is not almost surely (1, ..., 1). For N ≤ 1 every model is degenerate, because the single parent (if any) always has exactly one offspring, so the statements that assume non-degeneracy are vacuous unless N ≥ 2. The probability that parent k has m offspring is written P(ν_k = m), and the offspring variance of parent k is defined as the expectation of (ν_k − 1)^2; it is the variance because exchangeability and the sum constraint give E ν_k = 1 (that identification is proved in the library but is not a compared statement). Reachability of a set A means that from every state some power of the transition matrix gives positive probability to some state of A; it is positive-probability reachability, not almost-sure hitting.\n\nCompared theorems. (1) fixation_real_of_nonDegenerate: for N > 0, every non-degenerate Cannings model on N individuals, and every initial count i in {0, ..., N}, the probability that the count ever equals N is i/N. (2) fixation_real_eventually_of_nonDegenerate: under the same hypotheses, the probability that the count is equal to N at all times from some time onward is i/N. (3) loss_real_of_nonDegenerate: under the same hypotheses, the probability that the count ever equals 0 is 1 − i/N. (4) fixation_real_of_not_nonDegenerate: for every N, every degenerate Cannings model, and every initial count i ≠ N, the probability that the count ever equals N is 0 (the count chain is then the identity chain). (5) cannings_fixation_ne_freq_without_reaches: there is a Cannings model with N = 2 (on a one-point sample space; in the proof it is the model in which every parent has one offspring) whose fixation probability from count 1 is not 1/2. (6) countChain_reaches_iff: for N ≥ 2 and every Cannings model, the boundary {0, N} is reachable by the count chain from every state if and only if the model is non-degenerate. (7)–(9) nonDegenerate_iff_offspringProb_zero_pos, nonDegenerate_iff_offspringProb_one_lt_one, nonDegenerate_iff_offspringVariance_pos: for every Cannings model and every parent k (so N ≥ 1), the model is non-degenerate if and only if P(ν_k = 0) > 0, if and only if P(ν_k = 1) < 1, and if and only if the expectation of (ν_k − 1)^2 is positive. (10) fixation_real_of_martingale: for N > 0 and any Markov chain on {0, ..., N} given by a stochastic matrix such that the expected next state from every state j equals j, and from which the boundary {0, N} is reachable, the probability of ever reaching N from i is i/N for every i. (11) moranModel_nonDegenerate: for N ≥ 2, the Moran model is non-degenerate. Here the Moran model has Ω = pairs (p, d) of parents with uniform weight 1/N^2; parent p has one extra offspring and parent d has none, so when p = d every parent has exactly one offspring (a null step of probability 1/N). The extra argument 0 < N needed to construct the model is implied by N ≥ 2. (12) moranModel_fixation_real: for N ≥ 2, the Moran fixation probability from i is i/N.\n\nNot covered: fixation times or their moments, the rate of absorption, selection or mutation, models whose population size varies in time, non-exchangeable or diploid models, Wright–Fisher or other instances apart from the Moran model among the compared statements, and diffusion limits. No explicit lower bound on the probability of reaching the boundary within a given number of steps is stated."
+
+fidelity:
+  divergences: "Möhle's Cor. 3.2.6, as printed at the cited location, states the fixation probability for all Cannings models; the Lean statements add the non-degeneracy hypothesis of Thm. 3.2.4, without which the corollary fails, and treat the degenerate case separately. The offspring law is represented on a finite sample space with real weights, which is no loss of generality since offspring vectors take finitely many values. The count chain places the allele on the first i parents; by exchangeability the law of the next count does not depend on which i parents carry it (proved in the library, not a compared statement). Reachability is positive-probability reachability from every state, rather than almost-sure absorption as often assumed in textbook statements of the martingale argument; theorem (10) assumes it explicitly. The offspring 'variance' in theorem (9) is defined as the second moment about 1. The Moran model used here selects the reproducing and the dying parent independently and uniformly, so it includes null steps in which they coincide; other presentations exclude them or work in continuous time, which changes time scales but not fixation probabilities. Fixation probabilities are exact real numbers; no numerical approximation is involved."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.NeutralFixation"
+  statements:
+    - source: "Ewens 2004"
+      lean: "Rhone.MarkovChain.CanningsModel.fixation_real_of_nonDegenerate"
+      module: "Rhone.MarkovChain.CanningsReachability"
+      status: "adapted"
+    - source: "The same value for the event that the count stays at N"
+      lean: "Rhone.MarkovChain.CanningsModel.fixation_real_eventually_of_nonDegenerate"
+      module: "Rhone.MarkovChain.CanningsReachability"
+      status: "proved"
+    - source: "Möhle, Corollary 3.2.6"
+      lean: "Rhone.MarkovChain.CanningsModel.loss_real_of_nonDegenerate"
+      module: "Rhone.MarkovChain.CanningsReachability"
+      status: "proved"
+    - source: "A degenerate model never fixes from below N"
+      lean: "Rhone.MarkovChain.CanningsModel.fixation_real_of_not_nonDegenerate"
+      module: "Rhone.MarkovChain.CanningsReachability"
+      status: "proved"
+    - source: "The fixation statement fails for some exchangeable model"
+      lean: "Rhone.MarkovChain.cannings_fixation_ne_freq_without_reaches"
+      module: "Rhone.MarkovChain.NeutralFixationReachable"
+      status: "proved"
+    - source: "Möhle, Theorem 3.2.4, footnote 2"
+      lean: "Rhone.MarkovChain.CanningsModel.countChain_reaches_iff"
+      module: "Rhone.MarkovChain.CanningsReachability"
+      status: "proved"
+    - source: "Non-degenerate iff P(nu_k = 0) > 0"
+      lean: "Rhone.MarkovChain.CanningsModel.nonDegenerate_iff_offspringProb_zero_pos"
+      module: "Rhone.MarkovChain.CanningsReachability"
+      status: "proved"
+    - source: "Non-degenerate iff P(nu_k = 1) < 1"
+      lean: "Rhone.MarkovChain.CanningsModel.nonDegenerate_iff_offspringProb_one_lt_one"
+      module: "Rhone.MarkovChain.CanningsReachability"
+      status: "proved"
+    - source: "Non-degenerate iff nu_k has positive variance"
+      lean: "Rhone.MarkovChain.CanningsModel.nonDegenerate_iff_offspringVariance_pos"
+      module: "Rhone.MarkovChain.CanningsReachability"
+      status: "proved"
+    - source: "Fixation probability i/N for a mean-preserving chain with reachable boundary"
+      lean: "Rhone.MarkovChain.fixation_real_of_martingale"
+      module: "Rhone.MarkovChain.NeutralFixationReachable"
+      status: "proved"
+    - source: "The Moran step is a non-degenerate Cannings model"
+      lean: "Rhone.MarkovChain.moranModel_nonDegenerate"
+      module: "Rhone.MarkovChain.CanningsReachability"
+      status: "proved"
+    - source: "Fixation probability i/N for the Moran step"
+      lean: "Rhone.MarkovChain.moranModel_fixation_real"
+      module: "Rhone.MarkovChain.CanningsReachability"
+      status: "proved"

@@ -1,0 +1,192 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Combinatorics and probabilities of Kingman coalescent trees: histories, shapes, topologies, root splits, Colless, and Sackin"
+  description: "This entry formalizes combinatorics and probabilities of trees under Kingman's coalescent, through its embedded jump chain, in which each pair of the k current lineages is the next to merge with probability 1/binomial(k, 2). A ranked labelled history on n leaves is a sequence of n − 1 merges starting from n singletons; there are n!(n − 1)!/2^(n−1) of them, and each has probability 2^(n−1)/(n!(n − 1)!). Ranked and unranked tree shapes are defined as classes of histories under relabelling of the leaves; their numbers satisfy André's recurrence for alternating permutations, shifted by one, and the Wedderburn–Etherington recurrence, respectively, with the cases n = 1 and n = 2. The probability of a labelled rooted binary topology T is 2^(n−1)/(n! ∏(|C| − 1)), the product running over the clades C of T with at least two leaves. The probability that the root splits the leaves into a given set A and its complement is 2/((n − 1) binomial(n, |A|)). The probability that a sample S of a population of N leaves has the population root as its most recent common ancestor is (|S| − 1)(N + 1)/((|S| + 1)(N − 1)), which tends to (n − 1)/(n + 1) for a sample of fixed size n as N tends to infinity. The expected Colless and Sackin indices are n H_{⌊n/2⌋} − 2⌊n/2⌋ and 2n(H_n − 1), where H_m is the m-th harmonic number. Finally, the process of roots of the forest histories is identified with the jump chain of Kingman's partition-valued coalescent, for one step and for t steps."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["q-bio.PE", "math.CO"]
+  msc2020: ["92D15", "60J90", "05C05", "05A15"]
+
+sources:
+  - title: "The coalescent"
+    authors: ["J. F. C. Kingman"]
+    id: "doi:10.1016/0304-4149(82)90011-4"
+    relationship: background
+    note: "Background: supplies the model. Every probability and expectation in this entry is computed from the jump chain of Kingman's coalescent, in which each pair of the k current lineages is the next to merge with probability 1/binomial(k, 2) (the library cites Theorem 1 and eqs. (1.13) and (2.2)). The history counts and masses, the topology probability, the root-split probability, and the expected indices are derived in Lean from these merge probabilities by induction over histories; the proofs do not follow arguments of the paper."
+  - title: "Probability Models for DNA Sequence Evolution"
+    authors: ["Richard Durrett"]
+    id: "doi:10.1007/978-0-387-78168-6"
+    relationship: adapts
+    note: "Second edition (2008). Cited for two results that this entry adapts: Theorem 1.5, cited for root_split_mass, the probability 2/((n − 1) binomial(n, |A|)) that the root splits the labelled leaves into a given set A and its complement; and Theorem 1.7, cited for tendsto_sample_population_root_probability, the limit (n − 1)/(n + 1), as the population grows, of the probability that a sample of size n and the whole population share their most recent common ancestor. The adaptation is that both are stated for ranked labelled Kingman histories on labelled leaves: a specified labelled split in the first, and an explicit sequence of samples (the first n labels of a population of N) in the second."
+  - title: "Counting, grafting and evolving binary trees"
+    authors: ["Thomas Wiehe"]
+    id: "doi:10.4171/ECR/17-1/20"
+    relationship: background
+    note: "Context only; no step of any proof comes from it. A paper on counting binary trees, cited as context for the shape quotients RankedShape and UnrankedShape and their recurrences."
+  - title: "Sur les permutations alternees"
+    authors: ["Desire Andre"]
+    location: "Journal de mathematiques pures et appliquees (3) 7:167-184, 1881, section II no. 6, pp. 170-171"
+    relationship: adapts
+    note: "Supplies the established recurrence 2A(m + 1) = Σ_k binomial(m, k) A(k) A(m − k) for the numbers A of alternating permutations (section II no. 6). card_ranked_shape_recurrence adapts it to ranked shapes, with the index shifted so that the number of ranked shapes on n leaves plays the role of A(n − 1). The Lean proof does not pass through alternating permutations: it builds an explicit equivalence between ranked shape classes and their decomposition at the root and counts the fibres. The identification of ranked shapes with alternating permutations is not formalized."
+  - title: "Increasing trees and alternating permutations"
+    authors: ["A. G. Kuznetsov", "I. M. Pak", "A. E. Postnikov"]
+    id: "doi:10.1070/RM1994v049n06ABEH002448"
+    relationship: background
+    note: "Context only; no step of any proof comes from it. Treats the correspondence between increasing trees and alternating permutations, which explains why ranked tree shapes are counted by André's numbers. That correspondence is not formalized here."
+  - title: "The probabilities of rooted tree-shapes generated by random bifurcation"
+    authors: ["E. F. Harding"]
+    id: "doi:10.2307/1426329"
+    relationship: background
+    note: "Context only; no step of any proof comes from it. Treats the probabilities of rooted tree shapes under random bifurcation, cited as context for kingman_topology_probability_of_clade_factors and the root-split probability. No statement of this paper is restated here."
+  - title: "The functional equation g(x^2) = 2 alpha x + [g(x)]^2"
+    authors: ["J. H. M. Wedderburn"]
+    id: "doi:10.2307/1967710"
+    relationship: formalizes
+    note: "Supplies the established recurrence for the Wedderburn–Etherington numbers (section 1, p. 122): the number of unranked rooted binary shapes on n leaves is the sum over unordered root splits {k, n − k} with k < n − k of the product of the counts, plus W(n/2)(W(n/2) + 1)/2 when n is even. card_unranked_shape_recurrence formalizes this recurrence for unranked shapes defined as relabelling classes of the final trees of Kingman histories. The Lean proof uses an explicit equivalence between unranked shapes and their root decompositions; it does not use the functional equation of the title."
+  - title: "Exact formulas for the variance of several balance indices under the Yule model"
+    authors: ["Gabriel Cardona", "Arnau Mir", "Francesc Rossello"]
+    id: "doi:10.1007/s00285-012-0615-9"
+    location: "Secs. 1 and 7 (arXiv:1202.6573v2)"
+    relationship: adapts
+    note: "Supplies the established Yule-model expectations of the Colless index (sec. 7) and of the Sackin index (sec. 1) that kingman_colless_expectation and kingman_sackin_expectation adapt. The adaptation is the setting: the expectations here are weighted sums over ranked labelled Kingman histories, not expectations under the Yule model, and the equality of the two laws on final trees is not stated as a theorem. Sec. 1 credits the Sackin mean to Kirkpatrick and Slatkin (1993); sec. 4 credits it to Heard (1992). The Lean proofs work with histories directly, by a recurrence in the size of the root split for the Colless index and through expected leaf depths for the Sackin index; they do not follow the paper's arguments."
+  - title: "Patterns in tree balance among cladistic, phenetic, and randomly generated phylogenetic trees"
+    authors: ["Stephen B. Heard"]
+    id: "doi:10.1111/j.1558-5646.1992.tb01171.x"
+    relationship: background
+    note: "Context only; no step of any proof comes from it. Cited because Cardona, Mir, and Rosselló credit an earlier account of the expected Sackin index to this paper (their sec. 4); it is context for kingman_sackin_expectation and kingman_colless_expectation."
+  - title: "Searching for evolutionary patterns in the shape of a phylogenetic tree"
+    authors: ["Mark Kirkpatrick", "Montgomery Slatkin"]
+    id: "doi:10.1111/j.1558-5646.1993.tb02144.x"
+    relationship: background
+    note: "Context only; no step of any proof comes from it. Cited because Cardona, Mir, and Rosselló credit the expected Sackin index under the Yule model to this paper (their sec. 1); it is context for kingman_sackin_expectation."
+  - title: "On the genealogy of nested subsamples from a haploid population"
+    authors: ["Ian W. Saunders", "Simon Tavare", "G. A. Watterson"]
+    id: "doi:10.2307/1427285"
+    relationship: formalizes
+    note: "Supplies the established formula formalized in sample_population_root_probability: the probability that a sample of size s from a population of N leaves has the same most recent common ancestor as the population is (s − 1)(N + 1)/((s + 1)(N − 1)). Here the population genealogy is the final tree of a ranked labelled Kingman history on N leaves, and the sample is any set S of at least one leaf. The Lean proof counts histories directly and does not follow the paper's argument."
+  - title: "Lean 4 formalization of the multispecies coalescent identifiability results of Allman, Degnan and Rhodes (ADR11)"
+    authors: ["The-Anh Vu-Le"]
+    id: "https://github.com/vltanh/lean4-adr11"
+    relationship: adapts
+    note: "A Lean 4 project used as a dependency (library citation: commit 2db7f81). Its definitions of forests of clades, roots, merges, the forest jump matrix of Kingman's coalescent, singleton forests, hierarchies, and binary hierarchies are the vocabulary of the compared statements, and the proofs use its lemmas about them. This entry extends that forest construction: historyPayoff_roots_eq_partition_stepN and sum_jumpMatrix_roots_eq_partitionJump identify its process of roots with the jump chain of the partition-valued Kingman coalescent of this library, and the counting and probability results are stated for histories of its forest chain. It is listed among the related formalizations as well."
+  - title: "lean4phylo"
+    authors: ["chaoszhang"]
+    type: other
+    id: "https://github.com/chaoszhang/lean4phylo/tree/565bf6757999ff9f667835b8ca0cf376548545b9"
+    location: "Phylo/Stat/RankedGeneTree.lean: H_eq_factorial; Phylo/Stat/CoalescentHistoryCount.lean: card_mergeHistories_eq_H (files first committed 2026-10-08); Phylo/Stat/CladeCount.lean: cladeCount_univ (file first committed 2026-10-24)"
+    license: "Apache-2.0"
+    relationship: other
+    note: "A Lean 4 repository at the cited commit, listed so that a reader can see an overlapping formalization; it is not a mathematical source of this entry, and nothing from it is imported or used here. H_eq_factorial and card_mergeHistories_eq_H count ranked labelled histories, n!(n-1)!/2^(n-1): identical to card_ranked_labelled_history. cladeCount_univ counts the histories in which a set is a clade: overlapping with the clade factors of kingman_topology_probability_of_clade_factors. Independent formalization. No order of priority is stated in either direction."
+
+related_formalizations:
+  - id: "PALOMAR-2026-10-04-000005"
+    relationship: "builds-on"
+    note: "The Palomar record of the lean4-adr11 formalization (identifiability of the rooted species tree from gene trees under the multispecies coalescent). This entry builds on it: the compared statements are phrased in its definitions of forests, roots, merges, the forest jump matrix, and binary hierarchies, the proofs use its lemmas, and two compared theorems relate its forest chain to the partition-valued Kingman jump chain of this library."
+  - id: "https://www.isa-afp.org/entries/Random_BSTs.html"
+    relationship: "other"
+    note: "An Isabelle/HOL Archive of Formal Proofs entry on random binary search trees, a model of random binary trees closely related to the random tree shapes treated here. Nothing from it is used, and the exact overlap with the Sackin and Colless results of this entry has not been checked."
+  - id: "https://github.com/chaoszhang/lean4phylo"
+    relationship: "independent"
+    note: "Independent formalization (Lean 4, Apache-2.0); the overlap is described under sources."
+
+status:
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  scope: "Objects. Leaves are labelled by Fin n (or by an arbitrary finite type L in the last two theorems). A forest is a finite family of nonempty sets of leaves (clades), any two of which are nested or disjoint; its roots are its maximal clades. A merge adds the union of two distinct roots as a new clade. The forest jump matrix sends a forest with k ≥ 2 roots to each of its binomial(k, 2) merges with probability 1/binomial(k, 2), and fixes a forest with at most one root. A ranked labelled history on n leaves is a sequence of n − 1 merges starting from the forest of n singletons; its mass is the product of the jump probabilities along it, and its end is the final forest, a rooted binary tree given as its set of clades. For a function f of forests, historyPayoff F t f is the sum over t-step histories from F of mass times f at the end; started from the singletons with t = n − 1 it is the expectation of f at the final tree under Kingman's coalescent. Two histories have the same ranked shape if a single permutation of the leaves carries every intermediate forest of one onto the corresponding forest of the other, and the same unranked shape if a permutation carries the final tree of one onto the final tree of the other; RankedShape n and UnrankedShape n are the quotients. A labelled topology is a binary hierarchy on Fin n: a set of clades containing all leaves and every singleton, any two nested or disjoint, in which every clade of size at least 2 is the disjoint union of two clades of the hierarchy. Theorems. (1) card_ranked_labelled_history: for n ≥ 1 there are n!(n − 1)!/2^(n−1) ranked labelled histories (natural-number division, which is exact). (2) ranked_labelled_history_mass: for n ≥ 1 every history has mass 2^(n−1)/(n!(n − 1)!), so by (1) the masses form the uniform probability distribution on histories. (3) card_ranked_shape_one, card_ranked_shape_two, card_unranked_shape_one, and card_unranked_shape_two: on one leaf and on two leaves there is exactly one ranked shape and exactly one unranked shape. (4) card_ranked_shape_recurrence: for n ≥ 3, twice the number R(n) of ranked shapes equals Σ_{k=1}^{n−1} binomial(n − 2, k − 1) R(k) R(n − k). (5) card_unranked_shape_recurrence: for n ≥ 2, the number W(n) of unranked shapes equals Σ_{k=1}^{⌊(n−1)/2⌋} W(k) W(n − k), plus W(n/2)(W(n/2) + 1)/2 when n is even (natural-number division, which is exact). (6) kingman_topology_probability_of_clade_factors: for n ≥ 1 and every labelled topology T, the total mass of the histories ending at T is 2^(n−1)/(n! ∏(|C| − 1)), the product over the clades C of T with |C| ≥ 2 (an empty product is 1). (7) root_split_mass: for n ≥ 2 and every set A of leaves with 0 < |A| < n, the total mass of the histories whose final tree has root children exactly A and its complement is 2/((n − 1) binomial(n, |A|)). (8) sample_population_root_probability: for a population of N ≥ 2 leaves and any set S of leaves with |S| ≥ 1, the total mass of the histories in which S meets both children of the root, that is, in which the most recent common ancestor of S is the root, is (|S| − 1)(N + 1)/((|S| + 1)(N − 1)); it is 0 when |S| = 1 and 1 when S is the whole population. (9) tendsto_sample_population_root_probability: for fixed n ≥ 1, taking S to be the leaves with labels less than n in a population of N leaves, the probability in (8) tends to (n − 1)/(n + 1) as N tends to infinity. (10) kingman_colless_expectation: for n ≥ 1, the expectation over histories of the Colless index of the final tree, the sum over internal clades of the difference between the sizes of the larger and smaller child, is n H_{⌊n/2⌋} − 2⌊n/2⌋, with H_m the m-th harmonic number computed as a rational. (11) kingman_sackin_expectation: for n ≥ 1, the expectation of the Sackin index, the sum over leaves of the number of clades that contain the leaf, other than the leaf itself, is 2n(H_n − 1). (12) historyPayoff_roots_eq_partition_stepN: for any finite label type L, any forest F whose roots are the blocks of a set partition π of L, any t ≤ (number of roots of F) − 1, and any real function f of a family of sets, the expectation of f at the roots of the end of a t-step history from F equals Σ_σ P^t(π, σ) f(blocks of σ), where P is the jump matrix of Kingman's partition-valued coalescent on L. (13) sum_jumpMatrix_roots_eq_partitionJump: for the same F and π and every partition σ of L, the total forest-jump probability from F to forests whose roots are the blocks of σ equals P(π, σ); here there is no restriction on the number of roots, and both sides stay put when there is one root. Degenerate cases: n = 0 is excluded from every theorem on Fin n; the n = 1 cases are included in (1), (2), (6), (9), (10), and (11) and are trivial (a single history of mass 1, indices 0, and limit 0). Not covered: branch lengths, holding times, and any continuous-time statement; variances or distributions of the Colless and Sackin indices; the probabilities of ranked or unranked shapes; closed forms or generating functions for R(n) and W(n), and their identification with the Euler zigzag and Wedderburn–Etherington numbers, beyond the recurrences and initial values; the equality of the law of the final labelled tree with the Yule model; other tree models such as the uniform or beta-splitting models; and nonbinary trees."
+
+fidelity:
+  divergences: "Shapes: ranked and unranked shapes are defined as relabelling classes of Kingman histories, not as abstract unlabelled trees; the recurrences and initial values determine the classical sequences, but the identification with the Euler zigzag numbers and the Wedderburn–Etherington numbers is not stated. André's recurrence concerns alternating permutations and is applied here with an index shift; Wedderburn's paper is framed around a functional equation, whereas the recurrence is proved here combinatorially for shape classes. Model: the sources state the Colless and Sackin expectations under the Yule model and the topology probabilities under random bifurcation; here every expectation is a finite weighted sum over ranked labelled Kingman histories, and the coincidence of the Kingman and Yule laws on final trees is not formalized. Only the jump chain of Kingman's coalescent is used, with no holding times. Root split: root_split_mass gives the probability of one specified unordered split of the labelled leaves, which may differ in form from the textbook statement it is cited against. Sample root: the population is finite and labelled, the sample is a fixed set of leaves, and the limit is taken along the samples formed by the first n labels as the population size N grows. Colless index: each internal clade contributes the size of its larger child minus that of its smaller child, computed with natural-number subtraction, which equals the absolute difference. Labels: the last two theorems hold for an arbitrary finite label type, the others for Fin n."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.KingmanTrees"
+  statements:
+    - source: "Kingman 1982"
+      lean: "Rhone.Combinatorics.card_ranked_labelled_history"
+      module: "Rhone.Combinatorics.KingmanHistories"
+      status: "proved"
+    - source: "Kingman 1982"
+      lean: "Rhone.Combinatorics.ranked_labelled_history_mass"
+      module: "Rhone.Combinatorics.KingmanHistories"
+      status: "proved"
+    - source: "One ranked shape on one leaf"
+      lean: "Rhone.Combinatorics.card_ranked_shape_one"
+      module: "Rhone.Combinatorics.KingmanShapeBases"
+      status: "proved"
+    - source: "One ranked shape on two leaves"
+      lean: "Rhone.Combinatorics.card_ranked_shape_two"
+      module: "Rhone.Combinatorics.KingmanShapeBases"
+      status: "proved"
+    - source: "One unranked shape on one leaf"
+      lean: "Rhone.Combinatorics.card_unranked_shape_one"
+      module: "Rhone.Combinatorics.KingmanShapeBases"
+      status: "proved"
+    - source: "One unranked shape on two leaves"
+      lean: "Rhone.Combinatorics.card_unranked_shape_two"
+      module: "Rhone.Combinatorics.KingmanShapeBases"
+      status: "proved"
+    - source: "Andre 1881, section II no. 6"
+      lean: "Rhone.Coalescent.card_ranked_shape_recurrence"
+      module: "Rhone.Coalescent.KingmanShapeRankedRecurrence"
+      status: "proved"
+    - source: "Wedderburn 1922, section 1, p. 122"
+      lean: "Rhone.Coalescent.card_unranked_shape_recurrence"
+      module: "Rhone.Coalescent.KingmanUnrankedShapeRootCount"
+      status: "proved"
+    - source: "Kingman 1982"
+      lean: "Rhone.Coalescent.kingman_topology_probability_of_clade_factors"
+      module: "Rhone.Coalescent.KingmanTopologyProbability"
+      status: "proved"
+    - source: "Kingman 1982; Durrett 2008, Theorem 1.5"
+      lean: "Rhone.Coalescent.root_split_mass"
+      module: "Rhone.Coalescent.KingmanRootSplit"
+      status: "proved"
+    - source: "Saunders, Tavare, and Watterson 1984"
+      lean: "Rhone.Coalescent.sample_population_root_probability"
+      module: "Rhone.Coalescent.KingmanRootSampling"
+      status: "proved"
+    - source: "Durrett 2008, Theorem 1.7"
+      lean: "Rhone.Coalescent.tendsto_sample_population_root_probability"
+      module: "Rhone.Coalescent.KingmanRootSamplingLimit"
+      status: "proved"
+    - source: "Heard 1992; Cardona, Mir, and Rossello 2013, sections 1 and 7"
+      lean: "Rhone.Coalescent.kingman_colless_expectation"
+      module: "Rhone.Coalescent.KingmanCollessExpectation"
+      status: "proved"
+    - source: "Kirkpatrick and Slatkin 1993; Cardona, Mir, and Rossello 2013, section 1"
+      lean: "Rhone.Coalescent.kingman_sackin_expectation"
+      module: "Rhone.Coalescent.KingmanSackin"
+      status: "proved"
+    - source: "Kingman 1982"
+      lean: "Rhone.Coalescent.historyPayoff_roots_eq_partition_stepN"
+      module: "Rhone.Coalescent.KingmanForestHistoryBridge"
+      status: "proved"
+    - source: "Kingman 1982"
+      lean: "Rhone.Coalescent.External.ADR11.sum_jumpMatrix_roots_eq_partitionJump"
+      module: "Rhone.Coalescent.KingmanForestPartitionJump"
+      status: "proved"
+
+acknowledgements: "The ADR11 project (lean4-adr11, PALOMAR-2026-10-04-000005) of The-Anh Vu-Le."

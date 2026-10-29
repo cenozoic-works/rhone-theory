@@ -1,0 +1,17 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.FiniteSampleTesting.Challenge",
+  "solution_module": "Palomar.FiniteSampleTesting.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.FiniteSampleTesting.size_transfer",
+    "Rhone.Palomar.FiniteSampleTesting.power_transfer",
+    "Rhone.Palomar.FiniteSampleTesting.approximable_test_power_le_size",
+    "Rhone.Palomar.FiniteSampleTesting.test_advantage_implies_gap",
+    "Rhone.Palomar.FiniteSampleTesting.iid_necessary_inverse_square"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

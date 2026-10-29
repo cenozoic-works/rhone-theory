@@ -1,0 +1,28 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.FluctuatingSize.Challenge",
+  "solution_module": "Palomar.FluctuatingSize.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.FluctuatingSize.wfResize_nonneg",
+    "Rhone.Palomar.FluctuatingSize.wfResize_row_sum",
+    "Rhone.Palomar.FluctuatingSize.wfResize_self",
+    "Rhone.Palomar.FluctuatingSize.wfVarExpect_const",
+    "Rhone.Palomar.FluctuatingSize.wfResize_expect_het",
+    "Rhone.Palomar.FluctuatingSize.wfVarExpect_het",
+    "Rhone.Palomar.FluctuatingSize.sum_inv_eq_div_harmonicSize",
+    "Rhone.Palomar.FluctuatingSize.prod_deficit_le_harmonic",
+    "Rhone.Palomar.FluctuatingSize.prod_deficit_eq_harmonic_iff",
+    "Rhone.Palomar.FluctuatingSize.harmonic_sub_prod_deficit_le",
+    "Rhone.Palomar.FluctuatingSize.abs_prod_deficit_sub_harmonic_le",
+    "Rhone.Palomar.FluctuatingSize.wfVarExpect_het_le_harmonic",
+    "Rhone.Palomar.FluctuatingSize.prod_deficit_two_four",
+    "Rhone.Palomar.FluctuatingSize.harmonicSize_two_four",
+    "Rhone.Palomar.FluctuatingSize.harmonic_power_two_four",
+    "Rhone.Palomar.FluctuatingSize.prod_deficit_two_four_ne_harmonic"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

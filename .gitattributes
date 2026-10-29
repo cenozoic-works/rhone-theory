@@ -1,0 +1,10 @@
+# Every text file is stored and checked out with LF line endings on every platform.
+* text=auto eol=lf
+*.lean text eol=lf
+*.md text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.bib text eol=lf
+*.cff text eol=lf
+# Generated data modules: reviewers can collapse these in diffs
+Rhone/**/*Data.lean linguist-generated=true

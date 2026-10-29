@@ -1,0 +1,117 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "An upper bound on the denominators of solutions of the two-locus sampling recursion"
+  description: "This entry formalizes degree and divisibility facts about the denominators of solutions to the two-locus sampling recursion with two alleles at each locus. Centred moments of a solution, grouped in blocks by the numbers i and j of lineages at the two loci, satisfy a tridiagonal linear system with matrix T(i, j) whose right-hand side involves only smaller blocks. An explicit product D of linear factors in the mutation rates and of block determinants E(p, s) = det T(p, s) clears the denominator of the solution: D times the solution lies in any subring that contains the parameters. Conditionally on D being the reduced denominator of the top centred moment, every denominator of the solution is divisible by E. The determinant E(i, j) has degree min(i, j) in the recombination rate when a nonvanishing condition holds, and is positive when i, j ≥ 2 and the rates are nonnegative. Two statements show that the diagonal determinants E(m, m), with one mutation rate set to zero, have irreducible factors of unbounded degree as m varies, both as polynomials in the mutation rate over rational functions of the recombination rate and as polynomials in the recombination rate over rational functions of the mutation rate."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["math.AC", "q-bio.PE"]
+  msc2020: ["92D10", "12E05", "13F20"]
+
+sources:
+  - title: "An upper bound on the denominators of solutions of the two-locus sampling recursion by linear factors and the determinants of the tridiagonal block matrices T^{(i,j)}"
+    type: original-proof
+    relationship: other
+    note: "The statements and proofs were written in this project. Novelty unknown; no claim of priority. The recursion itself is established mathematics and is not claimed: it is the two-locus sampling recursion under parent-independent mutation, going back to G. B. Golding (Genetics 108:257-274, 1984) and S. N. Ethier and R. C. Griffiths (J. Math. Biol. 29:131-159, 1990), in the form recorded in this repository as eq. (5) of P. A. Jenkins and Y. S. Song (Genetics 183:1087-1103, 2009, doi:10.1534/genetics.109.107995); none of these is formalized here beyond the statement of the recursion. Solving the recursion block by block through tridiagonal systems is also known in the literature, as the context sources below record. What this formalization adds is the explicit tridiagonal system for the centred moments in the biallelic case, the explicit clearing denominator D, the conditional transfer of sharpness from the top centred moment to the solution, the degree and positivity of E, and the unbounded degrees of irreducible factors of E(m, m)."
+  - title: "Padé approximants and exact two-locus sampling distributions"
+    authors: ["Paul A. Jenkins", "Yun S. Song"]
+    id: "Annals of Applied Probability 22(2):576-607, 2012; arXiv:1107.3897"
+    location: "Lemma 4.1, sec. 7.3 (arXiv:1107.3897v2, pp. 29-30)"
+    relationship: background
+    note: "Context: the cited lemma states that the two-locus sampling distribution is a rational function of the recombination rate. Dfull_mul_q_mem is a more explicit result of the same kind in the biallelic case, giving a specific clearing denominator; its proof does not use this lemma."
+  - title: "Two-locus likelihoods under variable population size and fine-scale recombination rate estimation"
+    authors: ["John A. Kamm", "Jeffrey P. Spence", "Jeffrey Chan", "Yun S. Song"]
+    id: "Genetics 203(3):1381-1399, 2016; arXiv:1510.06017"
+    relationship: background
+    note: "Context: the paper uses a tridiagonal chain in the count of doubly ancestral lineages, which is context for the block structure of T_mulVec_Phi_eq_phiRecursionSource. Nothing from the paper is used in the Lean proofs."
+  - title: "Importance sampling on the coalescent with recombination"
+    authors: ["Paul A. Jenkins"]
+    id: "Oxford University Research Archive, uuid:de04e3ae-d3be-4eb3-9045-2387d872283d"
+    location: "pp. 191-192"
+    relationship: background
+    note: "Context: describes tridiagonal level-by-level solves of the two-locus recursion at zero mutation rate, crediting the method to Griffiths (1991). This is context for the block structure of T_mulVec_Phi_eq_phiRecursionSource, which here includes mutation and acts on centred moments; nothing from the thesis is used in the Lean proofs."
+  - title: "Nonnegative Matrices in the Mathematical Sciences"
+    authors: ["Abraham Berman", "Robert J. Plemmons"]
+    id: "doi:10.1137/1.9781611971262"
+    relationship: background
+    note: "Context: the theory of nonsingular M-matrices, whose determinants are positive, is a standard route to statements like E_pos for real nonnegative parameters, since T(i, j) has nonpositive off-diagonal entries when the recombination rate is nonnegative. The Lean proof of E_pos does not use this book; it is a direct continuant argument and holds over any ordered commutative ring."
+  - title: "Probability Models for DNA Sequence Evolution"
+    authors: ["Richard Durrett"]
+    id: "doi:10.1007/978-0-387-78168-6"
+    location: "2nd edition, 2008, sec. 3.1: Theorem 3.1, p. 85; Samples of size 3, pp. 89-90"
+    relationship: background
+    note: "Context and a consistency check: the book solves the two-locus recursion block by block, for fixed marginal counts with the number of doubly typed lineages as unknown, which is the block structure of T_mulVec_Phi_eq_phiRecursionSource. Its Theorem 3.1 has denominator rho^2 + 13 rho + 18, which equals E(2, 2)/8 at zero mutation rates (a direct computation from the definition of T). The book gives no divisor law for general blocks, and nothing from it is used in the Lean proofs."
+  - title: "Duality between the two-locus Wright-Fisher diffusion model and the ancestral process with recombination"
+    authors: ["Shuhei Mano"]
+    id: "doi:10.1239/jap/1363784437"
+    location: "Sec. 4, eq. (4.1) (arXiv:1201.5557, pp. 14-15)"
+    relationship: background
+    note: "Context: moments of the two-locus diffusion are solved class by class, each class a tridiagonal system, without mutation; this is the same kind of block structure as T_mulVec_Phi_eq_phiRecursionSource. Nothing from the paper is used in the Lean proofs."
+  - title: "A Markov chain model of coalescence with recombination"
+    authors: ["Katy L. Simonsen", "Gary A. Churchill"]
+    id: "doi:10.1006/tpbi.1997.1307"
+    relationship: background
+    note: "Context and a consistency check: the two-locus chain for a sample of size 2 gives P(T1 = T2) = (rho + 18)/(rho^2 + 13 rho + 18), as quoted in Wilton, Carmi, and Hobolth (2015), eq. (5). The denominator equals E(2, 2)/8 at zero mutation rates. Nothing from the paper is used in the Lean proofs."
+
+status:
+  scope: "Setting. The recursion IsSolution (two-locus sampling recursion under parent-independent mutation, here with two alleles per locus) is as in the companion recursion entries: q(empty) = 1, single-lineage boundary values πA i, πB j, and πA i πB j, and for n ≥ 2 lineages [n(n - 1) + θA nA + θB nB + ρ t] q(ξ) equals a combination of coalescence, mutation, and recombination terms. For block indices i, j, the matrix T(i, j) is the tridiagonal matrix of size min(i, j) + 1, indexed by t = 0, ..., min(i, j), with diagonal (i + j - t)(i + j - t - 1) + θA i + θB j + ρ t, entry -2(i - t)(j - t) in position (t, t + 1), and entry -ρ(t + 1) in position (t + 1, t); E(i, j) is its determinant. Phi(i, j, t) is the centred moment of q: the sum over allele assignments to i slots at locus A and j slots at locus B, with the first t slots at each locus paired into doubly ancestral lineages, of the products of the centred weight vectors (1 - π0, -π0) of the relevant locus at each slot, times q of the resulting configuration. poch(θ, n) = (θ + 1)(θ + 2)...(θ + n - 1), and Dfull(i, j) = poch(θA, i) poch(θB, j) times the product of E(p, s) over 2 ≤ p ≤ i and 2 ≤ s ≤ j. The first three theorems below assume an ordered field F, θA > 0, θB > 0, ρ ≥ 0, a solution q, and allele weights with πA 0 + πA 1 = 1 and πB 0 + πB 1 = 1; positivity of the weights is not assumed. Theorem T_mulVec_Phi_eq_phiRecursionSource: for every i and j, T(i, j) applied to the vector (Phi(i, j, t)) for t = 0, ..., min(i, j) equals the vector of phiRecursionSource(i, j, t), an explicit combination, with coefficients π0 π1 and π1 - π0 at each locus, of centred moments with i or j reduced by 1 or 2 and t possibly reduced (natural-number subtraction, with coefficients that vanish where it truncates). Theorem Dfull_mul_q_mem: for every subring A of F containing θA, θB, ρ, and the four allele weights, and every configuration ξ, Dfull(nA, nB) q(ξ) lies in A, where nA and nB are the numbers of lineages ancestral at each locus. Theorem dvdIn_E_of_clears: suppose in addition that nA ≥ 2 and nB ≥ 2, and that Dfull(nA, nB) is a reduced denominator of Phi(nA, nB, t) in A (it clears it, and divides in A every element of A that clears it), where t is the number of doubly ancestral lineages of ξ. Then every d in A with d q(ξ) in A is divisible in A by E(nA, nB). The reduced-denominator hypothesis is not proved here for any configuration, so this theorem is conditional, and the alignment records it as partial. Theorem natDegree_E: over any commutative ring F, for all i, j and a, b in F with min(i, j)! times i(i - 1 + a) + j(j - 1 + b) nonzero in F, the determinant E(i, j), with θA = a, θB = b, and ρ an indeterminate, has degree exactly min(i, j) in ρ. Theorem E_pos: over any ordered commutative ring, if i ≥ 2, j ≥ 2, and θA, θB, ρ ≥ 0, then E(i, j) > 0; this includes zero mutation and recombination rates. Theorem unbounded_irreducible_E_mm_factor_degree: for every D there are m ≥ 2 and an irreducible polynomial G over the field ℚ(ρ) of rational functions, of degree greater than D in the variable θA, dividing E(m, m) with θB = 0. Theorem unbounded_irreducible_E_mm_recombination_factor_degree: the same with the roles exchanged, over ℚ(θA) with ρ the polynomial variable and θB = 0. On diagonal blocks the determinant depends on the mutation rates only through θA + θB, since its diagonal involves θA m + θB m, so setting θB = 0 is no loss and θA plays the role of the total mutation rate; the case θB = 0 lies outside the positive-rate hypotheses of the recursion, and the last two theorems are statements about the polynomials E(m, m) only. Not covered: more than two alleles at a locus; the sharpness of Dfull for any configuration (only the conditional transfer is proved); any closed formula for q; and the probabilistic interpretation of q."
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+
+fidelity:
+  divergences: "No cited source states the formalized results; all cited works are context. Relative to them: the entry is restricted to two alleles at each locus; the block system acts on centred moments of the solution rather than on sampling probabilities directly, and includes mutation, whereas the tridiagonal solves cited from Jenkins (thesis) and Mano are at zero mutation; the parameters are elements of an arbitrary ordered field (or, for the degree and irreducibility statements, polynomial and rational-function variables) rather than real numbers; the rationality statement of Jenkins and Song (2012) is in the recombination rate, whereas Dfull_mul_q_mem is a membership statement in a subring generated by all parameters. The sharpness statement is conditional on a reduced-denominator hypothesis that is not discharged. The irreducibility statements set one mutation rate to zero. The checks against Durrett (2008) and Simonsen and Churchill (1997) concern only the 2 × 2 block at zero mutation and use the parameter convention of the Lean definitions; they are not formal statements of this entry."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.DenominatorLaw"
+  statements:
+    - source: "This project"
+      lean: "Rhone.Probability.SlotDeletion.T_mulVec_Phi_eq_phiRecursionSource"
+      module: "Rhone.Probability.SlotDeletion.Matrix"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Probability.SlotDeletion.Dfull_mul_q_mem"
+      module: "Rhone.Probability.SlotDeletion.Surj"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Probability.Denominator.dvdIn_E_of_clears"
+      module: "Rhone.Probability.Denominator.SharpnessTransfer"
+      status: "partial"
+    - source: "This project"
+      lean: "Rhone.LinearAlgebra.Tridiag.natDegree_E"
+      module: "Rhone.LinearAlgebra.Tridiag.RhoDegree"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.LinearAlgebra.GaloisDegreeSeven.E_pos"
+      module: "Rhone.LinearAlgebra.GaloisDegreeSeven.Positive"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Analysis.DiagonalObstruction.unbounded_irreducible_E_mm_factor_degree"
+      module: "Rhone.Analysis.DiagonalObstruction.Unbounded"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Probability.RecombinationDegree.unbounded_surviving_recombination_factor"
+      module: "Rhone.Probability.RecombinationDegree.MutationCoordinates"
+      status: "proved"

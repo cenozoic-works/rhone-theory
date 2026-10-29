@@ -1,0 +1,129 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Block determinants of the two-locus sampling recursion: degree, positivity, squarefreeness, coprimality, and Galois groups"
+  description: "This entry formalizes algebraic properties of the block determinants E(i, j) of the two-locus sampling recursion, viewed as polynomials in the recombination rate ρ. E(i, j) is the determinant of an explicit (min(i, j) + 1)-square tridiagonal matrix whose entries depend on i, j, the mutation rates θ_A and θ_B, and ρ. Its degree in ρ is min(i, j) under a stated nondegeneracy condition, and it is positive for i, j ≥ 2 with nonnegative parameters. For nonnegative real mutation rates, every root in ρ of E(5, 5) and of E(7, 7) is real and negative. At explicit rational parameters with negative θ_A, E(5, 5) and E(7, 7) are irreducible over the rationals, have 3 and 5 real roots, have Galois groups of orders 120 and 5040 (the full symmetric groups), and have roots that are not expressible by radicals. E(5, 5) and E(7, 7) are irreducible over the field of rational functions in the mutation rate, and their Galois groups over the field of rational functions in two independent mutation rates are the full symmetric groups; a general specialization lemma used for this is also stated. Squarefreeness, and coprimality for distinct index pairs, of the determinants with i, j ≥ 1 are stated over a field of rational functions in two independent mutation rates and over a field of Laurent series in which both mutation rates are large with a ratio that is not rational."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["math.AC", "math.NT"]
+  msc2020: ["12F10", "11R32", "12E05", "92D10"]
+
+sources:
+  - title: "Irreducibility, real-rootedness, squarefreeness, coprimality, and Galois groups of the block determinants E_{i,j} of the two-locus sampling recursion"
+    type: original-proof
+    relationship: other
+    note: "Novelty unknown; no claim of priority. None of the listed sources supplies the determinants or the results. In this entry E(i, j) is defined directly as the determinant of an explicit tridiagonal matrix, so no statement depends on a source for the recursion; within this repository the same matrix is the within-block system of the two-locus sampling recursion under parent-independent mutation that the ExplicitFormula entry inverts block by block. What this formalization presents relative to the cited sources is the set of statements in status.scope: the ρ-degree, positivity, real-rootedness with negative roots for (5, 5) and (7, 7), irreducibility and full symmetric Galois groups of E(5, 5) and E(7, 7) at explicit rational parameters and over rational-function fields, non-solvability by radicals at those parameters, and squarefreeness and coprimality over generic and Laurent-series fields. Standard results proved in Mathlib (the prime-degree criterion for a full symmetric Galois group, the Abel–Ruffini criterion, and the theory of decomposition groups) are used as tools and are listed under related_formalizations."
+  - title: "Nonnegative Matrices in the Mathematical Sciences"
+    authors: ["Abraham Berman", "Robert J. Plemmons"]
+    id: "doi:10.1137/1.9781611971262"
+    relationship: background
+    note: "Context for E_pos: the theory of nonsingular M-matrices, which gives positive determinants for real matrices with nonpositive off-diagonal entries under a dominance condition; for nonnegative parameters the off-diagonal entries of the matrix defining E(i, j) are nonpositive. The Lean proof does not use M-matrix theory: it proves positivity directly, over any ordered commutative ring, by induction along the three-term determinant recurrence with a row-sum invariant."
+  - title: "Duality between the two-locus Wright-Fisher diffusion model and the ancestral process with recombination"
+    authors: ["Shuhei Mano"]
+    id: "doi:10.1239/jap/1363784437"
+    location: "Sec. 4, after eq. (4.1) (arXiv:1201.5557, p. 15)"
+    relationship: background
+    note: "Context for the Galois statements: remarks that for classes k >= 4 explicit closed-form eigenvalues cannot be expected, citing Littler (1972) and Ohta and Kimura (1969). An informal statement in the mutation variable at theta = 0 blocks, not in rho; whether its matrices equal the blocks T^{(i,j)} up to similarity is not addressed there. The entry's non-solvability results are formal statements of a related kind for specific determinants in ρ; they do not formalize Mano's remark."
+  - title: "Irreducibility of the characteristic polynomials of random tridiagonal matrices"
+    authors: ["Lior Bary-Soroker", "Daniele Garzoni", "Sasha Sodin"]
+    id: "arXiv:2502.17218"
+    relationship: background
+    note: "Context: under GRH for certain Dedekind zeta functions, the characteristic polynomial of a random integer tridiagonal matrix is irreducible with Galois group S_n or A_n with high probability. Related: a different family of tridiagonal matrices; the entry's results concern specific deterministic determinants and are unconditional. Not used in the Lean proofs."
+
+related_formalizations:
+  - id: "https://github.com/leanprover-community/mathlib4/blob/c55e6e786f49471c72fbddbec5415808896aec1e/Mathlib/Analysis/Complex/Polynomial/Basic.lean"
+    relationship: "builds-on"
+    note: "Mathlib file containing Gal.galActionHom_bijective_of_prime_degree: an irreducible rational polynomial of prime degree p with exactly p − 2 real roots has the full symmetric Galois group. The proofs of card_gal_E55pt and card_gal_E77pt apply it after counting real and complex roots."
+  - id: "https://github.com/leanprover-community/mathlib4/blob/c55e6e786f49471c72fbddbec5415808896aec1e/Mathlib/FieldTheory/AbelRuffini.lean"
+    relationship: "builds-on"
+    note: "Mathlib's Abel–Ruffini development. The proofs of E55pt_root_not_solvableByRad and E77pt_root_not_solvableByRad apply its criterion that a root of an irreducible polynomial expressible by radicals forces a solvable Galois group (isSolvable_gal_of_irreducible), together with the non-solvability of S_5 and S_7."
+  - id: "https://github.com/leanprover-community/mathlib4/blob/c55e6e786f49471c72fbddbec5415808896aec1e/Mathlib/RingTheory/Invariant/Basic.lean"
+    relationship: "builds-on"
+    note: "Mathlib's results on invariant ring extensions, including surjectivity of the map from a decomposition group to the residue-field automorphisms (Ideal.Quotient.stabilizerHom_surjective). The specialization argument behind generic_galois_full_of_specialization, E55_galois_full, and E77_galois_full uses it to embed the Galois group of a specialization into the generic Galois group."
+
+status:
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  scope: "Setting. For a commutative ring R, natural numbers i and j, and θ_A, θ_B, ρ in R, let m = min(i, j) and let T(i, j) be the (m + 1) × (m + 1) tridiagonal matrix with diagonal entries d_t = (i + j − t)(i + j − t − 1) + θ_A i + θ_B j + ρ t, superdiagonal entries −2(i − t)(j − t), and subdiagonal entries −ρ(t + 1), for t = 0, ..., m. E(i, j) = det T(i, j). Most statements take R to be a polynomial ring and ρ = X, so that E(i, j) is a polynomial in ρ whose coefficients depend on θ_A and θ_B. When i = j, θ_A and θ_B enter only through θ_A + θ_B, because the diagonal contains θ_A i + θ_B i; this matters for (11) to (14) and (25) to (26). Degree and positivity. (1) natDegree_E: for any commutative ring F, any i, j, and constants θ_A = a, θ_B = b in F, if m! times κ = i(i − 1 + a) + j(j − 1 + b) is nonzero in F, then E(i, j) has degree exactly m in ρ. When i or j is 0, E(i, j) is the constant d_0 = κ. (2) E_pos: in any ordered commutative ring F (for example ℤ, ℚ, or ℝ), if i ≥ 2, j ≥ 2, θ_A ≥ 0, θ_B ≥ 0, and ρ ≥ 0, then E(i, j) > 0. Zero mutation rates are allowed. Explicit specializations over ℚ. E55pt is E(5, 5) in ℚ[ρ] at θ_A = −9, θ_B = 2/5; E77pt is E(7, 7) at θ_A = −13, θ_B = 3/7. These parameters are negative in sum and lie outside the range of mutation rates; they serve as certificates. (3) E55pt_irreducible: E55pt is irreducible in ℚ[ρ]. (4) card_rootSet_E55pt_real: E55pt has exactly 3 distinct real roots. (5) card_gal_E55pt: the Galois group of E55pt over ℚ has order 120; since that group acts faithfully on the 5 roots, it is the symmetric group S_5. (6) E55pt_root_not_solvableByRad: no complex root of E55pt lies in the field of complex numbers expressible by radicals over ℚ. (7)-(10) E77pt_irreducible, card_rootSet_E77pt_real, card_gal_E77pt, E77pt_root_not_solvableByRad: the same for E77pt, with 5 distinct real roots and Galois group of order 5040, hence S_7. Rational-function fields. E55gen is E(5, 5) with θ_A = s, θ_B = 0, as a polynomial in ρ with coefficients in ℚ[s]; E77gen likewise. Because E(i, i) depends only on θ_A + θ_B, these represent the determinants with a general sum s of the two mutation rates. (11) E55gen_irreducible_ratFunc: E55gen is irreducible over ℚ(s). (12) E55gen_irreducible_two_var: E55gen stays irreducible after extension of scalars to ℚ(s)(u), u a new indeterminate that does not occur in the polynomial; with the observation above, this is irreducibility in two independent mutation rates θ_A = s − u and θ_B = u, but the Lean statement itself is the extension-of-scalars form. (13)-(14) E77gen_irreducible_ratFunc and E77gen_irreducible_two_var: the same for E(7, 7). Real-rootedness for nonnegative mutation rates. (15) E55_splits: for all real θ_A ≥ 0 and θ_B ≥ 0, E(5, 5) as a polynomial in ρ over ℝ splits, that is, all its roots are real. (16) card_roots_E55: it has exactly 5 real roots counted with multiplicity. (17) roots_neg_E55: every real root is negative. (18)-(20) E77_splits, card_roots_E77, roots_neg_E77: the same for E(7, 7) with 7 roots. Squarefreeness and coprimality. In the Laurent setting, k is any field of characteristic zero, b is an element of k such that c + d b = 0 with integers c and d forces c = d = 0 (equivalently, b is not a rational number; in particular b ≠ 0, and for k = ℚ no such b exists, so the statements are vacuous there), the coefficients lie in the field k((σ)) of Laurent series, and θ_A = 1/σ, θ_B = b/σ: both mutation rates are large, with ratio θ_B/θ_A = b. (21) E_squarefree_laurent: for every i ≥ 1 and every j (j = 0 included, where E(i, 0) is a nonzero constant), E(i, j) is squarefree in k((σ))[ρ]. (22) E_coprime_of_ne_laurent: for i, j, p, q ≥ 1 with (i, j) ≠ (p, q), E(i, j) and E(p, q) are coprime in k((σ))[ρ] (there are polynomials U, V with U E(i, j) + V E(p, q) = 1), so distinct blocks share no root in ρ. In the generic setting, the coefficient field is ℚ(r)(σ), with r and σ independent indeterminates, and θ_A = 1/σ, θ_B = r/σ, so θ_A and θ_B are algebraically independent over ℚ and the field equals ℚ(θ_A, θ_B). (23) E_squarefree_generic: for i, j ≥ 1, E(i, j) is squarefree over ℚ(θ_A, θ_B). (24) E_coprime_generic: for i, j, p, q ≥ 1 with (i, j) ≠ (p, q), E(i, j) and E(p, q) are coprime over ℚ(θ_A, θ_B). Generic Galois groups. The field is ℚ(s)(d) with independent indeterminates s and d, and θ_A = (s + d)/2, θ_B = (s − d)/2. (25) E55_galois_full: the action of the Galois group of E(5, 5) on its roots in a splitting field over ℚ(θ_A, θ_B) is a bijection onto the permutations of the roots, so the Galois group is S_5. (26) E77_galois_full: the same for E(7, 7), giving S_7. (27) generic_galois_full_of_specialization: for any field k, any polynomial p in X with coefficients in k[t], and any a in k, if the leading coefficient of p does not vanish at t = a, the specialization p(a, X) is separable over k, p is separable over k(t), and the Galois group of p(a, X) over k has order n!, where n is the degree of p in X, then the Galois group of p over k(t) acts as the full symmetric group on the roots. Not covered: irreducibility, real-rootedness, or Galois groups of E(i, j) for index pairs other than (5, 5) and (7, 7); Galois groups at specific nonnegative rational mutation rates; squarefreeness or coprimality at specific numerical parameter values; the derivation of T(i, j) from the sampling recursion (not needed for these statements, and treated in the ExplicitFormula entry); and any consequence for computation of sampling probabilities beyond what the statements say."
+
+fidelity:
+  divergences: "1. E(i, j) is defined directly by its tridiagonal matrix; the entry does not itself show that this matrix arises from the two-locus sampling recursion. 2. The Galois-group and non-solvability statements at specific parameters use θ_A = −9, θ_B = 2/5 and θ_A = −13, θ_B = 3/7, which are not admissible mutation rates. For nonnegative mutation rates the entry states only real-rootedness with negative roots for (5, 5) and (7, 7), and the full symmetric Galois groups over the field of rational functions in the mutation rates; it states nothing about Galois groups at particular nonnegative rational rates. 3. E55gen_irreducible_two_var and E77gen_irreducible_two_var are stated with θ_B = 0 and a second indeterminate that does not occur in the polynomial. They amount to irreducibility in two independent mutation rates only through the fact, explained in status.scope, that E(i, i) depends on θ_A + θ_B alone; that reduction is not itself part of these two statements. 4. The squarefreeness and coprimality results hold over a field of rational functions in independent mutation rates, or over Laurent series with large mutation rates whose ratio is not rational; they do not assert squarefreeness or coprimality at any specific numerical parameters, where they may fail. 5. Mano (2013) makes an informal remark about the absence of explicit closed-form eigenvalues for related matrices in the mutation variable at θ = 0; the entry's statements are formal, concern specific determinants in the recombination variable, and do not formalize that remark. 6. Bary-Soroker, Garzoni, and Sodin treat random tridiagonal matrices conditionally on GRH; the entry treats specific matrices unconditionally. 7. All statements are exact algebraic statements; every certificate, such as a real-root count, is checked by the Lean kernel, and no external computation is trusted."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.GaloisObstruction"
+  statements:
+    - source: "This project"
+      lean: "Rhone.LinearAlgebra.Tridiag.natDegree_E"
+      module: "Rhone.LinearAlgebra.Tridiag.RhoDegree"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.LinearAlgebra.GaloisDegreeSeven.E_pos"
+      module: "Rhone.LinearAlgebra.GaloisDegreeSeven.Positive"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Algebra.Galois.E55pt_root_not_solvableByRad"
+      module: "Rhone.Algebra.Galois.E55"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Algebra.GaloisDegreeSeven.E77pt_root_not_solvableByRad"
+      module: "Rhone.Algebra.GaloisDegreeSeven.E77"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Algebra.GaloisDegreeSeven.E55gen_irreducible_two_var"
+      module: "Rhone.Algebra.GaloisDegreeSeven.AlgClosed"
+      status: "partial"
+    - source: "This project"
+      lean: "Rhone.Algebra.GaloisDegreeSeven.E55_splits"
+      module: "Rhone.Algebra.GaloisDegreeSeven.AllReal"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Analysis.Rescale.E_squarefree_laurent"
+      module: "Rhone.Analysis.Rescale.Discharge"
+      status: "adapted"
+    - source: "This project"
+      lean: "Rhone.Analysis.Rescale.E_coprime_of_ne_laurent"
+      module: "Rhone.Analysis.Rescale.Discharge"
+      status: "adapted"
+    - source: "This project"
+      lean: "Rhone.Analysis.GenericCoordinates.E_squarefree_generic"
+      module: "Rhone.Analysis.GenericCoordinates.GenericField"
+      status: "adapted"
+    - source: "This project"
+      lean: "Rhone.Analysis.GenericCoordinates.E_coprime_generic"
+      module: "Rhone.Analysis.GenericCoordinates.GenericField"
+      status: "adapted"
+    - source: "This project"
+      lean: "Rhone.Algebra.GaloisSpecialization.E55_galois_full"
+      module: "Rhone.Algebra.GaloisSpecialization.TwoParameter"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Algebra.GaloisSpecialization.E77_galois_full"
+      module: "Rhone.Algebra.GaloisSpecialization.TwoParameter"
+      status: "proved"
+    - source: "This project"
+      lean: "Rhone.Algebra.GaloisSpecialization.generic_galois_full_of_specialization"
+      module: "Rhone.Algebra.GaloisSpecialization.GenericGroup"
+      status: "proved"

@@ -1,0 +1,16 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.WeakRegularSeparation.Challenge",
+  "solution_module": "Palomar.WeakRegularSeparation.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.WeakRegularSeparation.nonnegative_internal_branch_separation_iff",
+    "Rhone.Palomar.WeakRegularSeparation.regular_profile_uniform_criterion",
+    "Rhone.Palomar.WeakRegularSeparation.island_uniformlySeparated_iff",
+    "Rhone.Palomar.WeakRegularSeparation.finitePhase_uniformlySeparated_iff"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

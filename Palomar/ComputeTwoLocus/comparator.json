@@ -1,0 +1,17 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.ComputeTwoLocus.Challenge",
+  "solution_module": "Palomar.ComputeTwoLocus.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.ComputeTwoLocus.q_correct",
+    "Rhone.Palomar.ComputeTwoLocus.checkTable_sound",
+    "Rhone.Palomar.ComputeTwoLocus.checkTable_complete",
+    "Rhone.LinearAlgebra.Recursion.exists_isSolution",
+    "Rhone.Computation.Params.valid_iff"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

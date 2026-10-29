@@ -1,0 +1,119 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Mean and variance of segregating sites, Watterson's estimator, and pairwise differences under Kingman's coalescent"
+  description: "This entry formalizes the mean and variance of three statistics for a sample of size n ≥ 2 under Kingman's coalescent, with time scaled so that each pair of lineages coalesces at rate 1 and with mutations placed on each branch as a Poisson process of rate θ/2 per unit length (infinite sites, so every mutation is a segregating site). The genealogy is Kingman's coalescent on set partitions of the labelled sample, realized as a jump chain with independent exponential holding times, and the mutation counts on its branch segments are conditionally independent Poisson variables given the genealogy. The statistics are the number S of segregating sites, Watterson's estimator S/a₁, and the average number π of pairwise differences. The mean of S is θa₁ and its variance is θa₁ + θ²a₂, where a₁ = Σ_{i=1}^{n−1} 1/i and a₂ = Σ_{i=1}^{n−1} 1/i². Watterson's estimator has mean θ and variance θ/a₁ + θ²a₂/a₁². The mean of π is θ, and its variance is b₁θ + b₂θ² with b₁ = (n + 1)/(3(n − 1)) and b₂ = 2(n² + n + 3)/(9n(n − 1))."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["q-bio.PE", "math.PR"]
+  msc2020: ["92D10", "60J90", "62F10"]
+
+sources:
+  - title: "On the number of segregating sites in genetical models without recombination"
+    authors: ["G. A. Watterson"]
+    id: "doi:10.1016/0040-5809(75)90020-9"
+    relationship: background
+    note: "Background: the original derivation of the mean θa₁ and variance θa₁ + θ²a₂ of the number of segregating sites (p. 258, eqs. (1.4a) and (1.5a)), and of the estimator S/a₁. The paper predates the coalescent formulation, so its setting differs from the marked Kingman law used here, and no step of the Lean proofs is taken from its derivation. The formulas are formalized here in the coalescent setting presented in Durrett's book, which is the source recorded as formalized."
+  - title: "The coalescent"
+    authors: ["J. F. C. Kingman"]
+    id: "doi:10.1016/0304-4149(82)90011-4"
+    relationship: background
+    note: "Background: supplies the model, the coalescent in which each pair of blocks of a partition of the sample merges at rate 1 (sec. 1). The genealogy in this entry is that process on set partitions of a labelled sample of size n, started from singletons. No result of this paper is restated, and no step of a proof is taken from it beyond the definition of the model."
+  - title: "Statistical method for testing the neutral mutation hypothesis by DNA polymorphism"
+    authors: ["Fumio Tajima"]
+    id: "doi:10.1093/genetics/123.3.585"
+    relationship: background
+    note: "Background and notation: the coefficients a₁, a₂, b₁, and b₂ (p. 585) whose names are used for tajimaA1, tajimaA2, tajimaB1, and tajimaB2, and the moments of S and π that they express. Tajima's D, the test statistic of this paper, is not part of this entry."
+  - title: "Evolutionary relationship of DNA sequences in finite populations"
+    authors: ["Fumio Tajima"]
+    id: "doi:10.1093/genetics/105.2.437"
+    relationship: background
+    note: "Background: the original derivation of the mean θ and variance b₁θ + b₂θ² of the average number of pairwise differences (eqs. (29)–(30), p. 449). Its setting is a finite population, not the marked Kingman law used here, and no step of the Lean proofs is taken from its derivation. The formulas are formalized here in the coalescent setting presented in Durrett's book."
+  - title: "Probability Models for DNA Sequence Evolution"
+    authors: ["Richard Durrett"]
+    id: "doi:10.1007/978-0-387-78168-6"
+    relationship: formalizes
+    note: "Second edition (2008). Supplies the established mathematics this entry formalizes, in the coalescent setting used here: the mean and variance of the number of segregating sites (sec. 1.4.1), the mean and variance of Watterson's estimator (Theorem 1.22), and the mean and variance of the average number of pairwise differences (Theorem 1.26 and eq. (1.30)), all for a Poisson process of mutations on the branches of Kingman's coalescent. The Lean proofs condition on the genealogy, use the conditional Poisson moments of the branch counts, and compute the first two moments of the total branch length (2a₁ and 4a₂) and of the pair-weighted branch length from potentials of the partition chain; they are not a transcription of the book's arguments."
+  - title: "Descent"
+    authors: ["SauersML"]
+    type: other
+    id: "https://github.com/SauersML/Descent/tree/28bbf4915b40b80e84ec9354e0bf450b0e4c7120"
+    location: "Descent/Coalescent/SegregatingSites.lean: wattersonEstimator_unbiased; Descent/Coalescent/SpectrumMoments.lean: varSegregatingSites_eq_totalVariance; Descent/Coalescent/BranchLength.lean: expectedTotalBranchLength_eq_harmonic (files first committed 2026-08-05)"
+    license: "Apache-2.0"
+    relationship: other
+    note: "A Lean 4 repository at the cited commit, listed so that a reader can see an overlapping formalization; it is not a mathematical source of this entry, and nothing from it is imported or used here. At that commit it has the Watterson mean and variance formulas as identities between closed-form definitions; this entry derives them as expectations under the marked Kingman law. Related; an independent formalization. No order of priority is stated in either direction."
+  - title: "lean4phylo"
+    authors: ["chaoszhang"]
+    type: other
+    id: "https://github.com/chaoszhang/lean4phylo/tree/565bf6757999ff9f667835b8ca0cf376548545b9"
+    location: "Phylo/Stat/CoalescentStats.lean: totalTreeLengthMean_eq, wattersonTheta_unbiased (file first committed 2026-10-08)"
+    license: "Apache-2.0"
+    relationship: other
+    note: "A Lean 4 repository at the cited commit, listed so that a reader can see an overlapping formalization; it is not a mathematical source of this entry, and nothing from it is imported or used here. At that commit it has the mean total tree length 2H_{n−1} and the unbiasedness of Watterson's estimator, at formula level. Related; an independent formalization. No order of priority is stated in either direction."
+
+related_formalizations:
+  - id: "https://github.com/SauersML/Descent"
+    relationship: "independent"
+    note: "Independent formalization (Lean 4, Apache-2.0); the overlap is described under sources."
+  - id: "https://github.com/chaoszhang/lean4phylo"
+    relationship: "independent"
+    note: "Independent formalization (Lean 4, Apache-2.0); the overlap is described under sources."
+
+status:
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  scope: "Model. For n labelled samples, the genealogy is Kingman's coalescent on set partitions of {0, …, n − 1}, started from the partition into singletons, in which each pair of blocks merges at rate 1, so that k blocks merge at total rate k(k − 1)/2. It is realized as a jump-and-hold path measure: the jump chain on partitions together with an independent sequence of unit-rate exponential clocks, the k-th holding time being the k-th clock divided by the current total rate. Given the genealogy, for each epoch k = 0, …, n − 2 and each block B present in that epoch, the number of mutations on that branch segment is Poisson with mean θ/2 times the holding time of the epoch, independently over all pairs (epoch, block); all other index pairs have mean 0. The resulting joint law of genealogy and counts is markedKingmanLaw n θ, for a non-negative real θ. The statistics are S, the total number of mutations, so that every mutation is a segregating site as under infinite sites; Watterson's estimator S/a₁; and π, the sum over branch segments of the mutation count times 2|B|(n − |B|)/(n(n − 1)), which is the average, over the n(n − 1)/2 unordered pairs of samples, of the number of mutations that separate the pair. Here a₁ = Σ_{i=1}^{n−1} 1/i (the harmonic number H_{n−1}), a₂ = Σ_{i=1}^{n−1} 1/i², b₁ = (n + 1)/(3(n − 1)), and b₂ = 2(n² + n + 3)/(9n(n − 1)), each computed as a rational and cast to a real. Each theorem holds for every n ≥ 2 and every θ ≥ 0. (1) markedKingmanSegregating_mean: the expectation of S is θa₁. (2) markedKingmanSegregating_variance: the variance of S is θa₁ + θ²a₂. (3) markedKingmanWatterson_mean: the expectation of S/a₁ is θ, so Watterson's estimator is unbiased. (4) markedKingmanWatterson_variance: the variance of S/a₁ is θ/a₁ + θ²a₂/a₁². (5) markedKingmanPi_mean: the expectation of π is θ. (6) markedKingmanPi_variance: the expectation of (π − θ)² is b₁θ + b₂θ²; by (5) this is the variance of π, although it is stated as an integral of the squared deviation from θ rather than through Mathlib's variance. Conventions: expectations are Bochner integrals, which are 0 for non-integrable functions, and Mathlib's variance is 0 for a function outside L². The library proves the integrability of S, S², π, and π² under the marked law, but those lemmas are not among the compared theorems. For θ > 0 every right-hand side is positive, so no compared statement can hold through the zero convention; for θ = 0 every statistic is almost surely 0 and each formula reduces to 0 = 0. Degenerate cases: samples of size 0 and 1 are excluded. Not covered: the distribution of S or π beyond the first two moments; the covariance of S and π, and Tajima's D; the site frequency spectrum; recombination, changing population size, population structure, and selection; finite-sites mutation models; and the convergence of Wright–Fisher or Moran genealogies to Kingman's coalescent."
+
+fidelity:
+  divergences: "Setting: Watterson (1975) and Tajima (1983) derive the formulas in their own population-genetic models (Watterson's paper predates the coalescent, and Tajima's is stated for finite populations); this entry works only with Kingman's coalescent marked by Poisson mutations, as in Durrett's book, and formalizes no finite-population model and no limit from one. Time and mutation scale: time is scaled so that each pair of lineages coalesces at rate 1, and each lineage carries mutations at rate θ/2 per unit time; sources that use other scalings agree after rescaling θ and time. Infinite sites: S is the total number of mutations; there is no sequence or site model, so the identification of mutations with segregating sites is built into the definition. Marks: mutation counts are attached to (epoch, block) branch segments as conditionally independent Poisson variables, which gives the same joint law of segment counts as a Poisson process along the branches, but the positions of mutations within a segment are not modelled. Genealogy: the coalescent is represented by a jump chain with independent exponential holding times, not as a process indexed by continuous time, and the samples are labelled. Variance of π: theorem (6) is stated as the expectation of (π − θ)², which equals the variance because the mean is θ by theorem (5)."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.KingmanSegregatingSites"
+  statements:
+    - source: "Watterson 1975; Durrett 2008, sec. 1.4.1"
+      lean: "Rhone.Statistics.markedKingmanSegregating_mean"
+      module: "Rhone.Statistics.SegregatingMoments"
+      status: "proved"
+    - source: "Watterson 1975; Durrett 2008, sec. 1.4.1"
+      lean: "Rhone.Statistics.markedKingmanSegregating_variance"
+      module: "Rhone.Statistics.SegregatingMoments"
+      status: "proved"
+    - source: "Watterson 1975; Durrett 2008, Theorem 1.22"
+      lean: "Rhone.Statistics.markedKingmanWatterson_mean"
+      module: "Rhone.Statistics.WattersonMarkedMoments"
+      status: "proved"
+    - source: "Durrett 2008, Theorem 1.22"
+      lean: "Rhone.Statistics.markedKingmanWatterson_variance"
+      module: "Rhone.Statistics.WattersonMarkedMoments"
+      status: "proved"
+    - source: "Tajima 1983; Durrett 2008, Theorem 1.26"
+      lean: "Rhone.Statistics.markedKingmanPi_mean"
+      module: "Rhone.Statistics.TajimaVariance"
+      status: "proved"
+    - source: "Tajima 1983; Durrett 2008, eq. (1.30)"
+      lean: "Rhone.Statistics.markedKingmanPi_variance"
+      module: "Rhone.Statistics.TajimaVariance"
+      status: "proved"

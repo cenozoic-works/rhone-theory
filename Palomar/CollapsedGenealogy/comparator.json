@@ -1,0 +1,14 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.CollapsedGenealogy.Challenge",
+  "solution_module": "Palomar.CollapsedGenealogy.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.CollapsedGenealogy.all_blocks_iff_collapsed_joint_eq",
+    "Rhone.Palomar.CollapsedGenealogy.star_labels_same_sequence_law"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

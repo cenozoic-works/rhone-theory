@@ -1,0 +1,28 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.KingmanTrees.Challenge",
+  "solution_module": "Palomar.KingmanTrees.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.KingmanTrees.card_ranked_labelled_history",
+    "Rhone.Palomar.KingmanTrees.ranked_labelled_history_mass",
+    "Rhone.Palomar.KingmanTrees.card_ranked_shape_one",
+    "Rhone.Palomar.KingmanTrees.card_ranked_shape_two",
+    "Rhone.Palomar.KingmanTrees.card_unranked_shape_one",
+    "Rhone.Palomar.KingmanTrees.card_unranked_shape_two",
+    "Rhone.Palomar.KingmanTrees.card_ranked_shape_recurrence",
+    "Rhone.Palomar.KingmanTrees.card_unranked_shape_recurrence",
+    "Rhone.Palomar.KingmanTrees.kingman_topology_probability_of_clade_factors",
+    "Rhone.Palomar.KingmanTrees.root_split_mass",
+    "Rhone.Palomar.KingmanTrees.sample_population_root_probability",
+    "Rhone.Palomar.KingmanTrees.tendsto_sample_population_root_probability",
+    "Rhone.Palomar.KingmanTrees.kingman_colless_expectation",
+    "Rhone.Palomar.KingmanTrees.kingman_sackin_expectation",
+    "Rhone.Palomar.KingmanTrees.historyPayoff_roots_eq_partition_stepN",
+    "Rhone.Palomar.KingmanTrees.sum_jumpMatrix_roots_eq_partitionJump"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

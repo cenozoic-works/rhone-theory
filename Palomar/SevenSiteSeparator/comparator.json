@@ -1,0 +1,13 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.SevenSiteSeparator.Challenge",
+  "solution_module": "Palomar.SevenSiteSeparator.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.SevenSiteSeparator.seven_site_separation"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

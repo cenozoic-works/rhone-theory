@@ -1,0 +1,143 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "The Ewens sampling formula and its generative urn"
+  description: "This entry formalizes the Ewens sampling formula for partitions of n and its relation to a generative urn. Over any field of characteristic zero, the weights sum to 1 whenever the rising factorial in θ is nonzero, and they have an explicit product form in the part counts. For θ > 0 the urn law on partitions of n equals the Ewens weights. The conditional law given the number of parts is expressed through Stirling numbers of the first kind, and the weights are consistent under deletion of one sampled individual."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["q-bio.PE", "math.PR"]
+  msc2020: ["92D10", "60C05", "05A17", "60J10"]
+
+sources:
+  - title: "The sampling theory of selectively neutral alleles"
+    authors: ["Warren J. Ewens"]
+    id: "doi:10.1016/0040-5809(72)90035-4"
+    location: "Eqs. (29)-(30), pp. 100-102, for the conditional law given the number of allele types"
+    relationship: formalizes
+    note: "The original source of the sampling formula for the allelic partition of a sample under the infinitely-many-alleles model, and of the observation that, given the number k of allele types, the conditional law of the partition does not depend on θ and has the unsigned Stirling number of the first kind |s(n, k)| as normalizer. esf_conditional_card_real formalizes that conditional law for real θ > 0; sum_esf and esf_eq_prod concern the formula itself. The derivation of the formula from the population model is not formalized here; the entry treats the formula as a family of weights on integer partitions."
+  - title: "Probability Models for DNA Sequence Evolution"
+    authors: ["Richard Durrett"]
+    id: "doi:10.1007/978-0-387-78168-6"
+    location: "2nd edition, 2008: Theorem 1.11 and its proof (sec. 1.3.1); Theorem 1.13, eq. (1.14)"
+    relationship: formalizes
+    note: "Textbook statement of the Ewens sampling formula (Theorem 1.11), in the product form proved as esf_eq_prod, whose normalization is sum_esf; the book's proof proceeds through the urn, which is the content of ewensUrnLaw_apply. Theorem 1.13 and eq. (1.14) give the conditional law given the number of allele types, as in esf_conditional_card_real. The Lean proofs were written in this project and are not transcriptions of the book's proofs."
+  - title: "Polya-like urns and the Ewens' sampling formula"
+    authors: ["Fred M. Hoppe"]
+    id: "doi:10.1007/BF00275863"
+    relationship: adapts
+    note: "Introduces the urn (a Pólya-like urn with a distinguished ball of weight θ) whose induced allelic partitions have the Ewens law. ewensUrnLaw_apply adapts this result: the Lean urn is defined directly as a Markov chain on integer partitions, adding a new part of size 1 with probability θ/(θ + n) or enlarging one part of size j with probability j m_j/(θ + n), where m_j is the number of parts of size j, rather than as an urn of labelled balls; the statement is for real θ > 0."
+  - title: "Random partitions in population genetics"
+    authors: ["J. F. C. Kingman"]
+    id: "doi:10.1098/rspa.1978.0089"
+    relationship: formalizes
+    note: "Introduces partition structures: families of laws on partitions of n, for every n, that are consistent when one individual chosen uniformly at random is deleted from the sample; the Ewens laws are the leading example. esf_deletion_consistent_real formalizes this consistency for the Ewens weights with real θ > 0. Kingman's representation theory of partition structures is not formalized here."
+  - title: "The Ubiquitous Ewens Sampling Formula"
+    authors: ["Harry Crane"]
+    id: "doi:10.1214/15-STS529"
+    location: "Sec. 2.3; Theorem 3.1"
+    relationship: background
+    note: "Survey of the Ewens sampling formula, used as a modern reference for the conditional law given the number of types (sec. 2.3) and for consistency under deletion (Theorem 3.1). Nothing beyond the results credited above to Ewens (1972) and Kingman (1978) is drawn from it."
+  - title: "Descent"
+    authors: ["SauersML"]
+    type: other
+    id: "https://github.com/SauersML/Descent/tree/28bbf4915b40b80e84ec9354e0bf450b0e4c7120"
+    location: "Descent/Coalescent/AlleleCount.lean: seating_new_class_prob; Descent/Coalescent/Ewens.lean: sum_ewensWeight; Descent/Coalescent/Mutation.lean: ewensProb_two_total, ewensProb_three_total (files first committed 2026-08-05)"
+    license: "Apache-2.0"
+    relationship: other
+    note: "The probability theta/(theta + n) of a new class at one step of the urn (identical to one step of the urn rule behind ewensUrnLaw_apply); the sum of Ewens weights over set partitions (overlapping with sum_esf); normalization of the sampling formula for n = 2 and 3 (sum_esf is the general case). An independent formalization."
+  - title: "formalpedia"
+    authors: ["prove2me"]
+    type: other
+    id: "https://github.com/prove2me/formalpedia/tree/082b32d5d4099d88e510efc822346b699a9584fa"
+    location: "KellyReversibility.Genetics.ewens_sum_eq_one and ewens_sampling_consistency (envs/0df444a/Solutions; solutions accepted 2026-10-06 and 2026-10-09)"
+    license: "Apache-2.0"
+    relationship: other
+    note: "The Ewens sampling formula on integer partitions sums to one and is consistent under subsampling (Kelly 1979, eq. (7.6) and Theorem 7.1): overlapping with sum_esf and esf_deletion_consistent_real. Independent formalization."
+  - title: "linglib"
+    authors: ["linglib-community"]
+    type: other
+    id: "https://github.com/linglib-community/linglib/tree/74b843ed5afebca21d66bcaeed274d12bea687ce"
+    location: "Linglib/Core/Probability/Distributions/PitmanYor.lean: crpRule, pitmanYor_singleton, pitmanYorEPPF_zero_left (file first committed 2026-10-01)"
+    license: "Apache-2.0"
+    relationship: other
+    note: "The two-parameter Chinese restaurant process and the Pitman–Yor partition law; at alpha = 0 it is the Ewens law, so the urn statement is its alpha = 0 case. Independent formalization."
+  - title: "Kagey-Problems"
+    authors: ["apemm"]
+    type: other
+    id: "https://github.com/apemm/Kagey-Problems/tree/18c804344e6f219c15005e4a5b4b4420de9ec1fe"
+    location: "kagey-problems/problem131/lean/PaperD/S4/Feller.lean: crpLaw_eq_esf, feller_coupling (file first committed 2026-10-25)"
+    license: "MIT"
+    relationship: other
+    note: "The law of the multiset of table sizes of the Chinese restaurant process is the Ewens sampling formula, and the Feller coupling: overlapping with ewensUrnLaw_apply. Independent formalization."
+
+related_formalizations:
+  - id: "https://isabelle.in.tum.de/library/HOL/HOL-Combinatorics/Stirling.html"
+    relationship: "other"
+    note: "Isabelle/HOL; stirling_pochhammer writes the rising factorial, the normalizing constant in sum_esf, as a sum of Stirling numbers of the first kind."
+  - id: "https://github.com/SauersML/Descent"
+    relationship: "independent"
+    note: "Independent formalization (Lean 4, Apache-2.0); the overlap is described under sources."
+  - id: "https://github.com/prove2me/formalpedia"
+    relationship: "independent"
+    note: "Independent formalization (Lean 4, Apache-2.0); the overlap is described under sources."
+  - id: "https://github.com/linglib-community/linglib"
+    relationship: "independent"
+    note: "Independent formalization (Lean 4, Apache-2.0); the overlap is described under sources."
+  - id: "https://github.com/apemm/Kagey-Problems"
+    relationship: "independent"
+    note: "Independent formalization (Lean 4, MIT); the overlap is described under sources."
+
+status:
+  scope: "Objects. For a field F, θ in F, and a partition p of n with k parts and m_j parts of size j, the Ewens weight is esf(θ, p) = n! θ^k / (θ(θ + 1)...(θ + n - 1) × (product of the parts) × (product over j of m_j!)), with the rising factorial (ascPochhammer) in the denominator. Theorem sum_esf: for every field F of characteristic zero, every θ in F, and every n with θ(θ + 1)...(θ + n - 1) ≠ 0, the weights of all partitions of n sum to 1; for n = 0 the single empty partition has weight 1. Theorem esf_eq_prod: for every field F, every θ, and every partition p of n, esf(θ, p) = n!/(θ(θ + 1)...(θ + n - 1)) × the product over j from 1 to n of (θ/j)^(m_j)/m_j!. No hypothesis is stated: Lean defines division by zero as zero, so the identity holds formally even when the rising factorial or some j or m_j! vanishes in F; its intended reading is in characteristic zero with a nonzero rising factorial. Theorem ewensUrnLaw_apply: for real θ > 0, let the urn law at size 0 be the point mass at the empty partition, and obtain the law at size n + 1 from the law at size n by one urn step: from a partition q of n, add a new part of size 1 with probability θ/(θ + n), or replace one part of size j by a part of size j + 1 with probability j m_j(q)/(θ + n). Then for every n and every partition p of n, the urn law gives p the probability esf(θ, p), as an extended nonnegative real. Theorem esf_conditional_card_real: for real θ > 0 and every partition p of n with k parts, the Ewens weight of p divided by the total Ewens weight of the partitions of n with k parts equals n! / ((product of the parts) × (product of the m_j!) × |s(n, k)|), where |s(n, k)| is the unsigned Stirling number of the first kind; in particular this conditional law does not depend on θ. Theorem esf_deletion_consistent_real: for real θ > 0 and every partition q of n, the sum over partitions p of n + 1 of esf(θ, p) times the probability of obtaining q from p by deleting one of the n + 1 individuals uniformly at random equals esf(θ, q). The deletion probability is the sum, over part sizes j of p whose reduction by one yields q, of j m_j(p)/(n + 1), where reducing a part of size 1 removes it. Not covered: the derivation of the Ewens formula from the Wright–Fisher, Moran, or coalescent model with infinitely many alleles; θ ≤ 0 for the urn, conditional-law, and consistency statements; random partitions of an infinite population and Kingman's representation theorem; and the two-parameter (Pitman–Yor) generalization."
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+
+fidelity:
+  divergences: "The formula is treated as a family of weights on integer partitions and is not derived from a population-genetic model. sum_esf and esf_eq_prod are stated for θ in an arbitrary field (of characteristic zero, with a nonvanishing rising factorial, for sum_esf), which is more general than the real θ > 0 of the sources; esf_eq_prod holds formally in every field because Lean defines division by zero as zero. The urn, conditional-law, and deletion-consistency statements are for real θ > 0 only. The urn is a Markov chain on integer partitions rather than an urn of labelled balls, and its law is a probability mass function with values in the extended nonnegative reals, compared with the Ewens weight after converting that real number. The deletion probability is written as a transition weight between integer partitions rather than through the deletion of a labelled individual."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.EwensUrn"
+  statements:
+    - source: "Durrett 2008, Theorem 1.11"
+      lean: "Rhone.Probability.sum_esf"
+      module: "Rhone.Probability.Ewens"
+      status: "proved"
+    - source: "Durrett 2008, Theorem 1.11"
+      lean: "Rhone.Probability.esf_eq_prod"
+      module: "Rhone.Probability.Ewens"
+      status: "proved"
+    - source: "Hoppe 1984; Durrett 2008, proof of Theorem 1.11"
+      lean: "Rhone.Statistics.ewensUrnLaw_apply"
+      module: "Rhone.Statistics.EwensUrn"
+      status: "adapted"
+    - source: "Kingman 1978; Crane 2016, Theorem 3.1"
+      lean: "Rhone.Statistics.esf_deletion_consistent_real"
+      module: "Rhone.Statistics.EwensReal"
+      status: "proved"
+    - source: "Ewens 1972; Crane 2016, sec. 2.3"
+      lean: "Rhone.Statistics.esf_conditional_card_real"
+      module: "Rhone.Statistics.EwensReal"
+      status: "proved"

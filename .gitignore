@@ -1,0 +1,7 @@
+# Lake build products and dependency checkouts
+.lake/
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

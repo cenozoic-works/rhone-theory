@@ -1,0 +1,59 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Seven linked sites separate a two-island history from every panmictic history"
+  description: "This entry formalizes a statement about blocks of seven completely linked sites with K ≥ 2 equally weighted roots, observed in three sampled sequences under an equal-rates K-state mutation model. A specific two-island history for three lineages (all three lineages start in the same island, the coalescence rate within an island is 1, and the migration rate is 1/100) produces, at mutation scale 1, a law of the seven-site block that differs from the block law of every panmictic history at every mutation scale k > 0. The panmictic histories are those given by a nonnegative locally integrable pairwise coalescence rate whose integrated clock diverges, so the population size may vary arbitrarily in time."
+  authors:
+    - "X. Lee"
+    - "N. Volkov"
+  responsible_maintainers:
+    - "X. Lee"
+    - "N. Volkov"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["q-bio.PE", "math.PR"]
+  msc2020: ["92D10", "60J90", "62F03"]
+
+sources:
+  - title: "Seven linked sites separate a two-island history from every panmictic history"
+    type: original-proof
+    relationship: other
+    note: "The result first presented by this formalization. What is new relative to the cited sources: the separation is stated for the law of an observed block of seven completely linked finite-alphabet sites in three sequences, not for the coalescence times themselves, and it holds against every panmictic history with a time-varying population size and every mutation scale on the panmictic side, for every alphabet size K ≥ 2. The established mathematics the entry builds on is the three-lineage coalescent in a symmetric island model and the coalescent with a time-varying population size; the coalescence-time analogue of the separation is the result of Grusea et al. listed below. No cited source supplies the finite-site statement or its proof. Novelty unknown; no claim of priority."
+  - title: "Coalescence times for three genes provide sufficient information to distinguish population structure from population size changes"
+    authors: ["S. Grusea", "W. Rodriguez", "D. Pinchon", "L. Chikhi", "S. Boitard", "O. Mazet"]
+    id: "doi:10.1007/s00285-018-1272-4"
+    relationship: background
+    note: "Context for the question the entry answers. HAL preprint hal-01631938v1, sec. 3.1, the paragraph after Prop. 10: the joint law of the coalescence times (T3, T2) for an n-island model differs from that of every panmictic model. That is a statement about coalescence times; the entry is about finite-site observations, where the times are seen only through mutations, and its proof does not use this result."
+
+status:
+  scope: "One compared theorem, seven_site_separation. Setting: three sampled sequences, each observed at L = 7 sites, every site taking one of K states. The genealogy of the three sequences is a rooted tree on three tips with a cherry of height T3 and a root at height T3 + T2, and its shape (which tip is the outgroup) is uniform over the three possibilities and independent of the times. All seven sites share this single genealogy (complete linkage, no recombination). Given the genealogy, sites mutate independently under the equal-rates model: along each branch the state is resampled uniformly from the K states at rate k/2, so the transition matrix over time t is exp(−kt/2) I + (1 − exp(−kt/2)) U, with U the matrix with every entry 1/K; the root state of every site is uniform on the K states. The block law is the resulting probability law on the K^21 possible seven-site panels, obtained by integrating over the law of (T3, T2). Island side: a two-island model in which each lineage migrates to the other island at rate 1/100 and two lineages in the same island coalesce at rate 1, with all three lineages starting in the same island; its (T3, T2) law is used at mutation scale 1. Panmictic side: for a function r on the real line that is nonnegative everywhere, locally integrable, and whose integral from 0 to t tends to infinity, the (T3, T2) law of the coalescent in which each pair coalesces at time-varying rate r(t); this law is used at an arbitrary mutation scale k > 0. Statement: for every K ≥ 2, every such r, and every k > 0, the two block laws are different measures. Degenerate cases: K ≥ 2 is required (for K = 1 every panel is the same and the laws coincide), and k > 0 is required on the panmictic side. The values of r at negative times play no role. The theorem is an inequality of laws only; it does not state a quantitative distance, a sample size, or a statistical test. Not covered: other island parameters or starting configurations, blocks of fewer than seven sites, sites that recombine, non-uniform root weights, other mutation models, and more than three sequences."
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+
+fidelity:
+  divergences: "Relative to Grusea et al.: their result concerns the coalescence times (T3, T2) themselves, whereas this entry concerns a finite-site observation of them, so neither statement implies the other as stated; the entry also treats only one fixed two-island history (two islands, migration rate 1/100, coalescence rate 1, all lineages starting together) rather than a family of island models. Modelling conventions of the entry: time is measured so that two lineages in the same island coalesce at rate 1; the mutation model is the equal-rates K-state model with a uniform root; the island history uses mutation scale 1 while the panmictic history may use any scale k > 0; the genealogy's shape is uniform and independent of the times, which holds for these exchangeable starting configurations. The proof is exact: it evaluates a moment-based score of the island block law to an exact rational number, 10464089628335504/53591027136025535, which is positive, and proves that the same score is at most 0 for every panmictic block law; no floating-point computation is involved."
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "AI coding agents"
+      tool_setup: "Agents worked in a Lean 4 and Mathlib toolchain with Lake, the Lean compiler, and the repository's build and checking scripts. They drafted the definitions, statements, and proofs, ported modules between toolchain versions, and repaired build errors."
+    - method: "agent"
+      framework: "AI research agents"
+      tool_setup: "Agents searched the literature, read the cited sources, and drafted the source notes and the informal account in this file."
+  notes: "This repository is published by Cenozoic Works, an organization; X. Lee and N. Volkov, members of Cenozoic Works, are the responsible authors and maintainers and take responsibility for these results. Cenozoic Works directed the project and chose which results to formalize and submit; X. Lee approved the statements and this metadata. The Lean code and most of the prose were drafted by AI agents. Results are attributed to models from OpenAI, Anthropic, Meta, internal models, and human experts. Every proof is checked by the Lean kernel."
+
+review:
+  status: "agent-reviewed"
+  notes: "AI agents, directed by Cenozoic Works, compared each informal statement in this file with the corresponding Lean statement in the Challenge and checked the stated role of each cited source; X. Lee approved the outcome. Mechanical checks: the Lean kernel on every proof, an independent replay of the whole library with leanchecker, and Comparator on this Challenge and Solution pair. No independent human peer review has been performed."
+
+alignment:
+  namespace: "Rhone.Palomar.SevenSiteSeparator"
+  statements:
+    - source: "This project"
+      lean: "Rhone.Statistics.SevenSiteSeparator.seven_site_separation"
+      module: "Rhone.Statistics.SevenSiteSeparator.Separation"
+      status: "proved"

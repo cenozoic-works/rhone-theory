@@ -1,0 +1,25 @@
+{
+  "challenge_module": "Rhone.Unproved.Palomar.SmcPrimeBound.Challenge",
+  "solution_module": "Palomar.SmcPrimeBound.Solution",
+  "theorem_names": [
+    "Rhone.Palomar.SmcPrimeBound.eventKernel_isMarkovKernel",
+    "Rhone.Palomar.SmcPrimeBound.spatialKernel_isMarkovKernel",
+    "Rhone.Palomar.SmcPrimeBound.fullARG_smcPrime_tv_bound",
+    "Rhone.Palomar.SmcPrimeBound.fullARG_smcPrime_tv_quadratic",
+    "Rhone.Palomar.SmcPrimeBound.fullARG_smcPrime_tv_one_sample",
+    "Rhone.Palomar.SmcPrimeBound.fullARG_smcPrime_tv_zero_recombination",
+    "Rhone.Palomar.SmcPrimeBound.fullARGGenealogyLaw_probability",
+    "Rhone.Palomar.SmcPrimeBound.smcPrimeGenealogyLaw_probability",
+    "Rhone.Palomar.SmcPrimeBound.eventProcess_liveCount_reaches_one",
+    "Rhone.Palomar.SmcPrimeBound.eventProcess_active_events_le",
+    "Rhone.Palomar.SmcPrimeBound.eventProcess_total_time_le",
+    "Rhone.Palomar.SmcPrimeBound.fullARGGenealogyLaw_ae_finite",
+    "Rhone.Palomar.SmcPrimeBound.fullARGGenealogyLaw_lintegral_iSup_le"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}
